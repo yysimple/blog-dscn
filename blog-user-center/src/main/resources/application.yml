@@ -1,0 +1,27 @@
+spring:
+  # 测试时，控制台彩色日志
+  output:
+    ansi:
+      enabled: always
+# mybatis-plus 相关配置
+mybatis-plus:
+  type-aliases-package: cn.jxwxkj.business
+  mapper-locations: classpath*:mybatis/mapper/*.xml
+  # mybatis-plus 的全局配置
+  global-config:
+    banner: false
+  # mybatis 原生配置
+  configuration:
+    # log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    map-underscore-to-camel-case: true
+    lazy-loading-enabled: false
+# 分页配置
+pagehelper:
+  helper-dialect: mysql
+  reasonable: true
+  support-methods-arguments: true
+  params: count=countSql
+# 日志打印级别
+logging:
+  level:
+    cn.jxwxkj: info
