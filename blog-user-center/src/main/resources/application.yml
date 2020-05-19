@@ -5,14 +5,14 @@ spring:
       enabled: always
 # mybatis-plus 相关配置
 mybatis-plus:
-  type-aliases-package: cn.jxwxkj.business
+  type-aliases-package: com.jxkj.usercenter
   mapper-locations: classpath*:mybatis/mapper/*.xml
   # mybatis-plus 的全局配置
   global-config:
     banner: false
   # mybatis 原生配置
   configuration:
-    # log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
     map-underscore-to-camel-case: true
     lazy-loading-enabled: false
 # 分页配置
@@ -24,4 +24,4 @@ pagehelper:
 # 日志打印级别
 logging:
   level:
-    cn.jxwxkj: info
+    com.jxkj: info
