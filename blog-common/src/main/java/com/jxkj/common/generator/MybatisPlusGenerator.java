@@ -26,8 +26,7 @@ public final class MybatisPlusGenerator {
 
         // 全局配置
         GlobalConfig gc = new GlobalConfig();
-        String projectPath = System.getProperty("user.dir");
-        gc.setOutputDir(projectPath + "/src/main/java");
+        gc.setOutputDir(generatorEntity.getProjectPath() + "/src/main/java");
         gc.setAuthor(generatorEntity.getAuthor());
         gc.setOpen(false);
         // 实体属性 Swagger2 注解
@@ -68,7 +67,7 @@ public final class MybatisPlusGenerator {
             @Override
             public String outputFile(TableInfo tableInfo) {
                 // 自定义输出文件名 ， 如果你 Entity 设置了前后缀、此处注意 xml 的名称会跟着发生变化！！
-                return projectPath + "/src/main/resources/mybatis/mapper/" + tableInfo.getEntityName() + "Mapper" + StringPool.DOT_XML;
+                return generatorEntity.getProjectPath() + "/src/main/resources/mybatis/mapper/" + tableInfo.getEntityName() + "Mapper" + StringPool.DOT_XML;
             }
         });
 

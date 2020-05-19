@@ -11,5 +11,12 @@
 
     <artifactId>blog-manage-center</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.jxkj</groupId>
+            <artifactId>blog-common</artifactId>
+            <version>V1.0.0</version>
+        </dependency>
+    </dependencies>
 
 </project>

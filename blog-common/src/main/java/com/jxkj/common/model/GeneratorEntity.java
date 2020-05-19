@@ -46,4 +46,9 @@ public class GeneratorEntity {
      * 表名，传String数组
      */
     private String[] tableNames;
+
+    /**
+     * 项目的绝对路径
+     */
+    private String projectPath;
 }
