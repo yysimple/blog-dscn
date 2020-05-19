@@ -16,6 +16,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/userCenter")
 public class UserCenterController {
 
+    /**
+     * 功能描述: 
+     *
+     * @Author wcx
+     * @param name
+     * @return java.lang.String
+     **/
     @PostMapping("/sayHello")
     public String sayHello(String name) {
         return "hello: " + name;
