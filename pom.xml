@@ -15,6 +15,8 @@
 		<module>blog-manage-center</module>
 		<module>blog-fileupload</module>
 		<module>blog-other</module>
+		<module>blog-gateway</module>
+		<module>blog-sms</module>
 	</modules>
 
 	<properties>
