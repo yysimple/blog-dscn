@@ -85,6 +85,8 @@ public final class MybatisPlusGenerator {
         strategy.setColumnNaming(NamingStrategy.underline_to_camel);
         strategy.setEntityLombokModel(true);
         strategy.setRestControllerStyle(true);
+        // 去掉表前缀
+        strategy.setTablePrefix("t_");
         // 公共父类
         // 写于父类中的公共字段
         // scanner("表名，多个英文逗号分割").split(",")
