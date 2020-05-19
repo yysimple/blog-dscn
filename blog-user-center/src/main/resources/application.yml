@@ -12,7 +12,7 @@ mybatis-plus:
     banner: false
   # mybatis 原生配置
   configuration:
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    # log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
     map-underscore-to-camel-case: true
     lazy-loading-enabled: false
 # 分页配置
@@ -21,7 +21,5 @@ pagehelper:
   reasonable: true
   support-methods-arguments: true
   params: count=countSql
-# 日志打印级别
-logging:
-  level:
-    com.jxkj: info
+swagger2:
+  enable: true

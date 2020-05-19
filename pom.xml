@@ -152,7 +152,7 @@
                 <artifactId>maven-resources-plugin</artifactId>
                 <configuration>
                     <delimiters>
-                        <!-- 以这个符号结尾和这个符号开头的内容就是在info中药显示的内容 -->
+                        <!-- 以这个符号结尾和这个符号开头的内容就是在info中要显示的内容 -->
                         <delimit>$</delimit>
                     </delimiters>
                 </configuration>
