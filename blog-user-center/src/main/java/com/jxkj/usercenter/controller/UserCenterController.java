@@ -1,5 +1,6 @@
 package com.jxkj.usercenter.controller;
 
+import com.jxkj.common.generator.MybatisPlusGenerator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserCenterController {
 
     /**
-     * 功能描述: 
+     * 功能描述:
      *
      * @Author wcx
      * @param name
