@@ -13,4 +13,12 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface BlogInfoService extends IService<BlogInfo> {
 
+    /***
+     * @Description: 逻辑删除博客, 更改博客删除状态为 1
+     *
+     * @author GuJunBin
+     * @param id
+     * @return void
+     */
+    void updateDelStatusById(Long id);
 }

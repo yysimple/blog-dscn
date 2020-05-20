@@ -54,10 +54,10 @@ public class BlogInfoController {
         return ResultBodyUtil.success();
     }
 
-    @ApiOperation(value = "删除博客信息")
-    @PostMapping("/deleteBlogInfo")
-    public ResultBody deleteBlogInfo(BlogInfo blogInfo){
-        blogInfoService.updateById(blogInfo);
+    @ApiOperation(value = "逻辑删除博客信息")
+    @PostMapping("/deleteBlogInfoById")
+    public ResultBody deleteBlogInfoById(Long id){
+        blogInfoService.updateDelStatusById(id);
         return ResultBodyUtil.success();
     }
 
