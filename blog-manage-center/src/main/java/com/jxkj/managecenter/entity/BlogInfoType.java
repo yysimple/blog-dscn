@@ -15,7 +15,7 @@ import lombok.experimental.Accessors;
  * 博客和类型的关联表
  * </p>
  *
- * @author gjb
+ * @author GuJunBin
  * @since 2020-05-19
  */
 @Data

@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
  * 博客信息和分类关联表 服务实现类
  * </p>
  *
- * @author gjb
+ * @author GuJunBin
  * @since 2020-05-19
  */
 @Service

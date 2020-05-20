@@ -16,7 +16,7 @@ import lombok.experimental.Accessors;
  * 回复表
  * </p>
  *
- * @author gjb
+ * @author GuJunBin
  * @since 2020-05-19
  */
 @Data

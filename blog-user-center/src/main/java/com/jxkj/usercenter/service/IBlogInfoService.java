@@ -8,7 +8,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * 博客基本信息表 服务类
  * </p>
  *
- * @author gjb
+ * @author GuJunBin
  * @since 2020-05-19
  */
 public interface IBlogInfoService extends IService<BlogInfo> {

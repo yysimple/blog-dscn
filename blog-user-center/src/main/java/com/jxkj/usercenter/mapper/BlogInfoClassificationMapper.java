@@ -8,7 +8,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * 博客信息和分类关联表 Mapper 接口
  * </p>
  *
- * @author gjb
+ * @author GuJunBin
  * @since 2020-05-19
  */
 public interface BlogInfoClassificationMapper extends BaseMapper<BlogInfoClassification> {
