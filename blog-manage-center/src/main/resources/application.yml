@@ -1,13 +1,4 @@
-server:
-  port: 5220
-
 spring:
-  datasource:
-    username: db_blog_center
-    password: db_blog_center
-    url: jdbc:mysql://39.100.24.145/db_blog_center?serverTimezone=UTC
-    driver-class-name: com.mysql.cj.jdbc.Driver
-  # 测试时，控制台彩色日志
   output:
     ansi:
       enabled: always

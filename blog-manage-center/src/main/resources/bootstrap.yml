@@ -1,6 +1,6 @@
 spring:
   application:
-    name: blog-manage-center
+    name: blog-center
   cloud:
     nacos:
       discovery:
