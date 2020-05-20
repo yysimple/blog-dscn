@@ -1,4 +1,5 @@
 spring:
+  # 测试时，控制台彩色日志
   output:
     ansi:
       enabled: always

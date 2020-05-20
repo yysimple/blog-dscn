@@ -17,4 +17,5 @@ import org.springframework.stereotype.Service;
 @Service
 public class BlogInfoClassificationServiceImpl extends ServiceImpl<BlogInfoClassificationMapper, BlogInfoClassification> implements IBlogInfoClassificationService {
 
+
 }

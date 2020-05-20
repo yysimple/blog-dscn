@@ -25,8 +25,8 @@ import java.util.List;
  * @since 2020-05-19
  */
 @RestController
-@RequestMapping("/blog-info")
-@Api(tags = "回收企业信息模块 接口")
+@RequestMapping("/blogInfo")
+@Api(tags = "博客信息模块 接口")
 @Slf4j
 public class BlogInfoController {
 
@@ -54,10 +54,11 @@ public class BlogInfoController {
         return ResultBodyUtil.success();
     }
 
-    @ApiOperation(value = "更改博客信息")
+    @ApiOperation(value = "删除博客信息")
     @PostMapping("/deleteBlogInfo")
-    public void deleteBlogInfo(BlogInfo blogInfo){
+    public ResultBody deleteBlogInfo(BlogInfo blogInfo){
         blogInfoService.updateById(blogInfo);
+        return ResultBodyUtil.success();
     }
 
 }
