@@ -4,7 +4,7 @@ package com.jxkj.managecenter.controller;
 import com.jxkj.common.result.ResultBody;
 import com.jxkj.common.result.ResultBodyUtil;
 import com.jxkj.managecenter.entity.BlogInfo;
-import com.jxkj.managecenter.service.IBlogInfoService;
+import com.jxkj.managecenter.service.BlogInfoService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -31,7 +31,7 @@ import java.util.List;
 public class BlogInfoController {
 
     @Autowired
-    private IBlogInfoService blogInfoService;
+    private BlogInfoService blogInfoService;
 
     @ApiOperation(value = "查询所有博客信息")
     @GetMapping("/findAllBlogInfo")
@@ -55,7 +55,7 @@ public class BlogInfoController {
     }
 
     @ApiOperation(value = "更改博客信息")
-    @PostMapping("/updateBlogInfo")
+    @PostMapping("/deleteBlogInfo")
     public void deleteBlogInfo(BlogInfo blogInfo){
         blogInfoService.updateById(blogInfo);
     }

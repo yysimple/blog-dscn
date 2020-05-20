@@ -1,4 +1,7 @@
 com\jxkj\common\generator\MybatisPlusGenerator$1.class
 com\jxkj\common\model\GeneratorEntity.class
-com\jxkj\common\generator\MybatisPlusGenerator$2.class
+com\jxkj\common\result\ResultTypeEnum.class
+com\jxkj\common\result\ResultBody.class
 com\jxkj\common\generator\MybatisPlusGenerator.class
+com\jxkj\common\result\ResultBodyUtil.class
+com\jxkj\common\generator\MybatisPlusGenerator$2.class

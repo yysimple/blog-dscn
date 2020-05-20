@@ -14,9 +14,9 @@ public class UserMybatisPlusGenerator {
         GeneratorEntity generatorEntity = new GeneratorEntity();
         generatorEntity.setAuthor("GuJunBin");
         generatorEntity.setParentPackage("com.jxkj.usercenter");
-        generatorEntity.setUrl("jdbc:mysql://39.100.24.145:3306/db_blog_center?serverTimezone=UTC&useUnicode=true&useSSL=false&characterEncoding=utf8");
-        generatorEntity.setUsername("db_blog_center");
-        generatorEntity.setPassword("db_blog_center");
+        generatorEntity.setUrl("jdbc:mysql://39.100.24.145:3306/db_user_center?serverTimezone=UTC&useUnicode=true&useSSL=false&characterEncoding=utf8");
+        generatorEntity.setUsername("db_user_center");
+        generatorEntity.setPassword("db_user_center");
         generatorEntity.setProjectPath("F:\\Micro-service\\blog-dscn\\blog-user-center");
         MybatisPlusGenerator.generator(generatorEntity);
 

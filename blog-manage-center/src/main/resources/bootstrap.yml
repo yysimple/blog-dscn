@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: blog-manage-center
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 39.100.24.145:5180
+      config:
+        # 配置中心的地址
+        server-addr: 39.100.24.145:5180
+        # 指定配置文件格式，相当于gitee上的那个文件
+        file-extension: yaml
+        # 分组
+        group: DEFAULT_GROUP
+        # 命名空间
+        namespace: 1e66063c-7c4f-4903-a84d-0640c25eec7c

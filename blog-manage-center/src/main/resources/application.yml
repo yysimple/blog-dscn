@@ -1,2 +1,33 @@
 server:
   port: 5220
+
+spring:
+  datasource:
+    username: db_blog_center
+    password: db_blog_center
+    url: jdbc:mysql://39.100.24.145/db_blog_center?serverTimezone=UTC
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  # 测试时，控制台彩色日志
+  output:
+    ansi:
+      enabled: always
+# mybatis-plus 相关配置
+mybatis-plus:
+  type-aliases-package: com.jxkj.usercenter
+  mapper-locations: classpath*:mybatis/mapper/*.xml
+  # mybatis-plus 的全局配置
+  global-config:
+    banner: false
+  # mybatis 原生配置
+  configuration:
+    # log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    map-underscore-to-camel-case: true
+    lazy-loading-enabled: false
+# 分页配置
+pagehelper:
+  helper-dialect: mysql
+  reasonable: true
+  support-methods-arguments: true
+  params: count=countSql
+swagger2:
+  enable: true

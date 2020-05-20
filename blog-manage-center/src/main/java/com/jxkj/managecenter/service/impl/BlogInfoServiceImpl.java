@@ -2,7 +2,7 @@ package com.jxkj.managecenter.service.impl;
 
 import com.jxkj.managecenter.entity.BlogInfo;
 import com.jxkj.managecenter.mapper.BlogInfoMapper;
-import com.jxkj.managecenter.service.IBlogInfoService;
+import com.jxkj.managecenter.service.BlogInfoService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +15,6 @@ import org.springframework.stereotype.Service;
  * @since 2020-05-19
  */
 @Service
-public class BlogInfoServiceImpl extends ServiceImpl<BlogInfoMapper, BlogInfo> implements IBlogInfoService {
+public class BlogInfoServiceImpl extends ServiceImpl<BlogInfoMapper, BlogInfo> implements BlogInfoService {
 
 }
