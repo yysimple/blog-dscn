@@ -39,9 +39,9 @@ public class SwaggerConfig {
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
                 .title("Swagger API")
-                .description("test")
+                .description("博客管理中心")
                 .termsOfServiceUrl("")
-                .version("2.0")
+                .version("1.0")
                 .build();
     }
 }

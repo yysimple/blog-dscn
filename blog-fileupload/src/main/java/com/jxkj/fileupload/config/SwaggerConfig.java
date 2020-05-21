@@ -1,4 +1,4 @@
-package com.jxkj.usercenter.config;
+package com.jxkj.fileupload.config;
 
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Value;
@@ -22,14 +22,11 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 public class SwaggerConfig {
 
-    @Value("${swagger2.enable:false}")
-    private boolean enable = false;
-
     @Bean
     public Docket createRestApi() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo())
-                .enable(enable)
+                .enable(true)
                 .select()
                 .apis(RequestHandlerSelectors.withMethodAnnotation(ApiOperation.class))
                 .paths(PathSelectors.any())
@@ -39,7 +36,7 @@ public class SwaggerConfig {
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
                 .title("Swagger API")
-                .description("用户中心")
+                .description("文件上传")
                 .termsOfServiceUrl("")
                 .version("1.0")
                 .build();
