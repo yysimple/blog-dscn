@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2020-05-19
  */
 @RestController
-@RequestMapping("/blog-info-type")
+@RequestMapping("blogCenter/blogInfoType")
 public class BlogInfoTypeController {
 
 }

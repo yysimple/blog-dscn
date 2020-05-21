@@ -18,6 +18,8 @@ public enum ResultTypeEnum {
     /**
      *
      */
+    ALREADY_EXIST(101,"收藏夹已存在"),
+
     FILE_TOO_LARGE(501, "文件过大, 请从新上传（小于100MB）"),
 
     PARAM_NOT_EMPTY(601, "参数不能为空,请填写"),

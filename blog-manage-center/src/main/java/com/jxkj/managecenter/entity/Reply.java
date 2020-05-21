@@ -1,15 +1,14 @@
 package com.jxkj.managecenter.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-import java.time.LocalDateTime;
-import java.io.Serializable;
+import com.jxkj.managecenter.base.entity.BaseEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+
+import java.io.Serializable;
 
 /**
  * <p>
@@ -24,12 +23,9 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 @TableName("t_reply")
 @ApiModel(value="Reply对象", description="回复表")
-public class Reply implements Serializable {
+public class Reply extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
-    @TableId(value = "id", type = IdType.AUTO)
-    private Long id;
 
     @ApiModelProperty(value = "回复内容")
     private String content;
@@ -41,13 +37,6 @@ public class Reply implements Serializable {
     private Long tCommentId;
 
     private Long tReplyId;
-
-    private LocalDateTime createTime;
-
-    private LocalDateTime updateTime;
-
-    @ApiModelProperty(value = "删除状态，0为真实删除，1为假删")
-    private Integer deleteStatus;
 
     @ApiModelProperty(value = "该条评论的回复用户id")
     private Long replyUserId;

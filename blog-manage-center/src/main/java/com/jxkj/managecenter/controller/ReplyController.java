@@ -1,8 +1,9 @@
 package com.jxkj.managecenter.controller;
 
 
+import io.swagger.annotations.Api;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -14,7 +15,10 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2020-05-19
  */
 @RestController
-@RequestMapping("/reply")
+@RequestMapping("blogCenter/reply")
+@Api(tags = "博客回复评论模块 接口")
+@Slf4j
 public class ReplyController {
+
 
 }

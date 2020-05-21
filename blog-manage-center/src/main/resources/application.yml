@@ -5,16 +5,18 @@ spring:
       enabled: always
 # mybatis-plus 相关配置
 mybatis-plus:
-  type-aliases-package: com.jxkj.usercenter
+  type-aliases-package: com.jxkj.blogcenter
   mapper-locations: classpath*:mybatis/mapper/*.xml
   # mybatis-plus 的全局配置
   global-config:
     banner: false
   # mybatis 原生配置
   configuration:
-    # log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    #mybatis-plus配置控制台打印完整带参数SQL语句
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
     map-underscore-to-camel-case: true
     lazy-loading-enabled: false
+
 # 分页配置
 pagehelper:
   helper-dialect: mysql
@@ -23,3 +25,7 @@ pagehelper:
   params: count=countSql
 swagger2:
   enable: true
+
+logging:
+  level:
+    com.jxkj: debug

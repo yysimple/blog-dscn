@@ -17,3 +17,11 @@ spring:
             - RewritePath=/api/(?<segment>.*),/$\{segment}
             - SwaggerHeaderFilter
             - StripPrefix=1
+        - id: blog-center
+            uri: lb://blog-center
+            predicates:
+              - Path=/api/blogCenter/**
+            filters:
+              - RewritePath=/api/(?<segment>.*),/$\{segment}
+              - SwaggerHeaderFilter
+              - StripPrefix=1

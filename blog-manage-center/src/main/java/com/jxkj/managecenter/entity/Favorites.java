@@ -1,15 +1,15 @@
 package com.jxkj.managecenter.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-import java.time.LocalDateTime;
-import java.io.Serializable;
+import com.jxkj.managecenter.base.entity.BaseEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+import org.apache.ibatis.type.Alias;
+
+import java.io.Serializable;
 
 /**
  * <p>
@@ -20,16 +20,15 @@ import lombok.experimental.Accessors;
  * @since 2020-05-19
  */
 @Data
+@Alias("favorites")
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @TableName("t_favorites")
 @ApiModel(value="Favorites对象", description="收藏夹表")
-public class Favorites implements Serializable {
+public class Favorites extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @TableId(value = "id", type = IdType.AUTO)
-    private Long id;
 
     @ApiModelProperty(value = "收藏夹名称")
     private String favoritesName;
@@ -42,15 +41,6 @@ public class Favorites implements Serializable {
 
     @ApiModelProperty(value = "描述")
     private String description;
-
-    @ApiModelProperty(value = "创建时间")
-    private LocalDateTime createTime;
-
-    @ApiModelProperty(value = "更新时间")
-    private LocalDateTime updateTime;
-
-    @ApiModelProperty(value = "删除状态，0为真实删除，1为假删")
-    private Integer deleteStatus;
 
     @ApiModelProperty(value = "收藏夹对应的用户id")
     private Long tUserId;
