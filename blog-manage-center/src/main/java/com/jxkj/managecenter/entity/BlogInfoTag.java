@@ -22,9 +22,9 @@ import java.io.Serializable;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@TableName("t_blog_info_classification")
-@ApiModel(value="BlogInfoClassification对象", description="博客信息和分类关联表")
-public class BlogInfoClassification implements Serializable {
+@TableName("t_blog_info_tag")
+@ApiModel(value="BlogInfoTag对象", description="博客信息和分类关联表")
+public class BlogInfoTag implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -35,5 +35,5 @@ public class BlogInfoClassification implements Serializable {
     private Long tBlogInfoId;
 
     @ApiModelProperty(value = "博客分类id")
-    private Long tBlogClassificationcolId;
+    private Long tBlogTagcolId;
 }

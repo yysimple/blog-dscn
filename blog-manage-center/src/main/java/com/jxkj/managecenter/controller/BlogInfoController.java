@@ -12,10 +12,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * <p>
@@ -56,20 +53,12 @@ public class BlogInfoController {
         return ResultBodyUtil.success(blogInfoIPage);
     }
 
-    @ApiOperation(value = "保存博客信息")
-    @PostMapping("/saveBlogInfo")
-    public ResultBody saveBlogInfo(BlogInfo blogInfo) {
-        iBlogInfoService.save(blogInfo);
+    @ApiOperation(value = "保存or更新博客信息")
+    @PostMapping("/saveOrUpdateBlogInfo")
+    public ResultBody saveOrUpdateBlogInfo(@RequestBody BlogInfo blogInfo) {
+        iBlogInfoService.saveOrUpdate(blogInfo);
         return ResultBodyUtil.success();
     }
-
-    @ApiOperation(value = "更新博客信息")
-    @PostMapping("/updateBlogInfo")
-    public ResultBody updateBlogInfo(BlogInfo blogInfo) {
-        iBlogInfoService.updateById(blogInfo);
-        return ResultBodyUtil.success();
-    }
-
     @ApiOperation(value = "逻辑删除博客信息")
     @PostMapping("/deleteBlogInfoById")
     public ResultBody deleteBlogInfoById(Long id) {

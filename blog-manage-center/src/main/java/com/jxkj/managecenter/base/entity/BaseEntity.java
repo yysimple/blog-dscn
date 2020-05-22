@@ -20,7 +20,7 @@ import java.time.LocalDateTime;
 public class BaseEntity implements Serializable {
 
     @TableId(value = "id", type = IdType.AUTO)
-    @ApiModelProperty(value = "Id")
+    @ApiModelProperty(value = "Id", hidden = true)
     private Long id;
 
     @ApiModelProperty(value = "创建时间", hidden = true)
@@ -33,7 +33,7 @@ public class BaseEntity implements Serializable {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime updateTime;
 
-    @ApiModelProperty(value = "显示状态，0为隐藏，1为显示")
+    @ApiModelProperty(value = "显示状态，0为隐藏，1为显示", hidden = true)
     private Integer deleteStatus;
 
 }

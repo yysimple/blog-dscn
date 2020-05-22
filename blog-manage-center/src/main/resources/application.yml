@@ -5,11 +5,16 @@ spring:
       enabled: always
 # mybatis-plus 相关配置
 mybatis-plus:
-  type-aliases-package: com.jxkj.blogcenter
+  type-aliases-package: com.jxkj.managecenter
   mapper-locations: classpath*:mybatis/mapper/*.xml
   # mybatis-plus 的全局配置
   global-config:
     banner: false
+    map-underscore-to-camel-case: false
+    db-config:
+      logic-delete-field: delete_status  #全局逻辑删除字段值 3.3.0开始支持，详情看下面。
+      logic-delete-value: 1 # 逻辑已删除值(默认为 1)
+      logic-not-delete-value: 0 # 逻辑未删除值(默认为 0)
   # mybatis 原生配置
   configuration:
     #mybatis-plus配置控制台打印完整带参数SQL语句

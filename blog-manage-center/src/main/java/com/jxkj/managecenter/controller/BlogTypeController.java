@@ -9,9 +9,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -25,7 +23,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("blogCenter/blogType")
-@Api(tags = "博客类型模块 接口")
+@Api(tags = "博客类型模块(原创、转载) 接口")
 @Slf4j
 public class BlogTypeController {
 
@@ -37,6 +35,13 @@ public class BlogTypeController {
     public ResultBody findAllBlogType(){
         List<BlogType> blogTypeList = iBlogTypeService.list();
         return ResultBodyUtil.success(blogTypeList);
+    }
+
+    @ApiOperation(value = "保存or更新博客类型")
+    @PostMapping("/saveOrUpdateBlogType")
+    public ResultBody saveOrUpdateBlogType(@RequestBody BlogType blogType){
+        iBlogTypeService.saveOrUpdate(blogType);
+        return ResultBodyUtil.success();
     }
 
 }

@@ -12,7 +12,7 @@ import java.io.Serializable;
 
 /**
  * <p>
- * 博客所属类别表
+ * 博客标签表
  * </p>
  *
  * @author GuJunBin
@@ -21,12 +21,12 @@ import java.io.Serializable;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@TableName("t_blog_classification")
-@ApiModel(value="BlogClassification对象", description="博客所属类别表")
-public class BlogClassification extends BaseEntity implements Serializable {
+@TableName("t_blog_tag")
+@ApiModel(value="BlogTag对象", description="博客标签表")
+public class BlogTag extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "分类名")
-    private String classificationName;
+    @ApiModelProperty(value = "标签名")
+    private String tagName;
 }

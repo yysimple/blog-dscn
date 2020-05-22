@@ -4,9 +4,8 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.jxkj.managecenter.entity.BlogInfo;
 import com.jxkj.managecenter.mapper.BlogInfoMapper;
 import com.jxkj.managecenter.service.IBlogInfoService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import javax.annotation.Resource;
 
 /**
  * <p>
@@ -19,7 +18,7 @@ import javax.annotation.Resource;
 @Service
 public class BlogInfoServiceImpl extends ServiceImpl<BlogInfoMapper, BlogInfo> implements IBlogInfoService {
 
-    @Resource
+    @Autowired
     private BlogInfoMapper blogInfoMapper;
 
     @Override

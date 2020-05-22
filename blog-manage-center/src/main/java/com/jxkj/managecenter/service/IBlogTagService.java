@@ -1,7 +1,7 @@
 package com.jxkj.managecenter.service;
 
-import com.jxkj.managecenter.entity.BlogClassification;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.jxkj.managecenter.entity.BlogTag;
 
 /**
  * <p>
@@ -11,6 +11,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @author GuJunBin
  * @since 2020-05-19
  */
-public interface IBlogClassificationService extends IService<BlogClassification> {
+public interface IBlogTagService extends IService<BlogTag> {
 
+    Boolean existTagName(BlogTag blogTag);
 }

@@ -13,4 +13,12 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IFavoritesService extends IService<Favorites> {
 
+    /**
+     * @Description: 查询收藏夹是否已存在
+     *
+     * @author GuJunBin
+     * @param favorites
+     * @return java.lang.Boolean
+     */
+    Boolean findExistFavorites(Favorites favorites);
 }

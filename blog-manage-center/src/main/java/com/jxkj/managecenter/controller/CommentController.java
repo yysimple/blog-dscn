@@ -12,9 +12,8 @@ import com.jxkj.managecenter.service.ICommentService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import javax.annotation.Resource;
 
 /**
  * <p>
@@ -30,15 +29,15 @@ import javax.annotation.Resource;
 @Slf4j
 public class CommentController {
 
-    @Resource
+    @Autowired
     private ICommentService iCommentService;
 
     private QueryWrapper<Comment> queryWrapper = Wrappers.query();
     IPage<Comment> page = new Page(1, 10);
 
     @ApiOperation(value = "分页查询当前博客所有评论")
-    @GetMapping("/findComment/{tBlogInfoId}")
-    public ResultBody findComment(@PathVariable Long tBlogInfoId){
+    @GetMapping("/findComment")
+    public ResultBody findComment(Long tBlogInfoId){
         queryWrapper.eq("t_blog_info_id",tBlogInfoId);
         IPage<Comment> commentIPage = iCommentService.page(this.page, queryWrapper);
         return ResultBodyUtil.success(commentIPage);
@@ -46,7 +45,7 @@ public class CommentController {
 
     @ApiOperation(value = "提交留言")
     @PostMapping("/commitComment")
-    public ResultBody commitComment(Comment comment){
+    public ResultBody commitComment(@RequestBody Comment comment){
         iCommentService.save(comment);
         return ResultBodyUtil.success();
     }
