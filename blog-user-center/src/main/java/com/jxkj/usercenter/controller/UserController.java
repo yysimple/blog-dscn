@@ -8,11 +8,10 @@ import com.jxkj.usercenter.service.IUserService;
 import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
-
-import javax.xml.bind.SchemaOutputResolver;
 
 /**
  * <p>
@@ -24,20 +23,19 @@ import javax.xml.bind.SchemaOutputResolver;
  */
 @RestController
 @RequestMapping("/user")
-@Api(value = "用户表")
+@Api(tags = "用户表")
 public class UserController {
 
 
-    @Qualifier("userServiceImpl")
     @Autowired
     private IUserService iUserService;
 
-    @ApiImplicitParam(value = "注册用户")
+    @ApiOperation(value = "注册用户")
     @PostMapping("/register")
     public ResultBody register(@RequestBody User user){
         System.out.println(user.getUsername());
-        ResultBody resultBody = iUserService.userRegister(user);
-        return resultBody;
+        iUserService.userRegister(user);
+        return ResultBodyUtil.success();
     }
 
 }

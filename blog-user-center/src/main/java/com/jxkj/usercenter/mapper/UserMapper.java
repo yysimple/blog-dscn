@@ -16,5 +16,10 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UserMapper extends BaseMapper<User> {
 
+    /**
+     * 用户注册
+     *
+     * @param user
+     */
     void userRegister(User user);
 }

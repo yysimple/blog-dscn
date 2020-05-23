@@ -17,10 +17,11 @@ public interface IUserService extends IService<User> {
 
     /**
      * 用户注册
+     *
      * @param user
      * @return
      */
-    public ResultBody userRegister(User user);
+    ResultBody userRegister(User user);
 
 
 }

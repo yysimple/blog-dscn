@@ -30,7 +30,7 @@ public class Role extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "角色名称")
+    @ApiModelProperty(value = "角色名称,先设置两种：ROLE_ADMIN, ROLE_USER")
     private String roleName;
 
 }

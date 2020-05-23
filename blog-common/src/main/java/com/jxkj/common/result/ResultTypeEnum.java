@@ -34,6 +34,8 @@ public enum ResultTypeEnum {
     USER_NOT_USE(707, "账号正在审批，请耐心等待"),
     RECYCLER_ALREADY_LEAVE(708, "该回员已离职"),
     REGISTER_NOT_PASS(709, "您的注册信息被驳回，请重新注册"),
+    USERNAME_NOT_EMPTY(710, "用户名不能为空"),
+    PASSWORD_NOT_EMPTY(711, "密码不能为空")
 
     ;
     private Integer code;
