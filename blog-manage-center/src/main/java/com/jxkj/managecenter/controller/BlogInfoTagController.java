@@ -1,15 +1,8 @@
 package com.jxkj.managecenter.controller;
 
 
-import com.jxkj.common.result.ResultBody;
-import com.jxkj.common.result.ResultBodyUtil;
-import com.jxkj.managecenter.entity.BlogTag;
-import com.jxkj.managecenter.service.IBlogTagService;
-import com.jxkj.managecenter.service.IBlogInfoTagService;
-import com.jxkj.managecenter.service.IBlogInfoService;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -27,16 +20,4 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 public class BlogInfoTagController {
 
-    @Autowired
-    private IBlogInfoTagService iBlogInfoTagService;
-
-    @Autowired
-    private IBlogTagService iBlogTagService;
-
-    @Autowired
-    private IBlogInfoService iBlogInfoService;
-
-    public ResultBody saveBlogInfoTag(BlogTag blogTag){
-        return ResultBodyUtil.success();
-    }
 }

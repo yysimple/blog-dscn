@@ -1,7 +1,8 @@
 package com.jxkj.managecenter.service;
 
-import com.jxkj.managecenter.entity.Favorites;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.jxkj.common.result.ResultBody;
+import com.jxkj.managecenter.entity.Favorites;
 
 /**
  * <p>
@@ -20,5 +21,7 @@ public interface IFavoritesService extends IService<Favorites> {
      * @param favorites
      * @return java.lang.Boolean
      */
-    Boolean findExistFavorites(Favorites favorites);
+    ResultBody findExistFavorites(Favorites favorites);
+
+    ResultBody finaUserFavorites(Long userId);
 }

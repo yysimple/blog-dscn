@@ -1,7 +1,8 @@
 package com.jxkj.managecenter.service;
 
-import com.jxkj.managecenter.entity.Comment;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.jxkj.common.result.ResultBody;
+import com.jxkj.managecenter.entity.Comment;
 
 /**
  * <p>
@@ -13,4 +14,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface ICommentService extends IService<Comment> {
 
+    ResultBody listComment(Long tBlogInfoId);
 }

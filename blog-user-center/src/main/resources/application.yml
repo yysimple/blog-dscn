@@ -12,7 +12,7 @@ mybatis-plus:
     banner: false
   # mybatis 原生配置
   configuration:
-    # log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
     map-underscore-to-camel-case: true
     lazy-loading-enabled: false
 # 分页配置

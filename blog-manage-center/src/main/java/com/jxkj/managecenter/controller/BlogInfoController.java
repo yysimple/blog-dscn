@@ -1,9 +1,6 @@
 package com.jxkj.managecenter.controller;
 
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.jxkj.common.result.ResultBody;
 import com.jxkj.common.result.ResultBodyUtil;
 import com.jxkj.managecenter.entity.BlogInfo;
@@ -31,48 +28,40 @@ public class BlogInfoController {
     @Autowired
     private IBlogInfoService iBlogInfoService;
 
-    private QueryWrapper<BlogInfo> queryWrapper = new QueryWrapper<>();
-    IPage<BlogInfo> page = new Page(1, 10);
-
     @ApiOperation(value = "分页查询所有已发布博客信息")
     @GetMapping("/findAllIssueBlog")
     public ResultBody findAllIssueBlog() {
-        queryWrapper.eq("blog_status", 1);
-        IPage<BlogInfo> blogInfoIPage = iBlogInfoService.page(page, queryWrapper);
-        log.info("总页数： " + blogInfoIPage.getTotal());
-        log.info("总记录数： " + blogInfoIPage.getPages());
-        log.info("返回信息： " + blogInfoIPage.getRecords());
-        return ResultBodyUtil.success(blogInfoIPage);
+        return iBlogInfoService.pagingQuery();
     }
 
     @ApiOperation(value = "根据标题和文章内容模糊查询发布博客信息")
     @GetMapping("/findIssueBlog")
     public ResultBody findIssueBlog(String key) {
-        queryWrapper.eq("blog_status", 1).like("title", key).or().like("content", key);
-        IPage<BlogInfo> blogInfoIPage = iBlogInfoService.page(page, queryWrapper);
-        return ResultBodyUtil.success(blogInfoIPage);
+        return iBlogInfoService.findIssueBlog(key);
     }
 
     @ApiOperation(value = "保存or更新博客信息")
     @PostMapping("/saveOrUpdateBlogInfo")
     public ResultBody saveOrUpdateBlogInfo(@RequestBody BlogInfo blogInfo) {
-        iBlogInfoService.saveOrUpdate(blogInfo);
-        return ResultBodyUtil.success();
+        return ResultBodyUtil.success(iBlogInfoService.saveOrUpdate(blogInfo));
     }
+
     @ApiOperation(value = "逻辑删除博客信息")
     @PostMapping("/deleteBlogInfoById")
     public ResultBody deleteBlogInfoById(Long id) {
-        iBlogInfoService.updateDelStatusById(id);
+        iBlogInfoService.removeById(id);
         return ResultBodyUtil.success();
     }
 
     @ApiOperation(value = "点赞")
     @PostMapping("/likeNum")
     public ResultBody likeNum(Long id) {
-        BlogInfo blogInfo = iBlogInfoService.getById(id);
-        blogInfo.setLikeNum(blogInfo.getLikeNum() + 1);
-        iBlogInfoService.updateById(blogInfo);
-        return ResultBodyUtil.success();
+        return iBlogInfoService.addLikeNum(id);
     }
 
+    @ApiOperation(value = "收藏")
+    @PostMapping("/favorites")
+    public ResultBody favorites(Long blogId, Long favoritesId, Long userId) {
+        return iBlogInfoService.favorites(blogId, favoritesId, userId);
+    }
 }

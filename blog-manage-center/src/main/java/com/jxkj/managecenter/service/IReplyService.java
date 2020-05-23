@@ -1,5 +1,6 @@
 package com.jxkj.managecenter.service;
 
+import com.jxkj.common.result.ResultBody;
 import com.jxkj.managecenter.entity.Reply;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -13,4 +14,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IReplyService extends IService<Reply> {
 
+    ResultBody listReply(Long commentId);
 }

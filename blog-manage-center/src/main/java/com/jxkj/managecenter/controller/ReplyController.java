@@ -1,8 +1,16 @@
 package com.jxkj.managecenter.controller;
 
 
+import com.jxkj.common.result.ResultBody;
+import com.jxkj.common.result.ResultBodyUtil;
+import com.jxkj.managecenter.entity.Reply;
+import com.jxkj.managecenter.service.IReplyService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,5 +28,26 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 public class ReplyController {
 
+    @Autowired
+    private IReplyService iReplyService;
 
+    @ApiOperation(value = "查询当前评论的回复")
+    @GetMapping("/listReply")
+    public ResultBody listReply(Long commentId){
+        iReplyService.listReply(commentId);
+        return ResultBodyUtil.success();
+    }
+
+    @ApiOperation(value = "留言回复")
+    @PostMapping("/saveReply")
+    public ResultBody saveReply(Reply reply){
+        //TODO 获取回复用户的信息
+        iReplyService.save(reply);
+        return ResultBodyUtil.success();
+    }
+
+    public ResultBody deleteReply(Reply reply){
+
+        return ResultBodyUtil.success();
+    }
 }

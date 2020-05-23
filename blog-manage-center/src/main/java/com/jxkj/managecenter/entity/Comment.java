@@ -36,5 +36,4 @@ public class Comment extends BaseEntity implements Serializable {
     @ApiModelProperty(value = "该条评论对应的用户id")
     private Long commentUserId;
 
-
 }

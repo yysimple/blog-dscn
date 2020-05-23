@@ -1,10 +1,6 @@
 package com.jxkj.managecenter.controller;
 
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.jxkj.common.result.ResultBody;
 import com.jxkj.common.result.ResultBodyUtil;
 import com.jxkj.managecenter.entity.Comment;
@@ -32,21 +28,25 @@ public class CommentController {
     @Autowired
     private ICommentService iCommentService;
 
-    private QueryWrapper<Comment> queryWrapper = Wrappers.query();
-    IPage<Comment> page = new Page(1, 10);
-
     @ApiOperation(value = "分页查询当前博客所有评论")
-    @GetMapping("/findComment")
-    public ResultBody findComment(Long tBlogInfoId){
-        queryWrapper.eq("t_blog_info_id",tBlogInfoId);
-        IPage<Comment> commentIPage = iCommentService.page(this.page, queryWrapper);
-        return ResultBodyUtil.success(commentIPage);
+    @GetMapping("/listComment")
+    public ResultBody listComment(Long tBlogInfoId) {
+        return iCommentService.listComment(tBlogInfoId);
     }
 
     @ApiOperation(value = "提交留言")
     @PostMapping("/commitComment")
-    public ResultBody commitComment(@RequestBody Comment comment){
+    public ResultBody commitComment(@RequestBody Comment comment) {
+        //TODO 获取留言的用户信息
         iCommentService.save(comment);
+        return ResultBodyUtil.success();
+    }
+
+    @ApiOperation(value = "删除留言")
+    @PostMapping("/deleteComment")
+    public ResultBody deleteComment(Long id) {
+        //TODO 权限验证
+        iCommentService.removeById(id);
         return ResultBodyUtil.success();
     }
 }

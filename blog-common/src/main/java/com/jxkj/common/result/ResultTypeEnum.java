@@ -18,7 +18,8 @@ public enum ResultTypeEnum {
     /**
      *
      */
-    ALREADY_EXIST(101,"名称已存在"),
+    ALREADY_EXIST(101,"资源已存在"),
+    NOT_EXIST(102,"资源不存在"),
 
     FILE_TOO_LARGE(501, "文件过大, 请从新上传（小于100MB）"),
 

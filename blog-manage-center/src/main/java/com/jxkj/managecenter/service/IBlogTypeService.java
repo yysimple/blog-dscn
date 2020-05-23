@@ -1,7 +1,8 @@
 package com.jxkj.managecenter.service;
 
-import com.jxkj.managecenter.entity.BlogType;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.jxkj.common.result.ResultBody;
+import com.jxkj.managecenter.entity.BlogType;
 
 /**
  * <p>
@@ -13,4 +14,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IBlogTypeService extends IService<BlogType> {
 
+    ResultBody saveOrUpdateType(BlogType blogType);
 }

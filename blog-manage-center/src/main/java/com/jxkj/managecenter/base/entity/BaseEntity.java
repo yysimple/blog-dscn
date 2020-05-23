@@ -1,9 +1,6 @@
 package com.jxkj.managecenter.base.entity;
 
-import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.*;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -33,7 +30,8 @@ public class BaseEntity implements Serializable {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime updateTime;
 
-    @ApiModelProperty(value = "显示状态，0为隐藏，1为显示", hidden = true)
+    @TableLogic
+    @ApiModelProperty(value = "显示状态，0-未删除，1-已删除", hidden = true)
     private Integer deleteStatus;
 
 }

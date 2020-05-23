@@ -11,8 +11,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 /**
  * <p>
  * 博客类型表  （例：原创、转载）
@@ -33,14 +31,20 @@ public class BlogTypeController {
     @ApiOperation(value = "查询所有博客类型")
     @GetMapping("/findAllBlogType")
     public ResultBody findAllBlogType(){
-        List<BlogType> blogTypeList = iBlogTypeService.list();
-        return ResultBodyUtil.success(blogTypeList);
+        return ResultBodyUtil.success(iBlogTypeService.list());
     }
 
     @ApiOperation(value = "保存or更新博客类型")
     @PostMapping("/saveOrUpdateBlogType")
     public ResultBody saveOrUpdateBlogType(@RequestBody BlogType blogType){
-        iBlogTypeService.saveOrUpdate(blogType);
+        return iBlogTypeService.saveOrUpdateType(blogType);
+    }
+
+    @ApiOperation(value = "删除博客类型")
+    @PostMapping("/deleteBlogType")
+    public ResultBody deleteBlogType(Long id){
+        //TODO 检验是否被引用
+        iBlogTypeService.removeById(id);
         return ResultBodyUtil.success();
     }
 
