@@ -23,5 +23,5 @@ public interface IUserService extends IService<User> {
      */
     ResultBody userRegister(User user);
 
-
+    ResultBody userLogin(User user);
 }

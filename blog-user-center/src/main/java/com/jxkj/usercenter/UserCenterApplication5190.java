@@ -19,7 +19,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableFeignClients
 @EnableTransactionManagement
 @RefreshScope
-@MapperScan(basePackages = "com.jxkj.usercenter")
+@MapperScan(basePackages = "com.jxkj.usercenter.mapper")
 public class UserCenterApplication5190 {
     public static void main(String[] args) {
         SpringApplication.run(UserCenterApplication5190.class, args);

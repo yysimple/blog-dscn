@@ -7,9 +7,6 @@ import com.jxkj.common.result.ResultBody;
 import com.jxkj.common.result.ResultBodyUtil;
 import com.jxkj.common.result.ResultTypeEnum;
 import com.jxkj.usercenter.entity.User;
-import com.jxkj.usercenter.entity.UserInfo;
-import com.jxkj.usercenter.entity.UserLevel;
-import com.jxkj.usercenter.entity.UserRole;
 import com.jxkj.usercenter.mapper.UserMapper;
 import com.jxkj.usercenter.service.IUserInfoService;
 import com.jxkj.usercenter.service.IUserLevelService;
@@ -18,6 +15,7 @@ import com.jxkj.usercenter.service.IUserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,14 +39,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     @Autowired
     private UserMapper userMapper;
 
-    @Autowired
-    private IUserInfoService userInfoService;
-
-    @Autowired
-    private IUserRoleService userRoleService;
-
-    @Autowired
-    private IUserLevelService userLevelService;
 
     @Transactional(isolation = Isolation.SERIALIZABLE)
     @Override
@@ -72,19 +62,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
                     ResultTypeEnum.USER_ALREADY_EXIST.getMsg());
         }
         userMapper.userRegister(user);
-        UserInfo userInfo = new UserInfo();
-        userInfo.setTUserId(user.getId());
-        userInfoService.save(userInfo);
-
-        // TODO ,需要修改从redis中读取
-        UserRole userRole = new UserRole();
-        userRole.setTRoleId(2L);
-        userRole.setTUserId(user.getId());
-        userRoleService.save(userRole);
-
-        UserLevel userLevel = new UserLevel();
-        userLevel.setTUserId(user.getId());
-        userLevelService.save(userLevel);
         return ResultBodyUtil.success();
+    }
+
+    @Override
+    public ResultBody userLogin(User user) {
+        return null;
     }
 }
