@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.time.LocalDateTime;
 import java.io.Serializable;
+
+import com.jxkj.usercenter.base.entity.BaseEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -24,27 +26,15 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 @TableName("t_user")
 @ApiModel(value="User对象", description="用户表")
-public class User implements Serializable {
+public class  User extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
-    @TableId(value = "id", type = IdType.AUTO)
-    private Long id;
 
     @ApiModelProperty(value = "用户名")
     private String username;
 
     @ApiModelProperty(value = "密码")
     private String password;
-
-    @ApiModelProperty(value = "创建时间")
-    private LocalDateTime createTime;
-
-    @ApiModelProperty(value = "更新时间")
-    private LocalDateTime updateTime;
-
-    @ApiModelProperty(value = "删除状态，0为真实删除，1为假删")
-    private Integer deleteStatus;
 
 
 }

@@ -2,6 +2,8 @@ package com.jxkj.usercenter.mapper;
 
 import com.jxkj.usercenter.entity.User;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 /**
  * <p>
@@ -11,6 +13,8 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @author GuJunBin
  * @since 2020-05-20
  */
+@Repository
 public interface UserMapper extends BaseMapper<User> {
 
+    void userRegister(User user);
 }
