@@ -15,13 +15,11 @@ import org.springframework.web.bind.annotation.RequestParam;
  */
 public interface IUserService extends IService<User> {
 
-    /**
-     * 用户注册
-     *
-     * @param user
-     * @return
-     */
     ResultBody userRegister(User user);
 
-    ResultBody userLogin(User user);
+    ResultBody userLogin(String username, String password);
+
+    ResultBody updatePassword(Long userId, String newPassword);
+
+    ResultBody deleteById(Long userId);
 }

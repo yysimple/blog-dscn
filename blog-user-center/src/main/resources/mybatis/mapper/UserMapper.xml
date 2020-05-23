@@ -6,4 +6,5 @@
             useGeneratedKeys="true" keyProperty="id">
         insert into t_user(username, password) values (#{username}, #{password});
     </insert>
+
 </mapper>

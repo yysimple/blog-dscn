@@ -33,15 +33,25 @@ public class UserController {
 
     @ApiOperation(value = "注册用户")
     @PostMapping("/register")
-    public ResultBody register(@RequestBody User user){
-        System.out.println(user.getUsername());
-        userService.userRegister(user);
-        return ResultBodyUtil.success();
+    public ResultBody register(@RequestBody User user) {
+        return userService.userRegister(user);
     }
 
-    public ResultBody login(@RequestBody User user){
-        userService.userLogin(user);
-        return ResultBodyUtil.success();
+    @ApiOperation(value = "用户登录")
+    @PostMapping("/login")
+    public ResultBody login(String username, String password) {
+        return userService.userLogin(username, password);
     }
 
+    @ApiOperation(value = "修改密码")
+    @PostMapping("/updatePassword")
+    public ResultBody updatePassword(Long userId, String newPassword) {
+        return userService.updatePassword(userId, newPassword);
+    }
+
+    @ApiOperation(value = "删除用户")
+    @PostMapping("/deleteById")
+    public ResultBody deleteById(Long userId) {
+        return userService.deleteById(userId);
+    }
 }

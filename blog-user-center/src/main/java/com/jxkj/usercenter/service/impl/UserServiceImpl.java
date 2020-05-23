@@ -2,6 +2,7 @@ package com.jxkj.usercenter.service.impl;
 
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.jxkj.common.result.ResultBody;
 import com.jxkj.common.result.ResultBodyUtil;
@@ -39,7 +40,13 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     @Autowired
     private UserMapper userMapper;
 
-
+    /**
+     * 功能描述 用户注册
+     * @author ysq
+     * @param [user]
+     * @return com.jxkj.common.result.ResultBody
+     * @date 2020/5/23
+     */
     @Transactional(isolation = Isolation.SERIALIZABLE)
     @Override
     public ResultBody userRegister(User user) {
@@ -61,12 +68,66 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
             return ResultBodyUtil.error(ResultTypeEnum.USER_ALREADY_EXIST.getCode(),
                     ResultTypeEnum.USER_ALREADY_EXIST.getMsg());
         }
-        userMapper.userRegister(user);
+        userMapper.insert(user);
         return ResultBodyUtil.success();
     }
-
+    /**
+     * 功能描述 用户登录
+     * @author ysq
+     * @param [username, password]
+     * @return com.jxkj.common.result.ResultBody
+     * @date 2020/5/23
+     */
     @Override
-    public ResultBody userLogin(User user) {
-        return null;
+    public ResultBody userLogin(String username, String password) {
+        QueryWrapper<User> queryWrapper = Wrappers.query();
+        queryWrapper.eq("username", username).last("limit 1");
+        User user = userMapper.selectOne(queryWrapper);
+        if (null == user) {
+            return ResultBodyUtil.error(ResultTypeEnum.USER_NOT_EXIST.getCode(), ResultTypeEnum.USER_NOT_EXIST.getMsg());
+        }
+        if (!user.getPassword().equals(password)) {
+            return ResultBodyUtil.error(ResultTypeEnum.PASSWORD_NOT_TRUE.getCode(), ResultTypeEnum.PASSWORD_NOT_TRUE.getMsg());
+        }
+        return ResultBodyUtil.success(user);
+    }
+
+    /**
+     * 功能描述 修改密码
+     * @author ysq
+     * @param [userId, newPassword]
+     * @return com.jxkj.common.result.ResultBody
+     * @date 2020/5/23
+     */
+    @Override
+    public ResultBody updatePassword(Long userId, String newPassword) {
+        User user = userMapper.selectById(userId);
+        if (null == user){
+            return ResultBodyUtil.error(ResultTypeEnum.USER_NOT_EXIST.getCode(),ResultTypeEnum.USER_NOT_EXIST.getMsg());
+        }
+        if (null == newPassword || "" ==newPassword){
+            return ResultBodyUtil.error(ResultTypeEnum.PASSWORD_NOT_EMPTY.getCode(),ResultTypeEnum.PASSWORD_NOT_EMPTY.getMsg());
+        }
+        user.setPassword(newPassword);
+        int i = userMapper.updateById(user);
+        return ResultBodyUtil.success(i);
+    }
+
+    /**
+     * 功能描述  假删数据
+     * @author ysq
+     * @param [userId]
+     * @return com.jxkj.common.result.ResultBody
+     * @date 2020/5/23
+     */
+    @Override
+    public ResultBody deleteById(Long userId) {
+        User user = userMapper.selectById(userId);
+        if (null == user){
+            return ResultBodyUtil.error(ResultTypeEnum.USER_NOT_EXIST.getCode(),ResultTypeEnum.USER_NOT_EXIST.getMsg());
+        }
+        user.setDeleteStatus(1);
+        int i = userMapper.updateById(user);
+        return ResultBodyUtil.success(i);
     }
 }

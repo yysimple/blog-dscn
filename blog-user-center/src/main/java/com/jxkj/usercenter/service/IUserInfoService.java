@@ -1,5 +1,6 @@
 package com.jxkj.usercenter.service;
 
+import com.jxkj.common.result.ResultBody;
 import com.jxkj.usercenter.entity.UserInfo;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -12,5 +13,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @since 2020-05-20
  */
 public interface IUserInfoService extends IService<UserInfo> {
+
 
 }

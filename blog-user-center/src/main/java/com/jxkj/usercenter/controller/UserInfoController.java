@@ -1,6 +1,15 @@
 package com.jxkj.usercenter.controller;
 
 
+import com.jxkj.common.result.ResultBody;
+import com.jxkj.common.result.ResultBodyUtil;
+import com.jxkj.usercenter.entity.UserInfo;
+import com.jxkj.usercenter.service.IUserInfoService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
@@ -16,5 +25,31 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/user-info")
 public class UserInfoController {
+
+    @Autowired
+    private IUserInfoService iUserInfoService;
+
+    @ApiOperation(value = "根据用户id查询详细信息")
+    @GetMapping("/selectById")
+    public ResultBody selectById(Long id){
+        UserInfo byId = iUserInfoService.getById(id);
+        return ResultBodyUtil.success(byId);
+    }
+
+    @ApiOperation(value = "保存用户详细信息")
+    @PostMapping("/saveMessage")
+    public ResultBody saveMessage(UserInfo userInfo){
+        boolean save = iUserInfoService.save(userInfo);
+        return ResultBodyUtil.success(save);
+    }
+
+    @ApiOperation(value = "更改用户详细信息")
+    @PostMapping("/update")
+    public ResultBody update(UserInfo userInfo){
+        boolean b = iUserInfoService.updateById(userInfo);
+        return ResultBodyUtil.success(b);
+    }
+
+
 
 }
