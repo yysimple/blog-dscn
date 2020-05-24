@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 
 /**
  * <p>
- * 博客信息和分类关联表 Mapper 接口
+ * 博客信息和标签关联表 Mapper 接口
  * </p>
  *
  * @author GuJunBin

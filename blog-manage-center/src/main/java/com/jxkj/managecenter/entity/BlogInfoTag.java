@@ -13,7 +13,7 @@ import java.io.Serializable;
 
 /**
  * <p>
- * 博客信息和分类关联表
+ * 博客信息和标签关联表
  * </p>
  *
  * @author GuJunBin
@@ -23,7 +23,7 @@ import java.io.Serializable;
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @TableName("t_blog_info_tag")
-@ApiModel(value="BlogInfoTag对象", description="博客信息和分类关联表")
+@ApiModel(value="BlogInfoTag对象", description="博客信息和标签关联表")
 public class BlogInfoTag implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -34,6 +34,6 @@ public class BlogInfoTag implements Serializable {
     @ApiModelProperty(value = "博客id")
     private Long tBlogInfoId;
 
-    @ApiModelProperty(value = "博客分类id")
+    @ApiModelProperty(value = "博客标签id")
     private Long tBlogTagId;
 }

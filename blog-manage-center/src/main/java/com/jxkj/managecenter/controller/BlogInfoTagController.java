@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * <p>
- * 博客信息和分类关联表 前端控制器
+ * 博客信息和标签关联表 前端控制器
  * </p>
  *
  * @author GuJunBin

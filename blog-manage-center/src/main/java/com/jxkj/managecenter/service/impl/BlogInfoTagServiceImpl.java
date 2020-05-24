@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 /**
  * <p>
- * 博客信息和分类关联表 服务实现类
+ * 博客信息和标签关联表 服务实现类
  * </p>
  *
  * @author GuJunBin
