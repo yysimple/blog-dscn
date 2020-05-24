@@ -31,4 +31,10 @@ public class ReplyServiceImpl extends ServiceImpl<ReplyMapper, Reply> implements
         queryWrapper.eq("t_comment_id", commentId);
         return ResultBodyUtil.success(replyMapper.selectList(queryWrapper));
     }
+
+    @Override
+    public ResultBody deleteReply(Reply reply) {
+            replyMapper.deleteById(reply);
+            return ResultBodyUtil.success();
+    }
 }

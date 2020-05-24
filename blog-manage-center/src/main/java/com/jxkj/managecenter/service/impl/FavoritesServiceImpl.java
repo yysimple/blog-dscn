@@ -35,8 +35,8 @@ public class FavoritesServiceImpl extends ServiceImpl<FavoritesMapper, Favorites
     @Override
     public ResultBody findExistFavorites(Favorites favorites) {
         List<Favorites> favoritesName = favoritesMapper.selectList(queryWrapper.eq("favorites_name", favorites.getTUserId()));
-        boolean b = favoritesName.stream().anyMatch(u -> u.getFavoritesName().equals(favorites.getFavoritesName()));
-        if (!b) {
+        boolean exist = favoritesName.stream().anyMatch(u -> u.getFavoritesName().equals(favorites.getFavoritesName()));
+        if (!exist) {
             iFavoritesService.saveOrUpdate(favorites);
             return ResultBodyUtil.success();
         } else {

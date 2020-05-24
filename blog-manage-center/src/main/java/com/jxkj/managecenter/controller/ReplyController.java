@@ -34,8 +34,7 @@ public class ReplyController {
     @ApiOperation(value = "查询当前评论的回复")
     @GetMapping("/listReply")
     public ResultBody listReply(Long commentId){
-        iReplyService.listReply(commentId);
-        return ResultBodyUtil.success();
+        return iReplyService.listReply(commentId);
     }
 
     @ApiOperation(value = "留言回复")
@@ -46,8 +45,9 @@ public class ReplyController {
         return ResultBodyUtil.success();
     }
 
+    @ApiOperation(value = "删除回复")
+    @PostMapping("/deleteReply")
     public ResultBody deleteReply(Reply reply){
-
-        return ResultBodyUtil.success();
+        return iReplyService.deleteReply(reply);
     }
 }

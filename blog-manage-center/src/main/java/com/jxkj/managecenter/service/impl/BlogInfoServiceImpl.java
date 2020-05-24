@@ -8,12 +8,16 @@ import com.jxkj.common.result.ResultBody;
 import com.jxkj.common.result.ResultBodyUtil;
 import com.jxkj.common.result.ResultTypeEnum;
 import com.jxkj.managecenter.entity.BlogInfo;
+import com.jxkj.managecenter.entity.BlogInfoTag;
 import com.jxkj.managecenter.entity.Favorites;
 import com.jxkj.managecenter.mapper.BlogInfoMapper;
+import com.jxkj.managecenter.mapper.BlogInfoTagMapper;
 import com.jxkj.managecenter.mapper.FavoritesMapper;
 import com.jxkj.managecenter.service.IBlogInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -35,7 +39,7 @@ public class BlogInfoServiceImpl extends ServiceImpl<BlogInfoMapper, BlogInfo> i
     private FavoritesMapper favoritesMapper;
 
     @Autowired
-    private IBlogInfoService iBlogInfoService;
+    private BlogInfoTagMapper blogInfoTagMapper;
 
     private QueryWrapper<BlogInfo> queryWrapper = new QueryWrapper<>();
     IPage<BlogInfo> page = new Page(1, 10);
@@ -77,5 +81,42 @@ public class BlogInfoServiceImpl extends ServiceImpl<BlogInfoMapper, BlogInfo> i
                     ResultTypeEnum.NOT_EXIST.getCode(),
                     ResultTypeEnum.NOT_EXIST.getMsg());
         }
+    }
+
+    @Override
+    @Transactional(isolation = Isolation.SERIALIZABLE)
+    public ResultBody saveBlogInfo(BlogInfo blogInfo, Long[] tagIds) {
+        blogInfoMapper.insert(blogInfo);
+        BlogInfoTag blogInfoTag = new BlogInfoTag();
+        for (int i = 0; i < tagIds.length; i++) {
+            Long tagId = tagIds[i];
+            blogInfoTag.setTBlogInfoId(blogInfo.getId());
+            blogInfoTag.setTBlogTagId(tagId);
+            blogInfoTagMapper.insert(blogInfoTag);
+        }
+        return ResultBodyUtil.success();
+    }
+
+    @Override
+    @Transactional(isolation = Isolation.SERIALIZABLE)
+    public ResultBody updateBlogInfo(BlogInfo blogInfo, Long[] tagIds) {
+        blogInfoMapper.updateById(blogInfo);
+        BlogInfoTag blogInfoTag = new BlogInfoTag();
+        QueryWrapper<BlogInfoTag> wrapper = new QueryWrapper<>();
+        for (int i = 0; i < tagIds.length; i++) {
+            Long tagId = tagIds[i];
+            blogInfoTag.setTBlogInfoId(blogInfo.getId());
+            blogInfoTag.setTBlogTagId(tagId);
+            BlogInfoTag infoTag = blogInfoTagMapper.selectOne(wrapper.
+                    eq("t_blog_info_id", blogInfo.getId()).
+                    eq("t_blog_tag_id", tagId));
+            if(infoTag == null){
+                blogInfoTagMapper.insert(blogInfoTag);
+            }else {
+                blogInfoTagMapper.updateById(blogInfoTag);
+            }
+
+        }
+        return ResultBodyUtil.success();
     }
 }

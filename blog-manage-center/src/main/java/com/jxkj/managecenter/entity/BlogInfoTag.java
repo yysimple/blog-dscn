@@ -35,5 +35,5 @@ public class BlogInfoTag implements Serializable {
     private Long tBlogInfoId;
 
     @ApiModelProperty(value = "博客分类id")
-    private Long tBlogTagcolId;
+    private Long tBlogTagId;
 }

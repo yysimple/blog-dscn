@@ -45,7 +45,6 @@ public class CommentController {
     @ApiOperation(value = "删除留言")
     @PostMapping("/deleteComment")
     public ResultBody deleteComment(Long id) {
-        //TODO 权限验证
         iCommentService.removeById(id);
         return ResultBodyUtil.success();
     }

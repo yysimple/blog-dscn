@@ -27,15 +27,16 @@ public class BlogTypeServiceImpl extends ServiceImpl<BlogTypeMapper, BlogType> i
     @Autowired
     private BlogTypeMapper blogTypeMapper;
 
+    @Autowired
+    private IBlogTypeService iBlogTypeService;
+
     @Override
     public ResultBody saveOrUpdateType(BlogType blogType) {
         QueryWrapper<BlogType> queryWrapper = new QueryWrapper<>();
         List<BlogType> blogTypes = blogTypeMapper.selectList(queryWrapper);
-        boolean result = blogTypes.stream().anyMatch(u -> u.getType().equals(blogType.getType()));
-        if (!result && blogType.getId() == null){
-            return ResultBodyUtil.success(blogTypeMapper.insert(blogType));
-        }else if (!result && blogType.getId() != null) {
-            return ResultBodyUtil.success(blogTypeMapper.updateById(blogType));
+        boolean exist = blogTypes.stream().anyMatch(u -> u.getType().equals(blogType.getType()));
+        if (!exist ){
+            return ResultBodyUtil.success(iBlogTypeService.saveOrUpdateType(blogType));
         }else {
             return ResultBodyUtil.error(
                     ResultTypeEnum.ALREADY_EXIST.getCode(),

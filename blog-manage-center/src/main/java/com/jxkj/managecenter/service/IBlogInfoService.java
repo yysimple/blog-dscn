@@ -52,4 +52,24 @@ public interface IBlogInfoService extends IService<BlogInfo> {
      * @return com.jxkj.common.result.ResultBody
      */
     ResultBody favorites(Long blogId, Long favoritesId, Long userId);
+
+    /**
+     * @Description: 级联保存博客信息
+     *
+     * @author GuJunBin
+     * @param blogInfo
+	 * @param tagIds
+     * @return com.jxkj.common.result.ResultBody
+     */
+    ResultBody saveBlogInfo(BlogInfo blogInfo, Long[] tagIds);
+
+    /**
+     * @Description: 级联更新博客信息
+     *
+     * @author GuJunBin
+     * @param blogInfo
+	 * @param tagIds
+     * @return com.jxkj.common.result.ResultBody
+     */
+    ResultBody updateBlogInfo(BlogInfo blogInfo, Long[] tagIds);
 }
