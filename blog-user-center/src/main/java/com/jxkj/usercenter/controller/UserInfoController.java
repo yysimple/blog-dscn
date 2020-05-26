@@ -32,22 +32,19 @@ public class UserInfoController {
     @ApiOperation(value = "根据用户id查询详细信息")
     @GetMapping("/selectById")
     public ResultBody selectById(Long id){
-        UserInfo byId = iUserInfoService.getById(id);
-        return ResultBodyUtil.success(byId);
+        return iUserInfoService.selectById(id);
     }
 
     @ApiOperation(value = "保存用户详细信息")
     @PostMapping("/saveMessage")
     public ResultBody saveMessage(UserInfo userInfo){
-        boolean save = iUserInfoService.save(userInfo);
-        return ResultBodyUtil.success(save);
+        return iUserInfoService.saveMessage(userInfo);
     }
 
     @ApiOperation(value = "更改用户详细信息")
     @PostMapping("/update")
     public ResultBody update(UserInfo userInfo){
-        boolean b = iUserInfoService.updateById(userInfo);
-        return ResultBodyUtil.success(b);
+        return iUserInfoService.update(userInfo);
     }
 
 

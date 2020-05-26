@@ -3,6 +3,8 @@ package com.jxkj.usercenter.service;
 import com.jxkj.common.result.ResultBody;
 import com.jxkj.usercenter.entity.User;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.jxkj.usercenter.entity.UserInfo;
+import com.jxkj.usercenter.form.UserForm;
 import org.springframework.web.bind.annotation.RequestParam;
 
 /**
@@ -15,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  */
 public interface IUserService extends IService<User> {
 
-    ResultBody userRegister(User user);
+    ResultBody userRegister(UserForm userForm);
 
     ResultBody userLogin(String username, String password);
 

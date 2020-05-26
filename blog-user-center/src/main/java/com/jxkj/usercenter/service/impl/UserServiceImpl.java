@@ -8,6 +8,8 @@ import com.jxkj.common.result.ResultBody;
 import com.jxkj.common.result.ResultBodyUtil;
 import com.jxkj.common.result.ResultTypeEnum;
 import com.jxkj.usercenter.entity.User;
+import com.jxkj.usercenter.entity.UserInfo;
+import com.jxkj.usercenter.form.UserForm;
 import com.jxkj.usercenter.mapper.UserMapper;
 import com.jxkj.usercenter.service.IUserInfoService;
 import com.jxkj.usercenter.service.IUserLevelService;
@@ -40,6 +42,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     @Autowired
     private UserMapper userMapper;
 
+    @Autowired
+    private IUserInfoService iUserInfoService;
+
     /**
      * 功能描述 用户注册
      * @author ysq
@@ -49,26 +54,27 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
      */
     @Transactional(isolation = Isolation.SERIALIZABLE)
     @Override
-    public ResultBody userRegister(User user) {
-        // 使用日志打印
-        log.info("user：{}" , user);
-        if (StrUtil.hasBlank(user.getUsername())) {
+    public ResultBody userRegister(UserForm userForm) {
+        if (StrUtil.hasBlank(userForm.getUser().getUsername())) {
             return ResultBodyUtil.error(ResultTypeEnum.USERNAME_NOT_EMPTY.getCode(),
                     ResultTypeEnum.PASSWORD_NOT_EMPTY.getMsg());
         }
-        if (StrUtil.hasBlank(user.getPassword())) {
+        if (StrUtil.hasBlank(userForm.getUser().getPassword())) {
             return ResultBodyUtil.error(ResultTypeEnum.PASSWORD_NOT_EMPTY.getCode(),
                     ResultTypeEnum.PASSWORD_NOT_EMPTY.getMsg());
         }
         QueryWrapper<User> queryWrapper = Wrappers.query();
-        queryWrapper.eq("username", user.getUsername());
+        queryWrapper.eq("username", userForm.getUser().getUsername());
         List<User> users = userMapper.selectList(queryWrapper);
-        boolean usernameIsExist = users.stream().anyMatch(u -> u.getUsername().equals(user.getUsername()));
+        boolean usernameIsExist = users.stream().anyMatch(u -> u.getUsername().equals(userForm.getUser().getUsername()));
         if (usernameIsExist) {
             return ResultBodyUtil.error(ResultTypeEnum.USER_ALREADY_EXIST.getCode(),
                     ResultTypeEnum.USER_ALREADY_EXIST.getMsg());
         }
-        userMapper.insert(user);
+        userMapper.userRegister(userForm.getUser());
+        QueryWrapper<User> username = new QueryWrapper<User>().eq("username", userForm.getUser().getUsername());
+        userForm.getUserInfo().setTUserId(userMapper.selectOne(username).getId());
+        iUserInfoService.saveMessage(userForm.getUserInfo());
         return ResultBodyUtil.success();
     }
     /**
@@ -105,7 +111,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         if (null == user){
             return ResultBodyUtil.error(ResultTypeEnum.USER_NOT_EXIST.getCode(),ResultTypeEnum.USER_NOT_EXIST.getMsg());
         }
-        if (null == newPassword || "" ==newPassword){
+        if (null == newPassword || "".equals(newPassword)){
             return ResultBodyUtil.error(ResultTypeEnum.PASSWORD_NOT_EMPTY.getCode(),ResultTypeEnum.PASSWORD_NOT_EMPTY.getMsg());
         }
         user.setPassword(newPassword);

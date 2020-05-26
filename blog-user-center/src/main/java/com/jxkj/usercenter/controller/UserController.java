@@ -4,6 +4,8 @@ package com.jxkj.usercenter.controller;
 import com.jxkj.common.result.ResultBody;
 import com.jxkj.common.result.ResultBodyUtil;
 import com.jxkj.usercenter.entity.User;
+import com.jxkj.usercenter.entity.UserInfo;
+import com.jxkj.usercenter.form.UserForm;
 import com.jxkj.usercenter.service.IUserService;
 
 import io.swagger.annotations.Api;
@@ -33,8 +35,8 @@ public class UserController {
 
     @ApiOperation(value = "注册用户")
     @PostMapping("/register")
-    public ResultBody register(@RequestBody User user) {
-        return userService.userRegister(user);
+    public ResultBody register(@RequestBody UserForm userForm) {
+        return userService.userRegister(userForm);
     }
 
     @ApiOperation(value = "用户登录")

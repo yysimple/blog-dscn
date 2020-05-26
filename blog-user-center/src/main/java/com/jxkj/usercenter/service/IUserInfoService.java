@@ -14,5 +14,10 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IUserInfoService extends IService<UserInfo> {
 
+    ResultBody selectById(Long id);
+
+    ResultBody saveMessage(UserInfo userInfo);
+
+    ResultBody update(UserInfo userInfo);
 
 }
