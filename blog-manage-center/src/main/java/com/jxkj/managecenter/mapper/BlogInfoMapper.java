@@ -15,4 +15,12 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface BlogInfoMapper extends BaseMapper<BlogInfo> {
 
+    /**
+     * 功能描述: 插入博客信息并回填主键id
+     * 
+     * @author GuJunBin
+     * @param blogInfo
+     * @return void
+     */
+    void insertBlogInfo(BlogInfo blogInfo);
 }

@@ -31,7 +31,7 @@ public class ReplyController {
     @Autowired
     private IReplyService iReplyService;
 
-    @ApiOperation(value = "查询当前评论的回复")
+    @ApiOperation(value = "查询当前评论的所有回复")
     @GetMapping("/listReply")
     public ResultBody listReply(Long commentId){
         return iReplyService.listReply(commentId);

@@ -14,5 +14,15 @@ import com.jxkj.managecenter.entity.BlogTag;
  */
 public interface IBlogTagService extends IService<BlogTag> {
 
+
     ResultBody saveOrUpdateBlogTag(BlogTag blogTag);
+
+    /**
+     * 功能描述: 删除标签
+     *
+     * @author GuJunBin
+     * @param id
+     * @return com.jxkj.common.result.ResultBody
+     */
+    ResultBody deleteById(Long id);
 }

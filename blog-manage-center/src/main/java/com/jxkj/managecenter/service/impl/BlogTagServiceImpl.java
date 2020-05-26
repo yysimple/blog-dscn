@@ -5,7 +5,9 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.jxkj.common.result.ResultBody;
 import com.jxkj.common.result.ResultBodyUtil;
 import com.jxkj.common.result.ResultTypeEnum;
+import com.jxkj.managecenter.entity.BlogInfoTag;
 import com.jxkj.managecenter.entity.BlogTag;
+import com.jxkj.managecenter.mapper.BlogInfoTagMapper;
 import com.jxkj.managecenter.mapper.BlogTagMapper;
 import com.jxkj.managecenter.service.IBlogTagService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,19 +29,35 @@ public class BlogTagServiceImpl extends ServiceImpl<BlogTagMapper, BlogTag> impl
     @Autowired
     private BlogTagMapper blogTagMapper;
 
+    @Autowired
+    private IBlogTagService iBlogTagService;
+
+    @Autowired
+    private BlogInfoTagMapper blogInfoTagMapper;
+
     @Override
     public ResultBody saveOrUpdateBlogTag(BlogTag blogTag) {
         QueryWrapper<BlogTag> queryWrapper = new QueryWrapper<>();
         List<BlogTag> tagList = blogTagMapper.selectList(queryWrapper);
-        boolean b = tagList.stream().anyMatch(u -> u.getTagName().equals(blogTag.getTagName()));
-        if (!b && blogTag.getId() == null){
-            return ResultBodyUtil.success(blogTagMapper.insert(blogTag));
-        }else if (!b && blogTag.getId() != null) {
-            return ResultBodyUtil.success(blogTagMapper.updateById(blogTag));
+        boolean exist = tagList.stream().anyMatch(u -> u.getTagName().equals(blogTag.getTagName()));
+        if (!exist){
+            return ResultBodyUtil.success(iBlogTagService.saveOrUpdate(blogTag));
         }else {
             return ResultBodyUtil.error(
                     ResultTypeEnum.ALREADY_EXIST.getCode(),
                     ResultTypeEnum.ALREADY_EXIST.getMsg());
+        }
+    }
+
+    @Override
+    public ResultBody deleteById(Long id) {
+        QueryWrapper<BlogInfoTag> queryWrapper = new QueryWrapper<>();
+        List<BlogInfoTag> blogInfoTag = blogInfoTagMapper.selectList(queryWrapper.eq("t_blog_tag_id", id));
+        if (blogInfoTag.isEmpty()){
+            blogTagMapper.deleteById(id);
+            return ResultBodyUtil.success();
+        }else {
+            return ResultBodyUtil.error(ResultTypeEnum.CAN_NOT_DELETE.getCode(), ResultTypeEnum.CAN_NOT_DELETE.getMsg());
         }
     }
 }

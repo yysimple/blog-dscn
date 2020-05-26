@@ -30,21 +30,19 @@ public class BlogTagController {
 
     @ApiOperation(value = "查询所有博客标签")
     @GetMapping("/findAllBlogTag")
-    public ResultBody findAllBlogTag(){
+    public ResultBody findAllBlogTag() {
         return ResultBodyUtil.success(iBlogTagService.list());
     }
 
     @ApiOperation("新增or更新博客标签")
     @PostMapping("/saveOrUpdateBlogTag")
-    public ResultBody saveOrUpdateBlogTag(@RequestBody BlogTag blogTag){
+    public ResultBody saveOrUpdateBlogTag(@RequestBody BlogTag blogTag) {
         return iBlogTagService.saveOrUpdateBlogTag(blogTag);
     }
 
     @ApiOperation("根据id删除博客标签")
     @PostMapping("/deleteBlogTag")
-    public ResultBody deleteBlogTag(Long id){
-        //TODO 检验是否被引用
-        iBlogTagService.removeById(id);
-        return ResultBodyUtil.success();
+    public ResultBody deleteBlogTag(Long id) {
+        return iBlogTagService.deleteById(id);
     }
 }

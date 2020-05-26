@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("blogCenter/blogType")
-@Api(tags = "博客类型模块(原创、转载) 接口")
+@Api(tags = "博客类型模块 接口")
 @Slf4j
 public class BlogTypeController {
 
@@ -43,9 +43,7 @@ public class BlogTypeController {
     @ApiOperation(value = "删除博客类型")
     @PostMapping("/deleteBlogType")
     public ResultBody deleteBlogType(Long id){
-        //TODO 检验是否被引用
-        iBlogTypeService.removeById(id);
-        return ResultBodyUtil.success();
+        return iBlogTypeService.deleteById(id);
     }
 
 }

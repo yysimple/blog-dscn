@@ -16,7 +16,7 @@ public interface IBlogInfoService extends IService<BlogInfo> {
 
 
     /**
-     * @Description: 分页查询所有已发布博客信息
+     * 功能描述: 分页查询所有已发布博客信息
      *
      * @author GuJunBin
      * @param
@@ -25,7 +25,7 @@ public interface IBlogInfoService extends IService<BlogInfo> {
     ResultBody pagingQuery();
 
     /**
-     * @Description: 根据标题和文章内容模糊查询发布博客信息
+     * 功能描述: 根据标题和文章内容模糊查询发布博客信息
      * 
      * @author GuJunBin
      * @param key 
@@ -34,7 +34,7 @@ public interface IBlogInfoService extends IService<BlogInfo> {
     ResultBody findIssueBlog(String key);
 
     /**
-     * @Description: 点赞
+     * 功能描述: 点赞
      *
      * @author GuJunBin
      * @param id
@@ -43,7 +43,7 @@ public interface IBlogInfoService extends IService<BlogInfo> {
     ResultBody addLikeNum(Long id);
 
     /**
-     * @Description: 收藏
+     * 功能描述: 收藏
      *
      * @author GuJunBin
      * @param blogId
@@ -54,22 +54,32 @@ public interface IBlogInfoService extends IService<BlogInfo> {
     ResultBody favorites(Long blogId, Long favoritesId, Long userId);
 
     /**
-     * @Description: 级联保存博客信息
+     * 功能描述: 保存博客信息
      *
      * @author GuJunBin
-     * @param blogInfo
-	 * @param tagIds
+     * @param blogInfo 博客信息
+	 * @param tagIds  标签Id
+     * @param typeId  类型Id
      * @return com.jxkj.common.result.ResultBody
      */
-    ResultBody saveBlogInfo(BlogInfo blogInfo, Long[] tagIds);
+    ResultBody saveBlogInfo(BlogInfo blogInfo, Long[] tagIds, Long typeId);
 
     /**
-     * @Description: 级联更新博客信息
+     * 功能描述: 更新博客信息
      *
      * @author GuJunBin
      * @param blogInfo
 	 * @param tagIds
      * @return com.jxkj.common.result.ResultBody
      */
-    ResultBody updateBlogInfo(BlogInfo blogInfo, Long[] tagIds);
+    ResultBody updateBlogInfo(BlogInfo blogInfo, Long[] tagIds, Long typeId);
+
+    /**
+     * 功能描述: 删除博客信息
+     *
+     * @author GuJunBin
+     * @param id
+     * @return com.jxkj.common.result.ResultBody
+     */
+    ResultBody deleteBlogInfo(Long id);
 }

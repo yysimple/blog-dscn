@@ -9,7 +9,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
- * @Description:
+ * 功能描述:
  * @Author GuJunBin
  * @Version 1.0
  */

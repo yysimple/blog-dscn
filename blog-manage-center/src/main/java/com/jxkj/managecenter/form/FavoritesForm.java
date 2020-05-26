@@ -1,7 +1,7 @@
 package com.jxkj.managecenter.form;
 
 /**
- * @Description:
+ * 功能描述:
  * @Author GuJunBin
  * @Version 1.0
  */

@@ -3,4 +3,10 @@
 <mapper namespace="com.jxkj.managecenter.mapper.BlogInfoMapper">
 
 
+    <insert id="insertBlogInfo" parameterType="com.jxkj.managecenter.entity.BlogInfo"
+            useGeneratedKeys="true" keyProperty="id" >
+            insert into t_blog_info(title,content,t_user_id)
+            values
+            (#{title},#{content},#{tUserId});
+    </insert>
 </mapper>

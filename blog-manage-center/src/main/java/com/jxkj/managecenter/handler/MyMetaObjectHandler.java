@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDateTime;
 
 /**
- * @Description: 处理字段自动填充，创建时间、更新时间
+ * 功能描述: 处理字段自动填充，创建时间、更新时间
  * @Author GuJunBin
  * @Version 1.0
  */

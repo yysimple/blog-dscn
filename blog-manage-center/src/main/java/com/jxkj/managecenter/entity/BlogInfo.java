@@ -1,5 +1,6 @@
 package com.jxkj.managecenter.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.jxkj.managecenter.base.entity.BaseEntity;
 import io.swagger.annotations.ApiModel;
@@ -9,6 +10,7 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * <p>
@@ -49,5 +51,9 @@ public class BlogInfo extends BaseEntity implements Serializable {
 
     @ApiModelProperty(value = "博客状态，0为草稿，1为发布")
     private Integer blogStatus;
+
+    @ApiModelProperty(value = "", hidden = true)
+    @TableField(select = false)
+    private List<BlogInfoTag> blogInfoTags;
 
 }

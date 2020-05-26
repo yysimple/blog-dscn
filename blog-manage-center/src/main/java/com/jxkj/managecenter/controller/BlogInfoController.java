@@ -5,7 +5,6 @@ import com.jxkj.common.result.ResultBody;
 import com.jxkj.common.result.ResultBodyUtil;
 import com.jxkj.managecenter.entity.BlogInfo;
 import com.jxkj.managecenter.service.IBlogInfoService;
-import com.jxkj.managecenter.service.IBlogInfoTagService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -29,10 +28,6 @@ public class BlogInfoController {
     @Autowired
     private IBlogInfoService iBlogInfoService;
 
-    @Autowired
-    private IBlogInfoTagService iBlogInfoTagService;
-
-
     @ApiOperation(value = "分页查询所有已发布博客信息")
     @GetMapping("/findAllIssueBlog")
     public ResultBody findAllIssueBlog() {
@@ -47,20 +42,20 @@ public class BlogInfoController {
 
     @ApiOperation(value = "保存博客信息")
     @PostMapping("/saveBlogInfo")
-    public ResultBody saveBlogInfo(@RequestBody BlogInfo blogInfo,Long[]  tagIds) {
-        return iBlogInfoService.saveBlogInfo(blogInfo, tagIds);
+    public ResultBody saveBlogInfo(@RequestBody BlogInfo blogInfo,Long[]  tagIds,Long typeId) {
+        return iBlogInfoService.saveBlogInfo(blogInfo, tagIds, typeId);
     }
 
     @ApiOperation(value = "更新博客信息")
     @PostMapping("/updateBlogInfo")
-    public ResultBody updateBlogInfo(@RequestBody BlogInfo blogInfo,Long[] tagIds){
-        return iBlogInfoService.updateBlogInfo(blogInfo, tagIds);
+    public ResultBody updateBlogInfo(@RequestBody BlogInfo blogInfo,Long[] tagIds,Long typeId){
+        return iBlogInfoService.updateBlogInfo(blogInfo, tagIds, typeId);
     }
 
-    @ApiOperation(value = "逻辑删除博客信息")
+    @ApiOperation(value = "删除博客信息")
     @PostMapping("/deleteBlogInfoById")
     public ResultBody deleteBlogInfoById(Long id) {
-        iBlogInfoService.removeById(id);
+        iBlogInfoService.deleteBlogInfo(id);
         return ResultBodyUtil.success();
     }
 

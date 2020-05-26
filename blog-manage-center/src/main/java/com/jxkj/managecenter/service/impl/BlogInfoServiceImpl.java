@@ -9,11 +9,14 @@ import com.jxkj.common.result.ResultBodyUtil;
 import com.jxkj.common.result.ResultTypeEnum;
 import com.jxkj.managecenter.entity.BlogInfo;
 import com.jxkj.managecenter.entity.BlogInfoTag;
+import com.jxkj.managecenter.entity.BlogInfoType;
 import com.jxkj.managecenter.entity.Favorites;
 import com.jxkj.managecenter.mapper.BlogInfoMapper;
 import com.jxkj.managecenter.mapper.BlogInfoTagMapper;
+import com.jxkj.managecenter.mapper.BlogInfoTypeMapper;
 import com.jxkj.managecenter.mapper.FavoritesMapper;
 import com.jxkj.managecenter.service.IBlogInfoService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -30,6 +33,7 @@ import java.util.List;
  * @since 2020-05-19
  */
 @Service
+@Slf4j
 public class BlogInfoServiceImpl extends ServiceImpl<BlogInfoMapper, BlogInfo> implements IBlogInfoService {
 
     @Autowired
@@ -40,6 +44,9 @@ public class BlogInfoServiceImpl extends ServiceImpl<BlogInfoMapper, BlogInfo> i
 
     @Autowired
     private BlogInfoTagMapper blogInfoTagMapper;
+
+    @Autowired
+    private BlogInfoTypeMapper blogInfoTypeMapper;
 
     private QueryWrapper<BlogInfo> queryWrapper = new QueryWrapper<>();
     IPage<BlogInfo> page = new Page(1, 10);
@@ -72,51 +79,74 @@ public class BlogInfoServiceImpl extends ServiceImpl<BlogInfoMapper, BlogInfo> i
         QueryWrapper<Favorites> wrapper = new QueryWrapper<>();
         BlogInfo blogInfo = blogInfoMapper.selectById(blogId);
         List<Favorites> favorites = favoritesMapper.selectList(wrapper.eq("t_user_id", userId));
-        boolean b = favorites.stream().anyMatch(u -> u.getId().equals(favoritesId));
-        if (b) {
+        boolean exist = favorites.stream().anyMatch(u -> u.getId().equals(favoritesId));
+        if (exist) {
             blogInfo.setTFavoritesId(favoritesId);
             return ResultBodyUtil.success();
         } else {
-            return ResultBodyUtil.error(
-                    ResultTypeEnum.NOT_EXIST.getCode(),
-                    ResultTypeEnum.NOT_EXIST.getMsg());
+            return ResultBodyUtil.error(ResultTypeEnum.Favorites_NOT_EXIST.getCode(), ResultTypeEnum.Favorites_NOT_EXIST.getMsg());
         }
     }
 
     @Override
     @Transactional(isolation = Isolation.SERIALIZABLE)
-    public ResultBody saveBlogInfo(BlogInfo blogInfo, Long[] tagIds) {
-        blogInfoMapper.insert(blogInfo);
-        BlogInfoTag blogInfoTag = new BlogInfoTag();
+    public ResultBody saveBlogInfo(BlogInfo blogInfo, Long[] tagIds, Long typeId) {
+        blogInfoMapper.insertBlogInfo(blogInfo);
         for (int i = 0; i < tagIds.length; i++) {
+            BlogInfoTag blogInfoTag = new BlogInfoTag();
             Long tagId = tagIds[i];
             blogInfoTag.setTBlogInfoId(blogInfo.getId());
             blogInfoTag.setTBlogTagId(tagId);
             blogInfoTagMapper.insert(blogInfoTag);
         }
+        BlogInfoType blogInfoType = new BlogInfoType();
+        blogInfoType.setTBlogInfoId(blogInfo.getId());
+        blogInfoType.setTBlogTypeId(typeId);
+        blogInfoTypeMapper.insert(blogInfoType);
         return ResultBodyUtil.success();
     }
 
     @Override
     @Transactional(isolation = Isolation.SERIALIZABLE)
-    public ResultBody updateBlogInfo(BlogInfo blogInfo, Long[] tagIds) {
+    public ResultBody updateBlogInfo(BlogInfo blogInfo, Long[] tagIds, Long typeId) {
         blogInfoMapper.updateById(blogInfo);
-        BlogInfoTag blogInfoTag = new BlogInfoTag();
         QueryWrapper<BlogInfoTag> wrapper = new QueryWrapper<>();
         for (int i = 0; i < tagIds.length; i++) {
             Long tagId = tagIds[i];
+            BlogInfoTag blogInfoTag = new BlogInfoTag();
             blogInfoTag.setTBlogInfoId(blogInfo.getId());
             blogInfoTag.setTBlogTagId(tagId);
             BlogInfoTag infoTag = blogInfoTagMapper.selectOne(wrapper.
                     eq("t_blog_info_id", blogInfo.getId()).
                     eq("t_blog_tag_id", tagId));
-            if(infoTag == null){
+            if (infoTag == null) {
                 blogInfoTagMapper.insert(blogInfoTag);
-            }else {
+            } else {
                 blogInfoTagMapper.updateById(blogInfoTag);
             }
-
         }
+        QueryWrapper<BlogInfoType> queryType = new QueryWrapper<>();
+        BlogInfoType blogInfoType = blogInfoTypeMapper.selectOne(queryType.eq("t_blog_info_id", blogInfo.getId()));
+        if (blogInfoType == null){
+            BlogInfoType infoType = new BlogInfoType();
+            infoType.setTBlogInfoId(blogInfo.getId());
+            infoType.setTBlogTypeId(typeId);
+            blogInfoTypeMapper.insert(infoType);
+        }else {
+            blogInfoType.setTBlogTypeId(typeId);
+            blogInfoTypeMapper.updateById(blogInfoType);
+        }
+
+        return ResultBodyUtil.success();
+    }
+
+    @Override
+    public ResultBody deleteBlogInfo(Long id) {
+        blogInfoMapper.deleteById(id);
+        QueryWrapper<BlogInfoType> queryWrapper = new QueryWrapper<>();
+        QueryWrapper<BlogInfoTag> wrapper = new QueryWrapper<>();
+        blogInfoTypeMapper.delete(queryWrapper.eq("t_blog_info_id", id));
+        blogInfoTagMapper.delete(wrapper.eq("t_blog_info_id", id));
         return ResultBodyUtil.success();
     }
 }

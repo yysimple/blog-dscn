@@ -15,7 +15,7 @@ import com.jxkj.managecenter.entity.Favorites;
 public interface IFavoritesService extends IService<Favorites> {
 
     /**
-     * @Description: 查询收藏夹是否已存在
+     * 功能描述: 查询收藏夹是否已存在忽略大小写
      *
      * @author GuJunBin
      * @param favorites
@@ -23,5 +23,21 @@ public interface IFavoritesService extends IService<Favorites> {
      */
     ResultBody findExistFavorites(Favorites favorites);
 
+    /**
+     * 功能描述: 查询用户收藏夹
+     *
+     * @author GuJunBin
+     * @param userId
+     * @return com.jxkj.common.result.ResultBody
+     */
     ResultBody finaUserFavorites(Long userId);
+
+    /**
+     * 功能描述: 删除收藏夹
+     *
+     * @author GuJunBin
+     * @param id
+     * @return com.jxkj.common.result.ResultBody
+     */
+    ResultBody deleteById(Long id);
 }
