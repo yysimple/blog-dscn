@@ -20,6 +20,10 @@ mybatis-plus:
     map-underscore-to-camel-case: true
     lazy-loading-enabled: false
 
+# 消费者将去访问微服务的名称
+service-url:
+  nacos-user-service: http://user-center
+
 # 分页配置
 pagehelper:
   helper-dialect: mysql

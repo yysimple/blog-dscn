@@ -37,8 +37,7 @@ public class CommentController {
     @ApiOperation(value = "提交留言")
     @PostMapping("/commitComment")
     public ResultBody commitComment(@RequestBody Comment comment) {
-        //TODO 获取留言的用户信息
-        iCommentService.save(comment);
+        iCommentService.saveComment(comment);
         return ResultBodyUtil.success();
     }
 

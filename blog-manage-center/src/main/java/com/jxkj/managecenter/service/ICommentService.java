@@ -14,5 +14,21 @@ import com.jxkj.managecenter.entity.Comment;
  */
 public interface ICommentService extends IService<Comment> {
 
+    /**
+     * 功能描述: 根据博客id查询所有留言
+     *
+     * @author GuJunBin
+     * @param tBlogInfoId
+     * @return com.jxkj.common.result.ResultBody
+     */
     ResultBody listComment(Long tBlogInfoId);
+
+    /**
+     * 功能描述: 保存留言
+     *
+     * @author GuJunBin
+     * @param comment
+     * @return com.jxkj.common.result.ResultBody
+     */
+    ResultBody saveComment(Comment comment);
 }

@@ -10,6 +10,7 @@ import com.jxkj.common.result.ResultBodyUtil;
 import com.jxkj.managecenter.entity.Comment;
 import com.jxkj.managecenter.mapper.CommentMapper;
 import com.jxkj.managecenter.service.ICommentService;
+import com.jxkj.managecenter.feign.UserInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +28,9 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
     @Autowired
     private CommentMapper commentMapper;
 
+    @Autowired
+    private UserInfoService userInfoService;
+
     private QueryWrapper<Comment> queryWrapper = Wrappers.query();
     IPage<Comment> page = new Page(1, 10);
 
@@ -34,5 +38,13 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
     public ResultBody listComment(Long tBlogInfoId) {
         queryWrapper.eq("t_blog_info_id", tBlogInfoId);
         return ResultBodyUtil.success(commentMapper.selectPage(page,queryWrapper));
+    }
+
+    @Override
+    public ResultBody saveComment(Comment comment) {
+        ResultBody resultBody = userInfoService.selectById(comment.getCommentUserId());
+        Object data = resultBody.getData();
+        System.out.println(data);
+        return ResultBodyUtil.success();
     }
 }
