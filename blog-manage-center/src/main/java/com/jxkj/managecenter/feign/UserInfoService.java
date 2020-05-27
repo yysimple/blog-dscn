@@ -1,9 +1,11 @@
 package com.jxkj.managecenter.feign;
 
 import com.jxkj.common.result.ResultBody;
+import feign.hystrix.FallbackFactory;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * 功能描述: 远程调用 服务用户端
@@ -12,9 +14,9 @@ import org.springframework.web.bind.annotation.GetMapping;
  * @Version 1.0
  */
 @Component
-@FeignClient("USER-CENTER")
+@FeignClient(value = "user-center",fallback = FallbackFactory.Default.class)
 public interface UserInfoService {
 
     @GetMapping("/user-info/selectById")
-    ResultBody selectById(Long id);
+    ResultBody selectById(@RequestParam("id") Long id);
 }

@@ -43,7 +43,7 @@ public class CommentController {
 
     @ApiOperation(value = "删除留言")
     @PostMapping("/deleteComment")
-    public ResultBody deleteComment(Long id) {
+    public ResultBody deleteComment(@RequestParam("id") Long id) {
         iCommentService.removeById(id);
         return ResultBodyUtil.success();
     }

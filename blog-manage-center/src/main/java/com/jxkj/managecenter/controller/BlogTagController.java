@@ -42,7 +42,7 @@ public class BlogTagController {
 
     @ApiOperation("根据id删除博客标签")
     @PostMapping("/deleteBlogTag")
-    public ResultBody deleteBlogTag(Long id) {
+    public ResultBody deleteBlogTag(@RequestParam("id") Long id) {
         return iBlogTagService.deleteById(id);
     }
 }

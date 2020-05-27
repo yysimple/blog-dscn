@@ -2,17 +2,11 @@ package com.jxkj.usercenter.controller;
 
 
 import com.jxkj.common.result.ResultBody;
-import com.jxkj.common.result.ResultBodyUtil;
 import com.jxkj.usercenter.entity.UserInfo;
 import com.jxkj.usercenter.service.IUserInfoService;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * <p>
@@ -31,7 +25,7 @@ public class UserInfoController {
 
     @ApiOperation(value = "根据用户id查询详细信息")
     @GetMapping("/selectById")
-    public ResultBody selectById(Long id){
+    public ResultBody selectById(@RequestParam("id") Long id){
         return iUserInfoService.selectById(id);
     }
 

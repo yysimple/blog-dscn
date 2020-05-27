@@ -42,7 +42,7 @@ public class BlogTypeController {
 
     @ApiOperation(value = "删除博客类型")
     @PostMapping("/deleteBlogType")
-    public ResultBody deleteBlogType(Long id){
+    public ResultBody deleteBlogType(@RequestParam("id") Long id){
         return iBlogTypeService.deleteById(id);
     }
 

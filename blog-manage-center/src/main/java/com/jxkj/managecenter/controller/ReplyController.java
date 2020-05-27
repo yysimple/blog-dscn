@@ -9,10 +9,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * <p>
@@ -33,21 +30,20 @@ public class ReplyController {
 
     @ApiOperation(value = "查询当前评论的所有回复")
     @GetMapping("/listReply")
-    public ResultBody listReply(Long commentId){
+    public ResultBody listReply(@RequestParam("commentId") Long commentId){
         return iReplyService.listReply(commentId);
     }
 
     @ApiOperation(value = "留言回复")
     @PostMapping("/saveReply")
-    public ResultBody saveReply(Reply reply){
-        //TODO 获取回复用户的信息
+    public ResultBody saveReply(@RequestBody Reply reply){
         iReplyService.save(reply);
         return ResultBodyUtil.success();
     }
 
     @ApiOperation(value = "删除回复")
     @PostMapping("/deleteReply")
-    public ResultBody deleteReply(Reply reply){
+    public ResultBody deleteReply(@RequestBody Reply reply){
         return iReplyService.deleteReply(reply);
     }
 }

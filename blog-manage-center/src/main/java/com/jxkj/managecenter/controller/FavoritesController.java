@@ -36,13 +36,13 @@ public class FavoritesController {
 
     @ApiOperation(value = "查询用户收藏夹")
     @GetMapping("/finaUserFavorites")
-    public ResultBody finaUserFavorites(Long userId) {
+    public ResultBody finaUserFavorites(@RequestParam("userId") Long userId) {
         return iFavoritesService.finaUserFavorites(userId);
     }
 
     @ApiOperation(value = "删除收藏夹")
     @PostMapping("/deleteById")
-    public ResultBody deleteById(Long id) {
+    public ResultBody deleteById(@RequestParam("id") Long id) {
         iFavoritesService.deleteById(id);
         return ResultBodyUtil.success();
     }
