@@ -1,0 +1,6 @@
+spring:
+  cloud:
+    sentinel:
+      transport:
+        port: 8719
+        dashboard: 39.100.24.145:5880

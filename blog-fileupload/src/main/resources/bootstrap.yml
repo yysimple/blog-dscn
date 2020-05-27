@@ -2,6 +2,12 @@ spring:
   application:
     name: file-upload
   cloud:
+    sentinel:
+      transport:
+        # 控制面板中心
+        dashboard: 39.100.24.145:5880
+        # 客户端端口，存在会默认 +1
+        port: 8719
     nacos:
       discovery:
         server-addr: 39.100.24.145:5180
