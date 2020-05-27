@@ -35,7 +35,7 @@ public class UserLevel extends BaseEntity implements Serializable {
 
     @ApiModelProperty(value = "积分数")
     private Integer score;
-
+ 
     private Long tUserId;
 
 

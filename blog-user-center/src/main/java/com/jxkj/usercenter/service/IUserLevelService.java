@@ -1,5 +1,6 @@
 package com.jxkj.usercenter.service;
 
+import com.jxkj.common.result.ResultBody;
 import com.jxkj.usercenter.entity.UserLevel;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -13,4 +14,12 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IUserLevelService extends IService<UserLevel> {
 
+    /**
+     * 功能描述 增加积分
+     * @author ysq
+     * @param [userId, integral]
+     * @return com.jxkj.common.result.ResultBody
+     * @date 2020/5/27
+     */
+    ResultBody increaseIntegral(Long userId, Integer integral);
 }

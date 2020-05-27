@@ -36,5 +36,4 @@ public class UserRole implements Serializable {
     @ApiModelProperty(value = "角色id")
     private Long tRoleId;
 
-
 }
