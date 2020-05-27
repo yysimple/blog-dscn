@@ -20,9 +20,10 @@ import org.springframework.web.bind.annotation.*;
  * @since 2020-05-19
  */
 @RestController
-@RequestMapping("blogCenter/blogTag")
+@RequestMapping("blogTag")
 @Api(tags = "博客标签模块 接口")
 @Slf4j
+@CrossOrigin
 public class BlogTagController {
 
     @Autowired

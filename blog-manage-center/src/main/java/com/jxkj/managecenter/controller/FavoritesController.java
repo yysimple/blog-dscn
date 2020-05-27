@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
  * @since 2020-05-19
  */
 @RestController
-@RequestMapping("blogCenter/favorites")
+@RequestMapping("favorites")
 @Api(tags = "用户收藏夹模块 接口")
 @Slf4j
 public class FavoritesController {
