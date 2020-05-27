@@ -7,6 +7,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+import org.hibernate.validator.constraints.Length;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -47,6 +48,7 @@ public class UserInfo extends BaseEntity implements Serializable {
     private String phoneNumber;
 
     @ApiModelProperty(value = "性别")
+    @Length(max = 5)
     private String gender;
 
     @ApiModelProperty(value = "职位")

@@ -39,7 +39,6 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
 
     @Override
     public ResultBody saveMessage(UserInfo userInfo) {
-
         int insert = userInfoMapper.insert(userInfo);
         return ResultBodyUtil.success(insert);
 
