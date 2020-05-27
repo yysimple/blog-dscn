@@ -4,6 +4,7 @@ package com.jxkj.usercenter.controller;
 import com.jxkj.common.result.ResultBody;
 import com.jxkj.usercenter.entity.UserInfo;
 import com.jxkj.usercenter.service.IUserInfoService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/user-info")
+@Api(tags = "用户详细信息表")
 public class UserInfoController {
 
     @Autowired

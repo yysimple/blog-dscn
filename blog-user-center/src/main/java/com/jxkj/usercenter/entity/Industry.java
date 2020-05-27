@@ -34,6 +34,4 @@ public class Industry extends BaseEntity implements Serializable {
 
     @ApiModelProperty(value = "行业名称")
     private String industryName;
-
-
 }

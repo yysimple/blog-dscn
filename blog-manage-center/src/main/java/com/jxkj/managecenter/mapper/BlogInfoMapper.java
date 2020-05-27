@@ -23,4 +23,13 @@ public interface BlogInfoMapper extends BaseMapper<BlogInfo> {
      * @return void
      */
     void insertBlogInfo(BlogInfo blogInfo);
+
+    /**
+     * 功能描述
+     * @author ysq
+     * @param [blogId]
+     * @return com.jxkj.managecenter.entity.BlogInfo
+     * @date 2020/5/27
+     */
+    BlogInfo findBlogInfoAndTagsByBlogInfoId(Long blogId);
 }

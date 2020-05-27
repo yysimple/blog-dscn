@@ -82,4 +82,13 @@ public interface IBlogInfoService extends IService<BlogInfo> {
      * @return com.jxkj.common.result.ResultBody
      */
     ResultBody deleteBlogInfo(Long id);
+
+    /**
+     * 功能描述 查询博客和标签信息
+     * @author ysq
+     * @param blogId
+     * @return com.jxkj.common.result.ResultBody
+     * @date 2020/5/27
+     */
+    ResultBody findBlogInfoAndTagsByBlogInfoId(Long blogId);
 }

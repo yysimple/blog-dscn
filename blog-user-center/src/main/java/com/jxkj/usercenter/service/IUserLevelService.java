@@ -22,4 +22,14 @@ public interface IUserLevelService extends IService<UserLevel> {
      * @date 2020/5/27
      */
     ResultBody increaseIntegral(Long userId, Integer integral);
+
+    /**
+     * 功能描述 查询级别
+     * @author ysq
+     * @param [userId]
+     * @return com.jxkj.common.result.ResultBody
+     * @date 2020/5/27
+     */
+    ResultBody updateLevel(Long userId);
+
 }

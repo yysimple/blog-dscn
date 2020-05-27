@@ -149,4 +149,10 @@ public class BlogInfoServiceImpl extends ServiceImpl<BlogInfoMapper, BlogInfo> i
         blogInfoTagMapper.delete(wrapper.eq("t_blog_info_id", id));
         return ResultBodyUtil.success();
     }
+
+    @Override
+    public ResultBody findBlogInfoAndTagsByBlogInfoId(Long blogId) {
+        BlogInfo blogInfo = blogInfoMapper.findBlogInfoAndTagsByBlogInfoId(blogId);
+        return ResultBodyUtil.success(blogInfo);
+    }
 }

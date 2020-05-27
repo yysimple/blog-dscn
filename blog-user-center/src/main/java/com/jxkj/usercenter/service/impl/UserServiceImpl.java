@@ -54,7 +54,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     /** 
      * 功能描述 用户注册
      * @author ysq
-     * @param [userForm]
+     * @param userForm
      * @return com.jxkj.common.result.ResultBody
      * @date 2020/5/27
      */
@@ -96,7 +96,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     /**
      * 功能描述 用户登录
      * @author ysq
-     * @param [username, password]
+     * @param username, password
      * @return com.jxkj.common.result.ResultBody
      * @date 2020/5/23
      */
@@ -106,10 +106,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         queryWrapper.eq("username", username).last("limit 1");
         User user = userMapper.selectOne(queryWrapper);
         if (null == user) {
-            return ResultBodyUtil.error(ResultTypeEnum.USER_NOT_EXIST.getCode(), ResultTypeEnum.USER_NOT_EXIST.getMsg());
+            return ResultBodyUtil.error(ResultTypeEnum.USER_NOT_EXIST.getCode(),
+                    ResultTypeEnum.USER_NOT_EXIST.getMsg());
         }
         if (!user.getPassword().equals(password)) {
-            return ResultBodyUtil.error(ResultTypeEnum.PASSWORD_NOT_TRUE.getCode(), ResultTypeEnum.PASSWORD_NOT_TRUE.getMsg());
+            return ResultBodyUtil.error(ResultTypeEnum.PASSWORD_NOT_TRUE.getCode(),
+                    ResultTypeEnum.PASSWORD_NOT_TRUE.getMsg());
         }
         return ResultBodyUtil.success(user);
     }
@@ -117,7 +119,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     /**
      * 功能描述 修改密码
      * @author ysq
-     * @param [userId, newPassword]
+     * @param userId, newPassword
      * @return com.jxkj.common.result.ResultBody
      * @date 2020/5/23
      */
@@ -125,20 +127,22 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     public ResultBody updatePassword(Long userId, String newPassword) {
         User user = userMapper.selectById(userId);
         if (null == user){
-            return ResultBodyUtil.error(ResultTypeEnum.USER_NOT_EXIST.getCode(),ResultTypeEnum.USER_NOT_EXIST.getMsg());
+            return ResultBodyUtil.error(ResultTypeEnum.USER_NOT_EXIST.getCode(),
+                    ResultTypeEnum.USER_NOT_EXIST.getMsg());
         }
         if (null == newPassword || "".equals(newPassword)){
-            return ResultBodyUtil.error(ResultTypeEnum.PASSWORD_NOT_EMPTY.getCode(),ResultTypeEnum.PASSWORD_NOT_EMPTY.getMsg());
+            return ResultBodyUtil.error(ResultTypeEnum.PASSWORD_NOT_EMPTY.getCode(),
+                    ResultTypeEnum.PASSWORD_NOT_EMPTY.getMsg());
         }
         user.setPassword(newPassword);
-        int i = userMapper.updateById(user);
-        return ResultBodyUtil.success(i);
+        userMapper.updateById(user);
+        return ResultBodyUtil.success();
     }
 
     /**
      * 功能描述  假删数据
      * @author ysq
-     * @param [userId]
+     * @param userId
      * @return com.jxkj.common.result.ResultBody
      * @date 2020/5/23
      */
@@ -146,10 +150,29 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     public ResultBody deleteById(Long userId) {
         User user = userMapper.selectById(userId);
         if (null == user){
-            return ResultBodyUtil.error(ResultTypeEnum.USER_NOT_EXIST.getCode(),ResultTypeEnum.USER_NOT_EXIST.getMsg());
+            return ResultBodyUtil.error(ResultTypeEnum.USER_NOT_EXIST.getCode(),
+                    ResultTypeEnum.USER_NOT_EXIST.getMsg());
         }
         user.setDeleteStatus(1);
-        int i = userMapper.updateById(user);
-        return ResultBodyUtil.success(i);
+        userMapper.updateById(user);
+        return ResultBodyUtil.success();
+    }
+    /**
+     * 功能描述  重新激活用户
+     * @author ysq
+     * @param userId
+     * @return com.jxkj.common.result.ResultBody
+     * @date 2020/5/27
+     */
+    @Override
+    public ResultBody activation(Long userId) {
+        User user = userMapper.selectById(userId);
+        if (null == user){
+            return ResultBodyUtil.error(ResultTypeEnum.USER_NOT_EXIST.getCode(),
+                    ResultTypeEnum.USER_NOT_EXIST.getMsg());
+        }
+        user.setDeleteStatus(0);
+        userMapper.updateById(user);
+        return ResultBodyUtil.success();
     }
 }

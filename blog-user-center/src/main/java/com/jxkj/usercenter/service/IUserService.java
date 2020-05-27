@@ -24,4 +24,6 @@ public interface IUserService extends IService<User> {
     ResultBody updatePassword(Long userId, String newPassword);
 
     ResultBody deleteById(Long userId);
+
+    ResultBody activation(Long userId);
 }

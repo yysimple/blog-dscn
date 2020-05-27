@@ -76,4 +76,10 @@ public class BlogInfoController {
                                 @RequestParam("userId") Long userId) {
         return iBlogInfoService.favorites(blogId, favoritesId, userId);
     }
+
+    @ApiOperation(value = "查询博客和标签信息")
+    @GetMapping("/findBlogInfoAndTagsByBlogInfoId/{blogId}")
+    public ResultBody findBlogInfoAndTagsByBlogInfoId(@PathVariable("blogId") Long blogId){
+        return iBlogInfoService.findBlogInfoAndTagsByBlogInfoId(blogId);
+    }
 }
