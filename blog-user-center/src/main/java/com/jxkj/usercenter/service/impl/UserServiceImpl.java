@@ -2,7 +2,9 @@ package com.jxkj.usercenter.service.impl;
 
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.jxkj.common.result.ResultBody;
 import com.jxkj.common.result.ResultBodyUtil;
 import com.jxkj.common.result.ResultTypeEnum;
@@ -51,6 +53,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     @Autowired
     private IUserInfoService iUserInfoService;
 
+    private QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+    IPage<User> page = new Page(1, 10);
+
     /** 
      * 功能描述 用户注册
      * @author ysq
@@ -78,7 +83,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
                     ResultTypeEnum.USER_ALREADY_EXIST.getMsg());
         }
         userMapper.userRegister(userForm.getUser());
-        QueryWrapper<User> username = new QueryWrapper<User>().eq("username", userForm.getUser().getUsername());
+        QueryWrapper<User> username = queryWrapper.eq("username", userForm.getUser().getUsername());
         Long userId = userMapper.selectOne(username).getId();
         userForm.getUserInfo().setTUserId(userId);
         iUserInfoService.saveMessage(userForm.getUserInfo());
@@ -174,5 +179,26 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         user.setDeleteStatus(0);
         userMapper.updateById(user);
         return ResultBodyUtil.success();
+    }
+
+    /**
+     * 功能描述 分页查询所有用户
+     *
+     * @return com.jxkj.common.result.ResultBody
+     * @author ysq
+     * @Param []
+     * @date 2020/5/28
+     */
+    @Override
+    public ResultBody selectAll(Long current, Long size) {
+        if (null != current && 0L < current){
+            page.setCurrent(current);
+        }
+        if (null != size && 0L <size){
+            page.setPages(size);
+        }
+        QueryWrapper<User> delete_status = queryWrapper.eq("delete_status", 0);
+        IPage<User> userIPage = userMapper.selectPage(page, delete_status);
+        return ResultBodyUtil.success(userIPage);
     }
 }

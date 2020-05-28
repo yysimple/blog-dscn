@@ -17,7 +17,7 @@ public interface IUserLevelService extends IService<UserLevel> {
     /**
      * 功能描述 增加积分
      * @author ysq
-     * @param [userId, integral]
+     * @param userId, integral
      * @return com.jxkj.common.result.ResultBody
      * @date 2020/5/27
      */
@@ -26,9 +26,9 @@ public interface IUserLevelService extends IService<UserLevel> {
     /**
      * 功能描述 查询级别
      * @author ysq
-     * @param [userId]
+     * @Param [userId]
      * @return com.jxkj.common.result.ResultBody
-     * @date 2020/5/27
+     * @date 2020/5/28
      */
     ResultBody updateLevel(Long userId);
 
