@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2020-05-19
  */
 @RestController
-@RequestMapping("blogCenter/blogInfoType")
+@RequestMapping("blogInfoType")
 @Api(tags = "博客和类型的关联模块 接口")
 @Slf4j
 public class BlogInfoTypeController {

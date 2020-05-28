@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
  * @since 2020-05-19
  */
 @RestController
-@RequestMapping("blogCenter/comment")
+@RequestMapping("comment")
 @Api(tags = "博客留言模块 接口")
 @Slf4j
 public class CommentController {
