@@ -30,7 +30,7 @@ public class CommentController {
 
     @ApiOperation(value = "分页查询当前博客所有评论")
     @GetMapping("/listComment")
-    public ResultBody listComment(Long tBlogInfoId) {
+    public ResultBody listComment(@RequestParam("tBlogInfoId") Long tBlogInfoId) {
         return iCommentService.listComment(tBlogInfoId);
     }
 

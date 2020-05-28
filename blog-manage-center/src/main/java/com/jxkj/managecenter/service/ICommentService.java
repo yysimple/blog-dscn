@@ -15,7 +15,7 @@ import com.jxkj.managecenter.entity.Comment;
 public interface ICommentService extends IService<Comment> {
 
     /**
-     * 功能描述: 根据博客id查询所有留言
+     * 功能描述: 根据博客id分页查询所有留言
      *
      * @author GuJunBin
      * @param tBlogInfoId

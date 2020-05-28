@@ -17,6 +17,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 @FeignClient(value = "user-center",fallback = FallbackFactory.Default.class)
 public interface UserInfoService {
 
+    /**
+     * 功能描述: 查询用户信息
+     * 
+     * @author GuJunBin
+     * @param id 
+     * @return com.jxkj.common.result.ResultBody
+     */
     @GetMapping("/user-info/selectById")
     ResultBody selectById(@RequestParam("id") Long id);
 }
