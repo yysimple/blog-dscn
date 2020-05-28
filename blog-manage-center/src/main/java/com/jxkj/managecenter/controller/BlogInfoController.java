@@ -2,7 +2,6 @@ package com.jxkj.managecenter.controller;
 
 
 import com.jxkj.common.result.ResultBody;
-import com.jxkj.common.result.ResultBodyUtil;
 import com.jxkj.managecenter.entity.BlogInfo;
 import com.jxkj.managecenter.service.IBlogInfoService;
 import io.swagger.annotations.Api;
@@ -56,11 +55,28 @@ public class BlogInfoController {
         return iBlogInfoService.updateBlogInfo(blogInfo, tagIds, typeId);
     }
 
+    @ApiOperation(value = "分页查询所有已删除博客信息")
+    @GetMapping("/findAllDeletedBlog")
+    public ResultBody findAllDeletedBlog() {
+        return iBlogInfoService.findAllDeletedBlog();
+    }
+
     @ApiOperation(value = "删除博客信息")
     @PostMapping("/deleteBlogInfoById")
     public ResultBody deleteBlogInfoById(@RequestParam("id") Long id) {
-        iBlogInfoService.deleteBlogInfo(id);
-        return ResultBodyUtil.success();
+        return iBlogInfoService.deleteBlogInfo(id);
+    }
+
+    @ApiOperation(value = "回收已删除博客信息")
+    @PostMapping("/recoverBlogInfoById")
+    public ResultBody recoverBlogInfoById(@RequestParam("id") Long id) {
+        return iBlogInfoService.recoverBlogInfoById(id);
+    }
+
+    @ApiOperation(value = "彻底删除博客信息")
+    @PostMapping("/removeBlogInfoById")
+    public ResultBody removeBlogInfoById(@RequestParam("id") Long id) {
+        return iBlogInfoService.removeBlogInfoById(id);
     }
 
     @ApiOperation(value = "点赞")

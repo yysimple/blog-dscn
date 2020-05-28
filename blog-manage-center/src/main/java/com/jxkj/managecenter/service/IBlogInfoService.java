@@ -91,4 +91,31 @@ public interface IBlogInfoService extends IService<BlogInfo> {
      * @date 2020/5/27
      */
     ResultBody findBlogInfoAndTagsByBlogInfoId(Long blogId);
+
+    /**
+     * 功能描述: 回收已删除博客信息
+     *
+     * @author GuJunBin
+     * @param id
+     * @return com.jxkj.common.result.ResultBody
+     */
+    ResultBody recoverBlogInfoById(Long id);
+
+    /**
+     * 功能描述: 分页查询已删除博客信息
+     *
+     * @author GuJunBin
+     * @param
+     * @return com.jxkj.common.result.ResultBody
+     */
+    ResultBody findAllDeletedBlog();
+
+    /**
+     * 功能描述: 彻底删除博客信息
+     *
+     * @author GuJunBin
+     * @param id
+     * @return com.jxkj.common.result.ResultBody
+     */
+    ResultBody removeBlogInfoById(Long id);
 }

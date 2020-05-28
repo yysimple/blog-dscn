@@ -6,6 +6,9 @@ spring:
       discovery:
         server-addr: 39.100.24.145:5180
     gateway:
+      discovery:
+        locator:
+          enabled: true
       routes:
         - id: user-center
           uri: lb://user-center

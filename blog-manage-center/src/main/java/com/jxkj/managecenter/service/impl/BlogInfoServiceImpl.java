@@ -155,4 +155,25 @@ public class BlogInfoServiceImpl extends ServiceImpl<BlogInfoMapper, BlogInfo> i
         BlogInfo blogInfo = blogInfoMapper.findBlogInfoAndTagsByBlogInfoId(blogId);
         return ResultBodyUtil.success(blogInfo);
     }
+
+    @Override
+    public ResultBody recoverBlogInfoById(Long id) {
+        BlogInfo blogInfo = blogInfoMapper.selectById(id);
+        blogInfo.setDeleteStatus(0);
+        blogInfoMapper.updateById(blogInfo);
+        return ResultBodyUtil.success();
+    }
+
+    @Override
+    public ResultBody findAllDeletedBlog() {
+        queryWrapper.eq("delete_status", 1);
+        IPage<BlogInfo> blogInfoIPage = blogInfoMapper.selectPage(page, queryWrapper);
+        return ResultBodyUtil.success(blogInfoIPage);
+    }
+
+    @Override
+    public ResultBody removeBlogInfoById(Long id) {
+        //TODO
+        return ResultBodyUtil.success();
+    }
 }
