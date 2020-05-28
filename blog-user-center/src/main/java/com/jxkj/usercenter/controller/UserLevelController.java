@@ -35,7 +35,7 @@ public class UserLevelController {
     }
 
     @PostMapping("/queryLevel")
-    @ApiOperation(value = "更新等级")
+    @ApiOperation(value = "查询等级")
     public ResultBody updateLevel(Long userId){
         return iUserLevelService.updateLevel(userId);
     }

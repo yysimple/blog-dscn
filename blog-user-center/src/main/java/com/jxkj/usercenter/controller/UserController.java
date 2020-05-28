@@ -56,4 +56,16 @@ public class UserController {
     public ResultBody deleteById(Long userId) {
         return userService.deleteById(userId);
     }
+
+    @ApiOperation(value = "根据用户id查询")
+    @GetMapping("/selectById")
+    public ResultBody selectById(@RequestParam("userId") Long userId) {
+        return ResultBodyUtil.success(userService.getById(userId));
+    }
+
+    @ApiOperation(value = "分页查询所有用户")
+    @GetMapping("/selectAll")
+    public ResultBody selectAll(Long current, Long size) {
+        return userService.selectAll(current, size);
+    }
 }
