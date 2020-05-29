@@ -3,6 +3,7 @@ package com.jxkj.usercenter.controller;
 
 import com.jxkj.common.result.ResultBody;
 import com.jxkj.common.result.ResultBodyUtil;
+import com.jxkj.managecenter.entity.BlogInfo;
 import com.jxkj.usercenter.entity.User;
 import com.jxkj.usercenter.entity.UserInfo;
 import com.jxkj.usercenter.form.UserForm;
@@ -12,6 +13,7 @@ import io.swagger.annotations.Api;
 
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,7 +31,7 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
 
-    //@Qualifier("userServiceImpl")
+    @Qualifier("userServiceImpl")
     @Autowired
     private IUserService userService;
 
@@ -67,5 +69,11 @@ public class UserController {
     @GetMapping("/selectAll")
     public ResultBody selectAll(Long current, Long size) {
         return userService.selectAll(current, size);
+    }
+
+    @ApiOperation(value = "保存博客并添加分数")
+    @GetMapping("/saveBlogInfo")
+    public ResultBody saveBlogInfo(BlogInfo blogInfo, Long[] tagIds, Long typeId, Long userId){
+        return userService.saveBlogInfo(blogInfo, tagIds, typeId, userId);
     }
 }

@@ -17,7 +17,7 @@ public interface IUserLevelService extends IService<UserLevel> {
     /**
      * 功能描述 增加积分
      * @author ysq
-     * @param userId, integral
+     * @param userId , integral 分值
      * @return com.jxkj.common.result.ResultBody
      * @date 2020/5/27
      */

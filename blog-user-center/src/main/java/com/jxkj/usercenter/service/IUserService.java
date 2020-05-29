@@ -1,11 +1,15 @@
 package com.jxkj.usercenter.service;
 
 import com.jxkj.common.result.ResultBody;
+import com.jxkj.managecenter.entity.BlogInfo;
 import com.jxkj.usercenter.entity.User;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.jxkj.usercenter.entity.UserInfo;
 import com.jxkj.usercenter.form.UserForm;
 import io.swagger.models.auth.In;
+import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 /**
@@ -16,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  * @author GuJunBin
  * @since 2020-05-20
  */
+@FeignClient(value = "BLOG-CENTER")
 public interface IUserService extends IService<User> {
 
     /**
@@ -46,7 +51,7 @@ public interface IUserService extends IService<User> {
     ResultBody updatePassword(Long userId, String newPassword);
 
     /**
-     * 功能描述  重新激活用户
+     * 功能描述  删除用户
      * @author ysq
      * @param userId
      * @return com.jxkj.common.result.ResultBody
@@ -70,4 +75,13 @@ public interface IUserService extends IService<User> {
      * @date 2020/5/28
      */
     ResultBody selectAll(Long current, Long size);
+
+    /**
+     * 功能描述  添加博客并修改积分
+     * @author ysq
+     * @Param [blogInfo 博客内容, tagIds 标签id , typeId 类型id, userId 用户id]
+     * @return com.jxkj.common.result.ResultBody
+     * @date 2020/5/29
+     */
+    ResultBody saveBlogInfo(BlogInfo blogInfo, Long[] tagIds, Long typeId, Long userId);
 }

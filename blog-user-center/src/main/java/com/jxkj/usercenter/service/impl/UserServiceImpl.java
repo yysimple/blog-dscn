@@ -8,6 +8,8 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.jxkj.common.result.ResultBody;
 import com.jxkj.common.result.ResultBodyUtil;
 import com.jxkj.common.result.ResultTypeEnum;
+import com.jxkj.managecenter.entity.BlogInfo;
+import com.jxkj.managecenter.service.IBlogInfoService;
 import com.jxkj.usercenter.entity.User;
 import com.jxkj.usercenter.entity.UserLevel;
 import com.jxkj.usercenter.entity.UserRole;
@@ -20,6 +22,7 @@ import com.jxkj.usercenter.service.IUserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
@@ -52,6 +55,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
     @Autowired
     private IUserInfoService iUserInfoService;
+
 
     private QueryWrapper<User> queryWrapper = new QueryWrapper<>();
     IPage<User> page = new Page(1, 10);
@@ -200,5 +204,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         QueryWrapper<User> delete_status = queryWrapper.eq("delete_status", 0);
         IPage<User> userIPage = userMapper.selectPage(page, delete_status);
         return ResultBodyUtil.success(userIPage);
+    }
+
+
+    @Override
+    public ResultBody saveBlogInfo(BlogInfo blogInfo, Long[] tagIds, Long typeId, Long userId) {
+
+        return null;
     }
 }
