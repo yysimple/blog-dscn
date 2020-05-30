@@ -59,6 +59,21 @@ public class BlogInfoServiceImpl extends ServiceImpl<BlogInfoMapper, BlogInfo> i
     }
 
     @Override
+    public ResultBody listUserBlog(Long userId) {
+        queryWrapper.eq("blog_status", 1).eq("t_user_id", userId);
+        List<BlogInfo> blogInfoList = blogInfoMapper.selectList(queryWrapper);
+        return ResultBodyUtil.success(blogInfoList);
+    }
+
+    @Override
+    public ResultBody listPageUserBlog(Long userId) {
+        queryWrapper.eq("blog_status", 1).eq("t_user_id", userId);
+        IPage<BlogInfo> blogInfoIPage = blogInfoMapper.selectPage(page, queryWrapper);
+        return ResultBodyUtil.success(blogInfoIPage);
+    }
+
+
+    @Override
     public ResultBody findIssueBlog(String key) {
         queryWrapper.eq("blog_status", 1).like("title", key)
                 .or().like("content", key);
@@ -119,7 +134,7 @@ public class BlogInfoServiceImpl extends ServiceImpl<BlogInfoMapper, BlogInfo> i
             BlogInfoTag infoTag = blogInfoTagMapper.selectOne(wrapper.
                     eq("t_blog_info_id", blogInfo.getId()).
                     eq("t_blog_tag_id", tagId));
-            if (infoTag == null) {
+            if (null == infoTag) {
                 blogInfoTagMapper.insert(blogInfoTag);
             } else {
                 blogInfoTagMapper.updateById(blogInfoTag);
@@ -127,26 +142,15 @@ public class BlogInfoServiceImpl extends ServiceImpl<BlogInfoMapper, BlogInfo> i
         }
         QueryWrapper<BlogInfoType> queryType = new QueryWrapper<>();
         BlogInfoType blogInfoType = blogInfoTypeMapper.selectOne(queryType.eq("t_blog_info_id", blogInfo.getId()));
-        if (blogInfoType == null){
+        if (null == blogInfoType) {
             BlogInfoType infoType = new BlogInfoType();
             infoType.setTBlogInfoId(blogInfo.getId());
             infoType.setTBlogTypeId(typeId);
             blogInfoTypeMapper.insert(infoType);
-        }else {
+        } else {
             blogInfoType.setTBlogTypeId(typeId);
             blogInfoTypeMapper.updateById(blogInfoType);
         }
-
-        return ResultBodyUtil.success();
-    }
-
-    @Override
-    public ResultBody deleteBlogInfo(Long id) {
-        blogInfoMapper.deleteById(id);
-        QueryWrapper<BlogInfoType> queryWrapper = new QueryWrapper<>();
-        QueryWrapper<BlogInfoTag> wrapper = new QueryWrapper<>();
-        blogInfoTypeMapper.delete(queryWrapper.eq("t_blog_info_id", id));
-        blogInfoTagMapper.delete(wrapper.eq("t_blog_info_id", id));
         return ResultBodyUtil.success();
     }
 
@@ -173,7 +177,7 @@ public class BlogInfoServiceImpl extends ServiceImpl<BlogInfoMapper, BlogInfo> i
 
     @Override
     public ResultBody removeBlogInfoById(Long id) {
-        //TODO
+        blogInfoMapper.deleteInfoById(id);
         return ResultBodyUtil.success();
     }
 }

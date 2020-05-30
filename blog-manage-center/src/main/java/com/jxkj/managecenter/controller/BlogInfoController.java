@@ -2,6 +2,7 @@ package com.jxkj.managecenter.controller;
 
 
 import com.jxkj.common.result.ResultBody;
+import com.jxkj.common.result.ResultBodyUtil;
 import com.jxkj.managecenter.entity.BlogInfo;
 import com.jxkj.managecenter.service.IBlogInfoService;
 import io.swagger.annotations.Api;
@@ -33,6 +34,18 @@ public class BlogInfoController {
         return iBlogInfoService.pagingQuery();
     }
 
+    @ApiOperation(value = "查询用户所有已发布博客信息")
+    @GetMapping("/listUserBlog")
+    public ResultBody listUserBlog(Long userId){
+        return iBlogInfoService.listUserBlog(userId);
+    }
+
+    @ApiOperation(value = "分页查询用户所有已发布博客信息")
+    @GetMapping("/listPageUserBlog")
+    public ResultBody listPageUserBlog(Long userId){
+        return iBlogInfoService.listPageUserBlog(userId);
+    }
+
     @ApiOperation(value = "根据标题和文章内容模糊查询发布博客信息")
     @GetMapping("/findIssueBlog")
     public ResultBody findIssueBlog(@RequestParam("key") String key) {
@@ -55,19 +68,20 @@ public class BlogInfoController {
         return iBlogInfoService.updateBlogInfo(blogInfo, tagIds, typeId);
     }
 
-    @ApiOperation(value = "分页查询所有已删除博客信息")
+    @ApiOperation(value = "分页查询所有逻辑删除博客信息")
     @GetMapping("/findAllDeletedBlog")
     public ResultBody findAllDeletedBlog() {
         return iBlogInfoService.findAllDeletedBlog();
     }
 
-    @ApiOperation(value = "删除博客信息")
+    @ApiOperation(value = "逻辑删除博客信息")
     @PostMapping("/deleteBlogInfoById")
     public ResultBody deleteBlogInfoById(@RequestParam("id") Long id) {
-        return iBlogInfoService.deleteBlogInfo(id);
+        iBlogInfoService.removeById(id);
+        return ResultBodyUtil.success();
     }
 
-    @ApiOperation(value = "回收已删除博客信息")
+    @ApiOperation(value = "回收逻辑删除博客信息")
     @PostMapping("/recoverBlogInfoById")
     public ResultBody recoverBlogInfoById(@RequestParam("id") Long id) {
         return iBlogInfoService.recoverBlogInfoById(id);

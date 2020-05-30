@@ -14,7 +14,7 @@ import java.util.List;
  * 功能描述:
  *
  * @Author GuJunBin
- * @Version 1.0.0 RELEASE
+ * @Version 1.0
  */
 @Configuration
 public class FeignConfig {

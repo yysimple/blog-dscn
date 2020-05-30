@@ -26,6 +26,10 @@
             (#{title},#{content},#{tUserId});
     </insert>
 
+    <delete id="deleteInfoById" parameterType="long">
+        delete from t_blog_info where id = #{id}
+    </delete>
+
 
     <select id="findBlogInfoAndTagsByBlogInfoId" parameterType="long" resultMap="findBlogInfoAndTagsByBlogInfoIdMap">
         select

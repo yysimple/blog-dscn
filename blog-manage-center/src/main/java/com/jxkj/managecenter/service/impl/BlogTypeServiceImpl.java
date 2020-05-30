@@ -55,7 +55,7 @@ public class BlogTypeServiceImpl extends ServiceImpl<BlogTypeMapper, BlogType> i
     public ResultBody deleteById(Long id) {
         QueryWrapper<BlogInfoType> queryWrapper = new QueryWrapper<>();
         BlogInfoType blogInfoType = blogInfoTypeMapper.selectOne(queryWrapper.eq("t_blog_type_id", id));
-        if (blogInfoType == null){
+        if (null == blogInfoType){
             blogTypeMapper.deleteById(id);
             return ResultBodyUtil.success();
         }else {

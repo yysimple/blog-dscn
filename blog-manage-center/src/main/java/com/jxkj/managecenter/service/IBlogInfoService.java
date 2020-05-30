@@ -18,76 +18,86 @@ public interface IBlogInfoService extends IService<BlogInfo> {
     /**
      * 功能描述: 分页查询所有已发布博客信息
      *
-     * @author GuJunBin
      * @param
      * @return com.jxkj.common.result.ResultBody
+     * @author GuJunBin
      */
     ResultBody pagingQuery();
 
     /**
-     * 功能描述: 根据标题和文章内容模糊查询发布博客信息
-     * 
-     * @author GuJunBin
-     * @param key 
+     * 功能描述: 查询用户所有已发布博客信息
+     *
+     * @param userId
      * @return com.jxkj.common.result.ResultBody
+     * @author GuJunBin
+     */
+    ResultBody listUserBlog(Long userId);
+
+    /**
+     * 功能描述: 分页查询用户所有已发布博客信息
+     *
+     * @param userId
+     * @return com.jxkj.common.result.ResultBody
+     * @author GuJunBin
+     */
+    ResultBody listPageUserBlog(Long userId);
+
+    /**
+     * 功能描述: 根据标题和文章内容模糊查询发布博客信息
+     *
+     * @param key
+     * @return com.jxkj.common.result.ResultBody
+     * @author GuJunBin
      */
     ResultBody findIssueBlog(String key);
 
     /**
      * 功能描述: 点赞
      *
-     * @author GuJunBin
      * @param id
      * @return com.jxkj.common.result.ResultBody
+     * @author GuJunBin
      */
     ResultBody addLikeNum(Long id);
 
     /**
      * 功能描述: 收藏
      *
-     * @author GuJunBin
      * @param blogId
-	 * @param favoritesId
-	 * @param userId
+     * @param favoritesId
+     * @param userId
      * @return com.jxkj.common.result.ResultBody
+     * @author GuJunBin
      */
     ResultBody favorites(Long blogId, Long favoritesId, Long userId);
 
     /**
      * 功能描述: 保存博客信息
      *
-     * @author GuJunBin
      * @param blogInfo 博客信息
-	 * @param tagIds  标签Id
-     * @param typeId  类型Id
+     * @param tagIds   标签Id
+     * @param typeId   类型Id
      * @return com.jxkj.common.result.ResultBody
+     * @author GuJunBin
      */
     ResultBody saveBlogInfo(BlogInfo blogInfo, Long[] tagIds, Long typeId);
 
     /**
      * 功能描述: 更新博客信息
      *
-     * @author GuJunBin
      * @param blogInfo
-	 * @param tagIds
+     * @param tagIds
      * @return com.jxkj.common.result.ResultBody
+     * @author GuJunBin
      */
     ResultBody updateBlogInfo(BlogInfo blogInfo, Long[] tagIds, Long typeId);
 
     /**
-     * 功能描述: 删除博客信息
-     *
-     * @author GuJunBin
-     * @param id
-     * @return com.jxkj.common.result.ResultBody
-     */
-    ResultBody deleteBlogInfo(Long id);
-
-    /**
      * 功能描述 查询博客和标签信息
-     * @author ysq
+     *
      * @param blogId
      * @return com.jxkj.common.result.ResultBody
+     * @author ysq
      * @date 2020/5/27
      */
     ResultBody findBlogInfoAndTagsByBlogInfoId(Long blogId);
@@ -95,27 +105,27 @@ public interface IBlogInfoService extends IService<BlogInfo> {
     /**
      * 功能描述: 回收已删除博客信息
      *
-     * @author GuJunBin
      * @param id
      * @return com.jxkj.common.result.ResultBody
+     * @author GuJunBin
      */
     ResultBody recoverBlogInfoById(Long id);
 
     /**
      * 功能描述: 分页查询已删除博客信息
      *
-     * @author GuJunBin
      * @param
      * @return com.jxkj.common.result.ResultBody
+     * @author GuJunBin
      */
     ResultBody findAllDeletedBlog();
 
     /**
      * 功能描述: 彻底删除博客信息
      *
-     * @author GuJunBin
      * @param id
      * @return com.jxkj.common.result.ResultBody
+     * @author GuJunBin
      */
     ResultBody removeBlogInfoById(Long id);
 }

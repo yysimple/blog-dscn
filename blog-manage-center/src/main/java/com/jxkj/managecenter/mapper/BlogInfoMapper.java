@@ -32,4 +32,13 @@ public interface BlogInfoMapper extends BaseMapper<BlogInfo> {
      * @date 2020/5/27
      */
     BlogInfo findBlogInfoAndTagsByBlogInfoId(Long blogId);
+
+    /**
+     * 功能描述: 彻底删除博客信息
+     *
+     * @author GuJunBin
+     * @param id
+     * @return void
+     */
+    void deleteInfoById(Long id);
 }
