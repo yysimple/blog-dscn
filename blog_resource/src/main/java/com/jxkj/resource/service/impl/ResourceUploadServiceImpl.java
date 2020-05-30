@@ -1,11 +1,9 @@
-package com.jxkj.fileupload.service.impl;
+package com.jxkj.resource.service.impl;
 
 import com.jxkj.common.result.ResultBody;
 import com.jxkj.common.result.ResultBodyUtil;
-import com.jxkj.common.result.ResultTypeEnum;
-import com.jxkj.fileupload.form.ResourceUploadForm;
-import com.jxkj.fileupload.service.BlogFileUploadService;
-import com.jxkj.fileupload.service.ResourceUploadService;
+import com.jxkj.resource.form.ResourceUploadForm;
+import com.jxkj.resource.service.ResourceUploadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,15 +17,12 @@ import org.springframework.stereotype.Service;
 public class ResourceUploadServiceImpl implements ResourceUploadService {
 
     @Autowired
-    private BlogFileUploadService blogFileUploadService;
+    //private BlogFileUploadService blogFileUploadService;
 
     @Override
     public ResultBody resourceUpload(ResourceUploadForm resource) {
-        blogFileUploadService.blogInfoUpload(resource.getFile());
+        //blogFileUploadService.blogInfoUpload(resource.getFile());
         System.out.println(resource.getTags());
-        if (resource.getTags().size() > 5) {
-            return ResultBodyUtil.error(ResultTypeEnum.TAG_LIMIT.getCode(),ResultTypeEnum.TAG_LIMIT.getMsg());
-        }
         return ResultBodyUtil.success(resource);
     }
 }

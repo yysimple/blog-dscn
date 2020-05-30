@@ -1,7 +1,7 @@
-package com.jxkj.fileupload.service;
+package com.jxkj.resource.service;
 
 import com.jxkj.common.result.ResultBody;
-import com.jxkj.fileupload.form.ResourceUploadForm;
+import com.jxkj.resource.form.ResourceUploadForm;
 
 /**
  * 功能描述: 用户资源上传

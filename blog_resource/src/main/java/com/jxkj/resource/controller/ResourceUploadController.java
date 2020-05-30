@@ -1,8 +1,8 @@
-package com.jxkj.fileupload.controller;
+package com.jxkj.resource.controller;
 
 import com.jxkj.common.result.ResultBody;
-import com.jxkj.fileupload.form.ResourceUploadForm;
-import com.jxkj.fileupload.service.ResourceUploadService;
+import com.jxkj.resource.form.ResourceUploadForm;
+import com.jxkj.resource.service.ResourceUploadService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
