@@ -50,4 +50,9 @@
         where tbi.id = #{blogId}
         ;
     </select>
+    <select id="selectListOrderByViewNum" resultType="com.jxkj.managecenter.entity.BlogInfo">
+        select * from t_blog_info
+        order by page_view_num DESC
+        limit 10;
+    </select>
 </mapper>

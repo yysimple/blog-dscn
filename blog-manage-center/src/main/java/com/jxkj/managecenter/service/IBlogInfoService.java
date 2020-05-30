@@ -61,6 +61,15 @@ public interface IBlogInfoService extends IService<BlogInfo> {
     ResultBody addLikeNum(Long id);
 
     /**
+     * 功能描述: 访问
+     *
+     * @author GuJunBin
+     * @param id
+     * @return com.jxkj.common.result.ResultBody
+     */
+    ResultBody addViewNum(Long id);
+
+    /**
      * 功能描述: 收藏
      *
      * @param blogId
@@ -128,4 +137,13 @@ public interface IBlogInfoService extends IService<BlogInfo> {
      * @author GuJunBin
      */
     ResultBody removeBlogInfoById(Long id);
+
+    /**
+     * 功能描述: 查询访问量最高的10条博客并排序
+     *
+     * @author GuJunBin
+     * @param
+     * @return com.jxkj.common.result.ResultBody
+     */
+    ResultBody listOrderByViewNum();
 }

@@ -90,6 +90,14 @@ public class BlogInfoServiceImpl extends ServiceImpl<BlogInfoMapper, BlogInfo> i
     }
 
     @Override
+    public ResultBody addViewNum(Long id) {
+        BlogInfo blogInfo = blogInfoMapper.selectById(id);
+        blogInfo.setPageViewNum(blogInfo.getPageViewNum() + 1);
+        blogInfoMapper.updateById(blogInfo);
+        return ResultBodyUtil.success();
+    }
+
+    @Override
     public ResultBody favorites(Long blogId, Long favoritesId, Long userId) {
         QueryWrapper<Favorites> wrapper = new QueryWrapper<>();
         BlogInfo blogInfo = blogInfoMapper.selectById(blogId);
@@ -179,5 +187,11 @@ public class BlogInfoServiceImpl extends ServiceImpl<BlogInfoMapper, BlogInfo> i
     public ResultBody removeBlogInfoById(Long id) {
         blogInfoMapper.deleteInfoById(id);
         return ResultBodyUtil.success();
+    }
+
+    @Override
+    public ResultBody listOrderByViewNum() {
+        List<BlogInfo> blogInfoList = blogInfoMapper.selectListOrderByViewNum();
+        return ResultBodyUtil.success(blogInfoList);
     }
 }

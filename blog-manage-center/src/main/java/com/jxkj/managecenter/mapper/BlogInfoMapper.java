@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.jxkj.managecenter.entity.BlogInfo;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * <p>
  * 博客基本信息表 Mapper 接口
@@ -17,18 +19,19 @@ public interface BlogInfoMapper extends BaseMapper<BlogInfo> {
 
     /**
      * 功能描述: 插入博客信息并回填主键id
-     * 
-     * @author GuJunBin
+     *
      * @param blogInfo
      * @return void
+     * @author GuJunBin
      */
     void insertBlogInfo(BlogInfo blogInfo);
 
     /**
      * 功能描述
-     * @author ysq
+     *
      * @param blogId
      * @return com.jxkj.managecenter.entity.BlogInfo
+     * @author ysq
      * @date 2020/5/27
      */
     BlogInfo findBlogInfoAndTagsByBlogInfoId(Long blogId);
@@ -36,9 +39,18 @@ public interface BlogInfoMapper extends BaseMapper<BlogInfo> {
     /**
      * 功能描述: 彻底删除博客信息
      *
-     * @author GuJunBin
      * @param id
      * @return void
+     * @author GuJunBin
      */
     void deleteInfoById(Long id);
+
+    /**
+     * 功能描述:
+     *
+     * @param
+     * @return void
+     * @author GuJunBin
+     */
+    List<BlogInfo> selectListOrderByViewNum();
 }

@@ -36,13 +36,13 @@ public class BlogInfoController {
 
     @ApiOperation(value = "查询用户所有已发布博客信息")
     @GetMapping("/listUserBlog")
-    public ResultBody listUserBlog(Long userId){
+    public ResultBody listUserBlog(@RequestParam("userId") Long userId){
         return iBlogInfoService.listUserBlog(userId);
     }
 
     @ApiOperation(value = "分页查询用户所有已发布博客信息")
     @GetMapping("/listPageUserBlog")
-    public ResultBody listPageUserBlog(Long userId){
+    public ResultBody listPageUserBlog(@RequestParam("userId") Long userId){
         return iBlogInfoService.listPageUserBlog(userId);
     }
 
@@ -99,6 +99,12 @@ public class BlogInfoController {
         return iBlogInfoService.addLikeNum(id);
     }
 
+    @ApiOperation(value = "访问")
+    @PostMapping("/viewNum")
+    public ResultBody viewNum(@RequestParam("id") Long id) {
+        return iBlogInfoService.addViewNum(id);
+    }
+
     @ApiOperation(value = "收藏")
     @PostMapping("/favorites")
     public ResultBody favorites(@RequestParam("blogId") Long blogId,
@@ -111,5 +117,11 @@ public class BlogInfoController {
     @GetMapping("/findBlogInfoAndTagsByBlogInfoId/{blogId}")
     public ResultBody findBlogInfoAndTagsByBlogInfoId(@PathVariable("blogId") Long blogId){
         return iBlogInfoService.findBlogInfoAndTagsByBlogInfoId(blogId);
+    }
+
+    @ApiOperation(value = "查询访问量最高的10条博客并排序")
+    @PostMapping("/listOrderByViewNum")
+    public ResultBody listOrderByViewNum() {
+        return iBlogInfoService.listOrderByViewNum();
     }
 }
