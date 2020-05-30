@@ -51,7 +51,7 @@
         ;
     </select>
     <select id="selectListOrderByViewNum" resultType="com.jxkj.managecenter.entity.BlogInfo">
-        select * from t_blog_info
+        select * from t_blog_info where datediff(NOW(),update_time) &lt;= 7
         order by page_view_num DESC
         limit 10;
     </select>

@@ -46,7 +46,7 @@ public interface BlogInfoMapper extends BaseMapper<BlogInfo> {
     void deleteInfoById(Long id);
 
     /**
-     * 功能描述:
+     * 功能描述: 查询一周内访问量最高的10条博客并排序
      *
      * @param
      * @return void
