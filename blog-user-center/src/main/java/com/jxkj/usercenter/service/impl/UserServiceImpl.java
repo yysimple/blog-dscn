@@ -212,4 +212,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
         return null;
     }
+
+    @Override
+    public ResultBody selectUserInfoById(Long userId) {
+        return ResultBodyUtil.success(userMapper.selectUserInfoById(userId));
+    }
 }

@@ -2,8 +2,11 @@ package com.jxkj.usercenter.mapper;
 
 import com.jxkj.usercenter.entity.User;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.jxkj.usercenter.form.UserInfoForm;
+import com.jxkj.usercenter.vo.UserInfoVo;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.bind.annotation.RequestBody;
 
 /**
  * <p>
@@ -22,4 +25,6 @@ public interface UserMapper extends BaseMapper<User> {
      * @param user
      */
     void userRegister(User user);
+
+    UserInfoVo selectUserInfoById(Long userId);
 }

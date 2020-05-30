@@ -7,4 +7,49 @@
         insert into t_user(username, password) values (#{username}, #{password});
     </insert>
 
+    <resultMap id="selectUserInfoByIdMap" type="com.jxkj.usercenter.vo.UserInfoVo">
+        <id column="id" property="id"/>
+        <result column="username" property="username"/>
+        <result column="password" property="password"/>
+        <result column="real_name" property="realName"/>
+        <result column="nickname" property="nickname"/>
+        <result column="birthday" property="birthday"/>
+        <result column="address" property="address"/>
+        <result column="email" property="email"/>
+        <result column="phone_number" property="phoneNumber"/>
+        <result column="gender" property="gender"/>
+        <result column="position" property="position"/>
+        <result column="company" property="company"/>
+        <result column="education" property="education"/>
+        <result column="industry" property="industry"/>
+        <result column="start_working_time" property="startWorkingTime"/>
+        <result column="remark" property="remark"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+    <select id="selectUserInfoById" parameterType="Long" resultMap="selectUserInfoByIdMap">
+        select
+        tu.id,
+        tu.username,
+        tu.password,
+        tui.real_name,
+        tui.nickname,
+        tui.birthday,
+        tui.address,
+        tui.email,
+        tui.phone_number,
+        tui.gender,
+        tui.position,
+        tui.company,
+        tui.education,
+        tui.industry,
+        tui.start_working_time,
+        tui.remark,
+        tui.create_time,
+        tui.update_time
+        from t_user tu
+        left join to t_user_info tui on tui.t_user_id = tu.id
+        where tu.id = #{userId}
+    </select>
+
 </mapper>

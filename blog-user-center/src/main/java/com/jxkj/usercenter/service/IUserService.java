@@ -84,4 +84,13 @@ public interface IUserService extends IService<User> {
      * @date 2020/5/29
      */
     ResultBody saveBlogInfo(BlogInfo blogInfo, Long[] tagIds, Long typeId, Long userId);
+
+    /**
+     * 功能描述 查询用户详细信息
+     * @author ysq
+     * @Param [userId]
+     * @return com.jxkj.common.result.ResultBody
+     * @date 2020/5/30
+     */
+    ResultBody selectUserInfoById(Long userId);
 }

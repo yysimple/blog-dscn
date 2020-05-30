@@ -76,4 +76,10 @@ public class UserController {
     public ResultBody saveBlogInfo(BlogInfo blogInfo, Long[] tagIds, Long typeId, Long userId){
         return userService.saveBlogInfo(blogInfo, tagIds, typeId, userId);
     }
+
+    @ApiOperation(value = "根据用户id查询详细信息")
+    @GetMapping("/selectUserInfoById")
+    public  ResultBody selectUserInfoById(Long userId){
+        return userService.selectUserInfoById(userId);
+    }
 }
