@@ -23,7 +23,6 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("blogTag")
 @Api(tags = "博客标签模块 接口")
 @Slf4j
-@CrossOrigin
 public class BlogTagController {
 
     @Autowired
