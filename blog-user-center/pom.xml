@@ -18,6 +18,12 @@
             <artifactId>blog-common</artifactId>
             <version>V1.0.0</version>
         </dependency>
+        <dependency>
+            <groupId>com.jxkj</groupId>
+            <artifactId>blog-manage-center</artifactId>
+            <version>V1.0.0</version>
+            <scope>compile</scope>
+        </dependency>
 
     </dependencies>
 
