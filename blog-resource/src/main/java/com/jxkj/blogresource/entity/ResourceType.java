@@ -1,8 +1,7 @@
 package com.jxkj.blogresource.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -10,10 +9,11 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author GuJunBin
@@ -23,12 +23,12 @@ import java.io.Serializable;
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @TableName("t_resource_type")
-@ApiModel(value="ResourceType对象", description="资源类型")
+@ApiModel(value = "ResourceType对象", description = "资源类型")
 public class ResourceType implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "类型ID")
+    @ApiModelProperty(value = "类型ID", hidden = true)
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
@@ -41,8 +41,13 @@ public class ResourceType implements Serializable {
     @ApiModelProperty(value = "层级")
     private Integer typeLevel;
 
-    @ApiModelProperty(value = "删除状态，0-未删除，1-已删除")
+    @TableLogic
+    @ApiModelProperty(value = "删除状态，0-未删除，1-已删除", hidden = true)
     private Integer deleteStatus;
 
+    @ApiModelProperty(value = "子分类",hidden = true)
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    @TableField(exist = false)
+    private List<ResourceType> children;
 
 }

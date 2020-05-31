@@ -15,6 +15,13 @@ import com.jxkj.managecenter.entity.BlogTag;
 public interface IBlogTagService extends IService<BlogTag> {
 
 
+    /**
+     * 功能描述: 新增or更新博客标签
+     *
+     * @author GuJunBin
+     * @param blogTag
+     * @return com.jxkj.common.result.ResultBody
+     */
     ResultBody saveOrUpdateBlogTag(BlogTag blogTag);
 
     /**

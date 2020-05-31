@@ -2,6 +2,7 @@ package com.jxkj.blogresource.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -14,7 +15,7 @@ import java.time.LocalDateTime;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author GuJunBin
@@ -24,12 +25,12 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @TableName("t_resource")
-@ApiModel(value="Resource对象", description="资源表单")
+@ApiModel(value = "Resource对象", description = "资源表单")
 public class Resource implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "资源 ID")
+    @ApiModelProperty(value = "资源 ID", hidden = true)
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
@@ -51,11 +52,14 @@ public class Resource implements Serializable {
     @ApiModelProperty(value = "资源描述")
     private String message;
 
+    @ApiModelProperty(value = "创建时间", hidden = true)
     private LocalDateTime createTime;
 
+    @ApiModelProperty(value = "更新时间", hidden = true)
     private LocalDateTime updateTime;
 
-    @ApiModelProperty(value = "删除状态，0-未删除，1-已删除")
+    @TableLogic
+    @ApiModelProperty(value = "删除状态，0-未删除，1-已删除", hidden = true)
     private Integer deleteStatus;
 
 

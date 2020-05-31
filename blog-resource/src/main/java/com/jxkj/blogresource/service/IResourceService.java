@@ -1,12 +1,10 @@
 package com.jxkj.blogresource.service;
 
-import com.jxkj.blogresource.entity.Resource;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.jxkj.blogresource.entity.Resource;
 
 /**
- * <p>
- *  服务类
- * </p>
+ * 服务类
  *
  * @author GuJunBin
  * @since 2020-05-31
