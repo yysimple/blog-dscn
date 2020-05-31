@@ -17,8 +17,8 @@
         <module>blog-other</module>
         <module>blog-gateway</module>
         <module>blog-sms</module>
-        <module>blog_resource</module>
         <module>blog-system</module>
+        <module>blog-resource</module>
     </modules>
 
     <properties>
