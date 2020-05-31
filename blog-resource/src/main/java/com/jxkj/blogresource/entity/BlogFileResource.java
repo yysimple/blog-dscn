@@ -25,8 +25,8 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @TableName("t_resource")
-@ApiModel(value = "Resource对象", description = "资源表单")
-public class Resource implements Serializable {
+@ApiModel(value = "BlogFileResource对象", description = "资源表单")
+public class BlogFileResource implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

@@ -1,7 +1,7 @@
 package com.jxkj.blogresource.controller;
 
 
-import com.jxkj.blogresource.entity.Resource;
+import com.jxkj.blogresource.entity.BlogFileResource;
 import com.jxkj.blogresource.service.IResourceService;
 import com.jxkj.common.result.ResultBody;
 import com.jxkj.common.result.ResultBodyUtil;
@@ -33,8 +33,7 @@ public class ResourceController {
 
     @ApiOperation(value = "提交资源")
     @PostMapping("/saveResource")
-    public ResultBody saveResource(@RequestBody Resource resource) {
-        //TODO 文件传入
+    public ResultBody saveResource(@RequestBody BlogFileResource resource) {
         iResourceService.save(resource);
         return ResultBodyUtil.success();
     }

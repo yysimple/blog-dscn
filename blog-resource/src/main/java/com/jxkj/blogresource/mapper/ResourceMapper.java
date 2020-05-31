@@ -1,7 +1,7 @@
 package com.jxkj.blogresource.mapper;
 
-import com.jxkj.blogresource.entity.Resource;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.jxkj.blogresource.entity.BlogFileResource;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -11,6 +11,6 @@ import org.springframework.stereotype.Repository;
  * @since 2020-05-31
  */
 @Repository
-public interface ResourceMapper extends BaseMapper<Resource> {
+public interface ResourceMapper extends BaseMapper<BlogFileResource> {
 
 }
