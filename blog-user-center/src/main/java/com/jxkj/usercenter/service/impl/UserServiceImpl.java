@@ -1,6 +1,8 @@
 package com.jxkj.usercenter.service.impl;
 
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.json.JSONObject;
+import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -228,7 +230,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     public ResultBody saveBlogInfo(BlogInfoForm blogInfoForm, Long[] tagIds, Long typeId, Long userId) {
         blogInfoForm.setTUserId(userId);
         ResultBody resultBody = blogInfoFeignService.saveBlogInfo(blogInfoForm, tagIds, typeId);
-        if (resultBody.getData().equals(true)){
+        if ((boolean)resultBody.getData()){
             iUserLevelService.increaseIntegral(userId, BlogPointsEnum.ORIGINAL.getScore());
         }
         return ResultBodyUtil.success();
@@ -248,7 +250,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     @Transactional(isolation = Isolation.SERIALIZABLE)
     public ResultBody deleteBlogInfoById(Long userId, Long blogId) {
         ResultBody resultBody = blogInfoFeignService.deleteBlogInfoById(blogId);
-        if (resultBody.getData().equals(true)){
+        if ((boolean)resultBody.getData()){
             iUserLevelService.increaseIntegral(userId,BlogPointsEnum.DELETE_ORIGINAL.getScore());
         }
         return ResultBodyUtil.success();
