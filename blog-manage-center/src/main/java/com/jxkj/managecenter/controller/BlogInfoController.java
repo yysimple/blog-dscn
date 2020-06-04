@@ -77,8 +77,8 @@ public class BlogInfoController {
     @ApiOperation(value = "逻辑删除博客信息")
     @PostMapping("/deleteBlogInfoById")
     public ResultBody deleteBlogInfoById(@RequestParam("id") Long id) {
-        iBlogInfoService.removeById(id);
-        return ResultBodyUtil.success();
+        boolean remove = iBlogInfoService.removeById(id);
+        return ResultBodyUtil.success(remove);
     }
 
     @ApiOperation(value = "回收逻辑删除博客信息")
