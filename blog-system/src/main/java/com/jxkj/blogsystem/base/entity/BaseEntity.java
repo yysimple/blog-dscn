@@ -1,4 +1,4 @@
-package com.jxkj.base.entity;
+package com.jxkj.blogsystem.base.entity;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;

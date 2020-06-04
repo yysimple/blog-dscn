@@ -1,10 +1,10 @@
 package com.jxkj.usercenter.service;
 
 import com.jxkj.common.result.ResultBody;
-import com.jxkj.managecenter.entity.BlogInfo;
 import com.jxkj.usercenter.entity.User;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.jxkj.usercenter.entity.UserInfo;
+import com.jxkj.usercenter.form.BlogInfoForm;
 import com.jxkj.usercenter.form.UserForm;
 import io.swagger.models.auth.In;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  * @author GuJunBin
  * @since 2020-05-20
  */
-@FeignClient(value = "BLOG-CENTER")
+
 public interface IUserService extends IService<User> {
 
     /**
@@ -77,13 +77,22 @@ public interface IUserService extends IService<User> {
     ResultBody selectAll(Long current, Long size);
 
     /**
-     * 功能描述  添加博客并修改积分
+     * 功能描述  添加博客并积分
      * @author ysq
      * @Param [blogInfo 博客内容, tagIds 标签id , typeId 类型id, userId 用户id]
      * @return com.jxkj.common.result.ResultBody
      * @date 2020/5/29
      */
-    ResultBody saveBlogInfo(BlogInfo blogInfo, Long[] tagIds, Long typeId, Long userId);
+    ResultBody saveBlogInfo(BlogInfoForm blogInfoForm, Long[] tagIds, Long typeId, Long userId);
+
+    /**
+     * 功能描述  删除博客并减分
+     * @author ysq
+     * @Param [userId, blogId]
+     * @return com.jxkj.common.result.ResultBody
+     * @date 2020/6/4
+     */
+    ResultBody deleteBlogInfoById(Long userId, Long blogId);
 
     /**
      * 功能描述 查询用户详细信息

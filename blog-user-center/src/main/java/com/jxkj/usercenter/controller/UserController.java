@@ -1,11 +1,12 @@
 package com.jxkj.usercenter.controller;
 
 
+import com.baomidou.mybatisplus.extension.api.R;
 import com.jxkj.common.result.ResultBody;
 import com.jxkj.common.result.ResultBodyUtil;
-import com.jxkj.managecenter.entity.BlogInfo;
 import com.jxkj.usercenter.entity.User;
 import com.jxkj.usercenter.entity.UserInfo;
+import com.jxkj.usercenter.form.BlogInfoForm;
 import com.jxkj.usercenter.form.UserForm;
 import com.jxkj.usercenter.service.IUserService;
 
@@ -73,8 +74,14 @@ public class UserController {
 
     @ApiOperation(value = "保存博客并添加分数")
     @GetMapping("/saveBlogInfo")
-    public ResultBody saveBlogInfo(BlogInfo blogInfo, Long[] tagIds, Long typeId, Long userId){
-        return userService.saveBlogInfo(blogInfo, tagIds, typeId, userId);
+    public ResultBody saveBlogInfo(BlogInfoForm blogInfoForm, Long[] tagIds, Long typeId, Long userId){
+        return userService.saveBlogInfo(blogInfoForm, tagIds, typeId, userId);
+    }
+
+    @ApiOperation(value = "删除博客并减分数")
+    @GetMapping("/deleteBlogInfoById")
+    public ResultBody deleteBlogInfoById(Long userId, Long blogId){
+        return userService.deleteBlogInfoById(userId, blogId);
     }
 
     @ApiOperation(value = "根据用户id查询详细信息")
