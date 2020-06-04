@@ -126,7 +126,7 @@ public class BlogInfoServiceImpl extends ServiceImpl<BlogInfoMapper, BlogInfo> i
         blogInfoType.setTBlogInfoId(blogInfo.getId());
         blogInfoType.setTBlogTypeId(typeId);
         blogInfoTypeMapper.insert(blogInfoType);
-        return ResultBodyUtil.success();
+        return ResultBodyUtil.success(blogInfo.getBlogStatus() == 1);
     }
 
     @Override
