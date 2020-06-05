@@ -4,10 +4,10 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr: 123.57.26.161:5180
+        server-addr: 123.57.26.161:8848
       config:
         # 配置中心的地址
-        server-addr: 123.57.26.161:5180
+        server-addr: 123.57.26.161:8848
         # 指定配置文件格式，相当于gitee上的那个文件
         file-extension: yaml
         # 分组
