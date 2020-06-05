@@ -1,5 +1,7 @@
 spring:
   # 测试时，控制台彩色日志
+  profiles:
+    active: dev
   output:
     ansi:
       enabled: always
