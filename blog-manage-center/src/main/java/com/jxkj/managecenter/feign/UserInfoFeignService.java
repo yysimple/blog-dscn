@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  */
 @Component
 @FeignClient(value = "user-center",fallback = FallbackFactory.Default.class)
-public interface UserInfoService {
+public interface UserInfoFeignService {
 
     /**
      * 功能描述: 查询用户信息

@@ -1,5 +1,8 @@
 package com.jxkj.managecenter.service.impl;
 
+import cn.hutool.json.JSONObject;
+import cn.hutool.json.JSONUtil;
+import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -11,17 +14,21 @@ import com.jxkj.managecenter.entity.BlogInfo;
 import com.jxkj.managecenter.entity.BlogInfoTag;
 import com.jxkj.managecenter.entity.BlogInfoType;
 import com.jxkj.managecenter.entity.Favorites;
+import com.jxkj.managecenter.feign.UserInfoFeignService;
 import com.jxkj.managecenter.mapper.BlogInfoMapper;
 import com.jxkj.managecenter.mapper.BlogInfoTagMapper;
 import com.jxkj.managecenter.mapper.BlogInfoTypeMapper;
 import com.jxkj.managecenter.mapper.FavoritesMapper;
 import com.jxkj.managecenter.service.IBlogInfoService;
+import com.jxkj.managecenter.vo.BlogUserInfoVO;
+import com.jxkj.managecenter.vo.UserCommentVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -47,6 +54,9 @@ public class BlogInfoServiceImpl extends ServiceImpl<BlogInfoMapper, BlogInfo> i
 
     @Autowired
     private BlogInfoTypeMapper blogInfoTypeMapper;
+
+    @Autowired
+    private UserInfoFeignService userInfoFeignService;
 
     private QueryWrapper<BlogInfo> queryWrapper = new QueryWrapper<>();
     IPage<BlogInfo> page = new Page(1, 10);
@@ -190,8 +200,20 @@ public class BlogInfoServiceImpl extends ServiceImpl<BlogInfoMapper, BlogInfo> i
     }
 
     @Override
+    //TODO 分布式事务
     public ResultBody listOrderByViewNum() {
         List<BlogInfo> blogInfoList = blogInfoMapper.selectListOrderByViewNum();
-        return ResultBodyUtil.success(blogInfoList);
+        List<BlogUserInfoVO> blogUserInfoVOS = new ArrayList<>();
+        for (BlogInfo blogInfo : blogInfoList) {
+            BlogUserInfoVO blogUserInfoVO = new BlogUserInfoVO();
+            blogUserInfoVO.setBlogInfo(blogInfo);
+            ResultBody resultBody = userInfoFeignService.selectById(blogInfo.getTUserId());
+            Object data = resultBody.getData();
+            JSONObject jsonObject = JSONUtil.parseObj(data, false);
+            UserCommentVO userCommentVO = JSON.parseObject(jsonObject.toString(), UserCommentVO.class);
+            blogUserInfoVO.setUser(userCommentVO);
+            blogUserInfoVOS.add(blogUserInfoVO);
+        }
+        return ResultBodyUtil.success(blogUserInfoVOS);
     }
 }
