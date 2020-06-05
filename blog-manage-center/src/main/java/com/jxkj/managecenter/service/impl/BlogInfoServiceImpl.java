@@ -21,7 +21,7 @@ import com.jxkj.managecenter.mapper.BlogInfoTypeMapper;
 import com.jxkj.managecenter.mapper.FavoritesMapper;
 import com.jxkj.managecenter.service.IBlogInfoService;
 import com.jxkj.managecenter.vo.BlogUserInfoVO;
-import com.jxkj.managecenter.vo.UserCommentVO;
+import com.jxkj.managecenter.vo.UserInfoVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -210,8 +210,8 @@ public class BlogInfoServiceImpl extends ServiceImpl<BlogInfoMapper, BlogInfo> i
             ResultBody resultBody = userInfoFeignService.selectById(blogInfo.getTUserId());
             Object data = resultBody.getData();
             JSONObject jsonObject = JSONUtil.parseObj(data, false);
-            UserCommentVO userCommentVO = JSON.parseObject(jsonObject.toString(), UserCommentVO.class);
-            blogUserInfoVO.setUser(userCommentVO);
+            UserInfoVO userInfoVO = JSON.parseObject(jsonObject.toString(), UserInfoVO.class);
+            blogUserInfoVO.setUser(userInfoVO);
             blogUserInfoVOS.add(blogUserInfoVO);
         }
         return ResultBodyUtil.success(blogUserInfoVOS);

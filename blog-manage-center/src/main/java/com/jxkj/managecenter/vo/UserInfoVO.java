@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
  * @Version 1.0
  */
 @Data
-public class UserCommentVO implements Serializable {
+public class UserInfoVO implements Serializable {
 
     private Long id;
 

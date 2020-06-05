@@ -120,7 +120,7 @@ public class BlogInfoController {
     }
 
     @ApiOperation(value = "查询访问量最高的10条博客并排序")
-    @PostMapping("/listOrderByViewNum")
+    @GetMapping("/listOrderByViewNum")
     public ResultBody listOrderByViewNum() {
         return iBlogInfoService.listOrderByViewNum();
     }
