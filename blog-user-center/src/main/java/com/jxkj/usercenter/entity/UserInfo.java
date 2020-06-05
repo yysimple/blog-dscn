@@ -32,6 +32,9 @@ public class UserInfo extends BaseEntity implements Serializable {
     @ApiModelProperty(value = "真实姓名")
     private String realName;
 
+    @ApiModelProperty(value = "头像")
+    private String avatarUrl;
+
     @ApiModelProperty(value = "昵称")
     private String nickname;
 
