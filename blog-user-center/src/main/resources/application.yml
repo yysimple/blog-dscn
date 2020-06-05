@@ -23,3 +23,7 @@ pagehelper:
   params: count=countSql
 swagger2:
   enable: true
+
+# 消费者将去访问微服务的名称
+service-url:
+  nacos-user-service: http://blog-center

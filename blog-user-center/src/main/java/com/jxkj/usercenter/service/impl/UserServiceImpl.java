@@ -1,6 +1,8 @@
 package com.jxkj.usercenter.service.impl;
 
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.json.JSONObject;
+import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -8,16 +10,18 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.jxkj.common.result.ResultBody;
 import com.jxkj.common.result.ResultBodyUtil;
 import com.jxkj.common.result.ResultTypeEnum;
-import com.jxkj.managecenter.entity.BlogInfo;
-import com.jxkj.managecenter.service.IBlogInfoService;
+import com.jxkj.usercenter.constant.enums.BlogPointsEnum;
 import com.jxkj.usercenter.entity.User;
 import com.jxkj.usercenter.entity.UserLevel;
 import com.jxkj.usercenter.entity.UserRole;
+import com.jxkj.usercenter.fegin.BlogInfoFeignService;
+import com.jxkj.usercenter.form.BlogInfoForm;
 import com.jxkj.usercenter.form.UserForm;
 import com.jxkj.usercenter.mapper.UserLevelMapper;
 import com.jxkj.usercenter.mapper.UserMapper;
 import com.jxkj.usercenter.mapper.UserRoleMapper;
 import com.jxkj.usercenter.service.IUserInfoService;
+import com.jxkj.usercenter.service.IUserLevelService;
 import com.jxkj.usercenter.service.IUserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.extern.slf4j.Slf4j;
@@ -40,6 +44,7 @@ import java.util.List;
  */
 @Service
 @Slf4j
+
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IUserService {
 
     public static final Long DEFAULT_PERMISSIONS = 2L;
@@ -54,21 +59,49 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     private UserLevelMapper userLevelMapper;
 
     @Autowired
+    private IUserLevelService iUserLevelService;
+
+    @Autowired
     private IUserInfoService iUserInfoService;
+
+    @Autowired
+    private BlogInfoFeignService blogInfoFeignService;
 
 
     private QueryWrapper<User> queryWrapper = new QueryWrapper<>();
     IPage<User> page = new Page(1, 10);
 
-    /** 
+    /**
+     * 功能描述 用户登录
+     * @author ysq
+     * @param username, password
+     * @return com.jxkj.common.result.ResultBody
+     * @date 2020/5/23
+     */
+    @Override
+    public ResultBody userLogin(String username, String password) {
+        QueryWrapper<User> queryWrapper = Wrappers.query();
+        queryWrapper.eq("username", username).last("limit 1");
+        User user = userMapper.selectOne(queryWrapper);
+        if (null == user) {
+            return ResultBodyUtil.error(ResultTypeEnum.USER_NOT_EXIST.getCode(),
+                    ResultTypeEnum.USER_NOT_EXIST.getMsg());
+        }
+        if (!user.getPassword().equals(password)) {
+            return ResultBodyUtil.error(ResultTypeEnum.PASSWORD_NOT_TRUE.getCode(),
+                    ResultTypeEnum.PASSWORD_NOT_TRUE.getMsg());
+        }
+        return ResultBodyUtil.success(user);
+    }
+    /**
      * 功能描述 用户注册
      * @author ysq
      * @param userForm
      * @return com.jxkj.common.result.ResultBody
      * @date 2020/5/27
      */
-    @Transactional(isolation = Isolation.SERIALIZABLE)
     @Override
+    @Transactional(isolation = Isolation.SERIALIZABLE)
     public ResultBody userRegister(UserForm userForm) {
         if (StrUtil.hasBlank(userForm.getUser().getUsername())) {
             return ResultBodyUtil.error(ResultTypeEnum.USERNAME_NOT_EMPTY.getCode(),
@@ -101,28 +134,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         userLevel.setTUserId(userId);
         userLevelMapper.insert(userLevel);
         return ResultBodyUtil.success();
-    }
-    /**
-     * 功能描述 用户登录
-     * @author ysq
-     * @param username, password
-     * @return com.jxkj.common.result.ResultBody
-     * @date 2020/5/23
-     */
-    @Override
-    public ResultBody userLogin(String username, String password) {
-        QueryWrapper<User> queryWrapper = Wrappers.query();
-        queryWrapper.eq("username", username).last("limit 1");
-        User user = userMapper.selectOne(queryWrapper);
-        if (null == user) {
-            return ResultBodyUtil.error(ResultTypeEnum.USER_NOT_EXIST.getCode(),
-                    ResultTypeEnum.USER_NOT_EXIST.getMsg());
-        }
-        if (!user.getPassword().equals(password)) {
-            return ResultBodyUtil.error(ResultTypeEnum.PASSWORD_NOT_TRUE.getCode(),
-                    ResultTypeEnum.PASSWORD_NOT_TRUE.getMsg());
-        }
-        return ResultBodyUtil.success(user);
     }
 
     /**
@@ -207,12 +218,52 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     }
 
 
+    /**
+     * 功能描述   添加博客并加分
+     * @author ysq
+     * @Param [blogInfoForm, tagIds, typeId, userId]
+     * @return com.jxkj.common.result.ResultBody
+     * @date 2020/6/4
+     */
     @Override
-    public ResultBody saveBlogInfo(BlogInfo blogInfo, Long[] tagIds, Long typeId, Long userId) {
-
-        return null;
+    @Transactional(isolation = Isolation.SERIALIZABLE)
+    public ResultBody saveBlogInfo(BlogInfoForm blogInfoForm, Long[] tagIds, Long typeId, Long userId) {
+        blogInfoForm.setTUserId(userId);
+        ResultBody resultBody = blogInfoFeignService.saveBlogInfo(blogInfoForm, tagIds, typeId);
+        if ((boolean)resultBody.getData()){
+            iUserLevelService.increaseIntegral(userId, BlogPointsEnum.ORIGINAL.getScore());
+        }
+        return ResultBodyUtil.success();
     }
 
+    /**
+     * 功能描述  删除博客并减分
+     *
+     * @param userId
+     * @param blogId
+     * @return com.jxkj.common.result.ResultBody
+     * @author ysq
+     * @Param [userId, blogId]
+     * @date 2020/6/4
+     */
+    @Override
+    @Transactional(isolation = Isolation.SERIALIZABLE)
+    public ResultBody deleteBlogInfoById(Long userId, Long blogId) {
+        ResultBody resultBody = blogInfoFeignService.deleteBlogInfoById(blogId);
+        if ((boolean)resultBody.getData()){
+            iUserLevelService.increaseIntegral(userId,BlogPointsEnum.DELETE_ORIGINAL.getScore());
+        }
+        return ResultBodyUtil.success();
+    }
+
+
+    /**
+     * 功能描述  查询用户详细信息
+     * @author ysq
+     * @Param [userId]
+     * @return com.jxkj.common.result.ResultBody
+     * @date 2020/6/4
+     */
     @Override
     public ResultBody selectUserInfoById(Long userId) {
         return ResultBodyUtil.success(userMapper.selectUserInfoById(userId));
