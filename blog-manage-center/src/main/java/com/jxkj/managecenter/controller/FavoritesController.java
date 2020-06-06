@@ -42,8 +42,8 @@ public class FavoritesController {
 
     @ApiOperation(value = "删除收藏夹")
     @PostMapping("/deleteById")
-    public ResultBody deleteById(@RequestParam("id") Long id) {
-        iFavoritesService.deleteById(id);
+    public ResultBody deleteById(@RequestParam("id") Long id, @RequestParam("userId") Long userId) {
+        iFavoritesService.deleteById(id, userId);
         return ResultBodyUtil.success();
     }
 }

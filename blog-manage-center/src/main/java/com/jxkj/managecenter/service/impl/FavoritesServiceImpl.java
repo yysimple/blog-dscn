@@ -5,9 +5,9 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.jxkj.common.result.ResultBody;
 import com.jxkj.common.result.ResultBodyUtil;
 import com.jxkj.common.result.ResultTypeEnum;
-import com.jxkj.managecenter.entity.BlogInfo;
+import com.jxkj.managecenter.entity.BlogFavoritesUser;
 import com.jxkj.managecenter.entity.Favorites;
-import com.jxkj.managecenter.mapper.BlogInfoMapper;
+import com.jxkj.managecenter.mapper.BlogFavoritesUserMapper;
 import com.jxkj.managecenter.mapper.FavoritesMapper;
 import com.jxkj.managecenter.service.IFavoritesService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +32,7 @@ public class FavoritesServiceImpl extends ServiceImpl<FavoritesMapper, Favorites
     private FavoritesMapper favoritesMapper;
 
     @Autowired
-    private BlogInfoMapper blogInfoMapper;
+    private BlogFavoritesUserMapper blogFavoritesUserMapper;
 
     @Autowired
     private IFavoritesService iFavoritesService;
@@ -41,8 +41,8 @@ public class FavoritesServiceImpl extends ServiceImpl<FavoritesMapper, Favorites
 
     @Override
     public ResultBody findExistFavorites(Favorites favorites) {
-        List<Favorites> favoritesName = favoritesMapper.selectList(queryWrapper.eq("favorites_name", favorites.getTUserId()));
-        boolean exist = favoritesName.stream().anyMatch(u -> u.getFavoritesName().equalsIgnoreCase(favorites.getFavoritesName()));
+        List<Favorites> favoritesList = favoritesMapper.selectList(queryWrapper.eq("t_user_id", favorites.getTUserId()));
+        boolean exist = favoritesList.stream().anyMatch(u -> u.getFavoritesName().equalsIgnoreCase(favorites.getFavoritesName()));
         if (!exist) {
             iFavoritesService.saveOrUpdate(favorites);
             return ResultBodyUtil.success();
@@ -59,13 +59,16 @@ public class FavoritesServiceImpl extends ServiceImpl<FavoritesMapper, Favorites
 
     @Override
     @Transactional(isolation = Isolation.SERIALIZABLE)
-    public ResultBody deleteById(Long id) {
-        favoritesMapper.deleteById(id);
-        QueryWrapper<BlogInfo> queryWrapper = new QueryWrapper<>();
-        List<BlogInfo> blogInfoList = blogInfoMapper.selectList(queryWrapper.eq("t_favorites_id", id));
-        for (BlogInfo blogInfo : blogInfoList) {
-            blogInfo.setTFavoritesId(0L);
-            blogInfoMapper.updateById(blogInfo);
+    public ResultBody deleteById(Long id, Long userId) {
+        Favorites favorites = favoritesMapper.selectById(id);
+        if (favorites.getTUserId().equals(userId)){
+            favoritesMapper.deleteById(id);
+        }
+        QueryWrapper<BlogFavoritesUser> queryWrapper = new QueryWrapper<>();
+        List<BlogFavoritesUser> favoritesUserList = blogFavoritesUserMapper.selectList(queryWrapper.eq("favorites_id", id).eq("user_id", userId));
+        //TODO SQLSyntaxErrorException
+        if (favoritesUserList != null){
+            blogFavoritesUserMapper.deleteBatchIds(favoritesUserList);
         }
         return ResultBodyUtil.success();
     }

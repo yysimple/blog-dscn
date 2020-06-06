@@ -52,13 +52,14 @@ public interface IBlogInfoService extends IService<BlogInfo> {
     ResultBody findIssueBlog(String key);
 
     /**
-     * 功能描述: 点赞
+     * 功能描述: 点赞或取消点赞
      *
      * @param id
+     * @param userId
      * @return com.jxkj.common.result.ResultBody
      * @author GuJunBin
      */
-    ResultBody addLikeNum(Long id);
+    ResultBody addLikeNum(Long id,Long userId);
 
     /**
      * 功能描述: 访问
@@ -70,15 +71,15 @@ public interface IBlogInfoService extends IService<BlogInfo> {
     ResultBody addViewNum(Long id);
 
     /**
-     * 功能描述: 收藏
+     * 功能描述: 收藏或取消收藏
      *
      * @param blogId
-     * @param favoritesId
      * @param userId
+     * @param favoritesId
      * @return com.jxkj.common.result.ResultBody
      * @author GuJunBin
      */
-    ResultBody favorites(Long blogId, Long favoritesId, Long userId);
+    ResultBody favorites(Long blogId, Long userId, Long favoritesId);
 
     /**
      * 功能描述: 保存博客信息

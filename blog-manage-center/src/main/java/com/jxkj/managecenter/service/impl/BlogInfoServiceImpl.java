@@ -9,16 +9,9 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.jxkj.common.result.ResultBody;
 import com.jxkj.common.result.ResultBodyUtil;
-import com.jxkj.common.result.ResultTypeEnum;
-import com.jxkj.managecenter.entity.BlogInfo;
-import com.jxkj.managecenter.entity.BlogInfoTag;
-import com.jxkj.managecenter.entity.BlogInfoType;
-import com.jxkj.managecenter.entity.Favorites;
+import com.jxkj.managecenter.entity.*;
 import com.jxkj.managecenter.feign.UserInfoFeignService;
-import com.jxkj.managecenter.mapper.BlogInfoMapper;
-import com.jxkj.managecenter.mapper.BlogInfoTagMapper;
-import com.jxkj.managecenter.mapper.BlogInfoTypeMapper;
-import com.jxkj.managecenter.mapper.FavoritesMapper;
+import com.jxkj.managecenter.mapper.*;
 import com.jxkj.managecenter.service.IBlogInfoService;
 import com.jxkj.managecenter.vo.BlogUserInfoVO;
 import com.jxkj.managecenter.vo.UserInfoVO;
@@ -47,7 +40,10 @@ public class BlogInfoServiceImpl extends ServiceImpl<BlogInfoMapper, BlogInfo> i
     private BlogInfoMapper blogInfoMapper;
 
     @Autowired
-    private FavoritesMapper favoritesMapper;
+    private BlogLikeUserMapper blogLikeUserMapper;
+
+    @Autowired
+    private BlogFavoritesUserMapper blogFavoritesUserMapper;
 
     @Autowired
     private BlogInfoTagMapper blogInfoTagMapper;
@@ -92,9 +88,21 @@ public class BlogInfoServiceImpl extends ServiceImpl<BlogInfoMapper, BlogInfo> i
     }
 
     @Override
-    public ResultBody addLikeNum(Long id) {
+    @Transactional(isolation = Isolation.SERIALIZABLE)
+    public ResultBody addLikeNum(Long id, Long userId) {
         BlogInfo blogInfo = blogInfoMapper.selectById(id);
-        blogInfo.setLikeNum(blogInfo.getLikeNum() + 1);
+        QueryWrapper<BlogLikeUser> queryWrapper = new QueryWrapper<>();
+        BlogLikeUser likeUser = blogLikeUserMapper.selectOne(queryWrapper.eq("blog_id", id).eq("user_id", userId));
+        if (likeUser == null) {
+            blogInfo.setLikeNum(blogInfo.getLikeNum() + 1);
+            BlogLikeUser blogLikeUser = new BlogLikeUser();
+            blogLikeUser.setBlogId(id);
+            blogLikeUser.setUserId(userId);
+            blogLikeUserMapper.insert(blogLikeUser);
+        } else {
+            blogInfo.setLikeNum(blogInfo.getLikeNum() - 1);
+            blogLikeUserMapper.deleteById(likeUser.getId());
+        }
         blogInfoMapper.updateById(blogInfo);
         return ResultBodyUtil.success();
     }
@@ -108,17 +116,19 @@ public class BlogInfoServiceImpl extends ServiceImpl<BlogInfoMapper, BlogInfo> i
     }
 
     @Override
-    public ResultBody favorites(Long blogId, Long favoritesId, Long userId) {
-        QueryWrapper<Favorites> wrapper = new QueryWrapper<>();
-        BlogInfo blogInfo = blogInfoMapper.selectById(blogId);
-        List<Favorites> favorites = favoritesMapper.selectList(wrapper.eq("t_user_id", userId));
-        boolean exist = favorites.stream().anyMatch(u -> u.getId().equals(favoritesId));
-        if (exist) {
-            blogInfo.setTFavoritesId(favoritesId);
-            return ResultBodyUtil.success();
+    public ResultBody favorites(Long blogId, Long userId, Long favoritesId) {
+        QueryWrapper<BlogFavoritesUser> wrapper = new QueryWrapper<>();
+        BlogFavoritesUser favoritesUser = blogFavoritesUserMapper.selectOne(wrapper.eq("blog_id", blogId).eq("favorites_id", favoritesId).eq("user_id", userId));
+        if (favoritesUser == null) {
+            BlogFavoritesUser blogFavoritesUser = new BlogFavoritesUser();
+            blogFavoritesUser.setBlogId(blogId);
+            blogFavoritesUser.setUserId(userId);
+            blogFavoritesUser.setFavoritesId(favoritesId);
+            blogFavoritesUserMapper.insert(blogFavoritesUser);
         } else {
-            return ResultBodyUtil.error(ResultTypeEnum.Favorites_NOT_EXIST.getCode(), ResultTypeEnum.Favorites_NOT_EXIST.getMsg());
+            blogFavoritesUserMapper.deleteById(favoritesUser.getId());
         }
+        return ResultBodyUtil.success();
     }
 
     @Override

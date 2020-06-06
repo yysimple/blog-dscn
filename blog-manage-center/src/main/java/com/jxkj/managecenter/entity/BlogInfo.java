@@ -41,10 +41,8 @@ public class BlogInfo extends BaseEntity implements Serializable {
     @ApiModelProperty(value = "点赞数")
     private Integer likeNum;
 
+    @ApiModelProperty(value = "博客URL地址")
     private String blogLinkUrl;
-
-    @ApiModelProperty(value = "关联收藏夹id")
-    private Long tFavoritesId;
 
     @ApiModelProperty(value = "用户id")
     private Long tUserId;

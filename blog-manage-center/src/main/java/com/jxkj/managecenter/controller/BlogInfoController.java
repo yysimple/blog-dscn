@@ -93,10 +93,10 @@ public class BlogInfoController {
         return iBlogInfoService.removeBlogInfoById(id);
     }
 
-    @ApiOperation(value = "点赞")
+    @ApiOperation(value = "点赞/取消点赞")
     @PostMapping("/likeNum")
-    public ResultBody likeNum(@RequestParam("id") Long id) {
-        return iBlogInfoService.addLikeNum(id);
+    public ResultBody likeNum(@RequestParam("id") Long id,@RequestParam("userId") Long userId) {
+        return iBlogInfoService.addLikeNum(id , userId);
     }
 
     @ApiOperation(value = "访问")
@@ -105,12 +105,12 @@ public class BlogInfoController {
         return iBlogInfoService.addViewNum(id);
     }
 
-    @ApiOperation(value = "收藏")
+    @ApiOperation(value = "收藏/取消收藏")
     @PostMapping("/favorites")
     public ResultBody favorites(@RequestParam("blogId") Long blogId,
-                                @RequestParam("favoritesId") Long favoritesId,
-                                @RequestParam("userId") Long userId) {
-        return iBlogInfoService.favorites(blogId, favoritesId, userId);
+                                @RequestParam("userId") Long userId,
+                                @RequestParam("favoritesId") Long favoritesId) {
+        return iBlogInfoService.favorites(blogId, userId, favoritesId);
     }
 
     @ApiOperation(value = "查询博客和标签信息")

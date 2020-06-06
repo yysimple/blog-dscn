@@ -19,7 +19,6 @@ public enum ResultTypeEnum {
      *
      */
     ALREADY_EXIST(101,"名称已存在"),
-    Favorites_NOT_EXIST(102,"收藏夹不存在"),
     CAN_NOT_DELETE(103,"资源被引用,不能删除"),
 
     FILE_TOO_LARGE(501, "文件过大, 请从新上传（小于100MB）"),
