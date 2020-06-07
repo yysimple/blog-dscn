@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -65,10 +66,13 @@ public class FavoritesServiceImpl extends ServiceImpl<FavoritesMapper, Favorites
             favoritesMapper.deleteById(id);
         }
         QueryWrapper<BlogFavoritesUser> queryWrapper = new QueryWrapper<>();
-        List<BlogFavoritesUser> favoritesUserList = blogFavoritesUserMapper.selectList(queryWrapper.eq("favorites_id", id).eq("user_id", userId));
-        //TODO SQLSyntaxErrorException
-        if (favoritesUserList != null){
-            blogFavoritesUserMapper.deleteBatchIds(favoritesUserList);
+        List<BlogFavoritesUser> blogFavoritesUsers = blogFavoritesUserMapper.selectList(queryWrapper.eq("favorites_id", id).eq("user_id", userId));
+        if (blogFavoritesUsers != null){
+            ArrayList<Long> idList = new ArrayList<>();
+            for (BlogFavoritesUser blogFavoritesUser : blogFavoritesUsers) {
+                idList.add(blogFavoritesUser.getId());
+            }
+            blogFavoritesUserMapper.deleteBatchIds(idList);
         }
         return ResultBodyUtil.success();
     }
