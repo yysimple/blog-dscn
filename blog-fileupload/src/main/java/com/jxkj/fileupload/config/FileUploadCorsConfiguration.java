@@ -3,8 +3,9 @@ package com.jxkj.fileupload.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.cors.reactive.CorsWebFilter;
-import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
 
 /**
  * 功能描述：配置跨域放行
@@ -14,19 +15,24 @@ import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
  */
 @Configuration
 public class FileUploadCorsConfiguration {
+
     @Bean
-    public CorsWebFilter corsWebFilter(){
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+    public CorsFilter corsFilter() {
+        //1.添加CORS配置信息
+        final CorsConfiguration config = new CorsConfiguration();
+        config.addAllowedOrigin("*");
+        config.setAllowCredentials(true);
+        //3) 允许的请求方式
+        config.addAllowedMethod("*");
+        // 4）允许的头信息
+        config.addAllowedHeader("*");
+        //5,有效时长
+        // config.setMaxAge(3600L);
+        //2.添加映射路径，我们拦截一切请求
+        final org.springframework.web.cors.UrlBasedCorsConfigurationSource configSource = new UrlBasedCorsConfigurationSource();
+        configSource.registerCorsConfiguration("/**", config);
 
-        CorsConfiguration corsConfiguration = new CorsConfiguration();
-
-        //1、配置跨域
-        corsConfiguration.addAllowedHeader("*");
-        corsConfiguration.addAllowedMethod("*");
-        corsConfiguration.addAllowedOrigin("*");
-        corsConfiguration.setAllowCredentials(true);
-
-        source.registerCorsConfiguration("/**",corsConfiguration);
-        return new CorsWebFilter(source);
+        //3.返回新的CorsFilter.
+        return new CorsFilter(configSource);
     }
 }

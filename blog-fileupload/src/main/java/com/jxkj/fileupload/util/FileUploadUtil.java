@@ -43,7 +43,7 @@ public class FileUploadUtil {
             }
             String fileName = file.getOriginalFilename();
             String newName = dir + "/" + UUID.randomUUID().toString().replaceAll("-", "")
-                    + "-" + fileName;
+                    + "-dscn-" + fileName;
             //新的名称，pic会是bucket下的文件夹
             //获取file的inputStream
             InputStream inputStream = file.getInputStream();

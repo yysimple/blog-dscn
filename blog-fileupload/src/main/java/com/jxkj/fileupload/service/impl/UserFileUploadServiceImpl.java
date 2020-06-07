@@ -20,6 +20,10 @@ public class UserFileUploadServiceImpl implements UserFileUploadService {
 
     @Override
     public ResultBody userAvatarUpload(MultipartFile file) {
+        if (null == file) {
+            return ResultBodyUtil.error(ResultTypeEnum.PARAM_NOT_EMPTY.getCode(),
+                    ResultTypeEnum.PARAM_NOT_EMPTY.getMsg());
+        }
         if (file.getSize() > FileConstant.FILE_SIZE) {
             return ResultBodyUtil.error(ResultTypeEnum.FILE_TOO_LARGE.getCode(),
                     ResultTypeEnum.FILE_TOO_LARGE.getMsg());
