@@ -2,7 +2,7 @@ package com.jxkj.blogresource.controller;
 
 
 import com.jxkj.blogresource.entity.BlogFileResource;
-import com.jxkj.blogresource.service.IResourceService;
+import com.jxkj.blogresource.service.IBlogFileResourceService;
 import com.jxkj.common.result.ResultBody;
 import com.jxkj.common.result.ResultBodyUtil;
 import io.swagger.annotations.Api;
@@ -26,15 +26,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/resource")
 @Api(tags = "资源模块 接口")
 @Slf4j
-public class ResourceController {
+public class BlogFileResourceController {
 
     @Autowired
-    private IResourceService iResourceService;
+    private IBlogFileResourceService iBlogFileResourceService;
 
     @ApiOperation(value = "提交资源")
     @PostMapping("/saveResource")
     public ResultBody saveResource(@RequestBody BlogFileResource resource) {
-        iResourceService.save(resource);
+        iBlogFileResourceService.save(resource);
         return ResultBodyUtil.success();
     }
 

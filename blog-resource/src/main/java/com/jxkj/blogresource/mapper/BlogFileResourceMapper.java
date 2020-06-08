@@ -11,6 +11,6 @@ import org.springframework.stereotype.Repository;
  * @since 2020-05-31
  */
 @Repository
-public interface ResourceMapper extends BaseMapper<BlogFileResource> {
+public interface BlogFileResourceMapper extends BaseMapper<BlogFileResource> {
 
 }

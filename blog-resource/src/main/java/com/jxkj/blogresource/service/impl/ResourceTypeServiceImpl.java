@@ -56,13 +56,12 @@ public class ResourceTypeServiceImpl extends ServiceImpl<ResourceTypeMapper, Res
     }
 
     private List<ResourceType> getChildren(ResourceType root, List<ResourceType> all) {
-        List<ResourceType> children = all.stream().filter(categoryEntity -> {
-            return categoryEntity.getParentId().equals(root.getId());
-        }).map(categoryEntity -> {
-            //1、找到子菜单
-            categoryEntity.setChildren(getChildren(categoryEntity, all));
-            return categoryEntity;
-        }).collect(Collectors.toList());
+        List<ResourceType> children = all.stream().filter(categoryEntity ->
+                categoryEntity.getParentId().equals(root.getId())).map(categoryEntity -> {
+                    // 找到子菜单
+                    categoryEntity.setChildren(getChildren(categoryEntity, all));
+                    return categoryEntity;
+                }).collect(Collectors.toList());
         return children;
     }
 }

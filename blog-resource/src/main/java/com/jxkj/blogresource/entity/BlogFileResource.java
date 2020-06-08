@@ -12,6 +12,7 @@ import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * <p>
@@ -37,17 +38,17 @@ public class BlogFileResource implements Serializable {
     @ApiModelProperty(value = "资源文件路径")
     private String fileUrl;
 
-    @ApiModelProperty(value = "资源名")
+    @ApiModelProperty(value = "资源名称")
     private String resourceName;
 
-    @ApiModelProperty(value = "所属分类ID")
-    private Long typeId;
+    @ApiModelProperty(value = "资源所属类型")
+    private ResourceType resourceType;
 
     @ApiModelProperty(value = "所需积分")
     private Integer integral;
 
     @ApiModelProperty(value = "资源标签")
-    private String tag;
+    private List<String> tagList;
 
     @ApiModelProperty(value = "资源描述")
     private String message;

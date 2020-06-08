@@ -9,6 +9,6 @@ import com.jxkj.blogresource.entity.BlogFileResource;
  * @author GuJunBin
  * @since 2020-05-31
  */
-public interface IResourceService extends IService<BlogFileResource> {
+public interface IBlogFileResourceService extends IService<BlogFileResource> {
 
 }

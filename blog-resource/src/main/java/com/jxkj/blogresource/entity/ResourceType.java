@@ -23,7 +23,7 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @TableName("t_resource_type")
-@ApiModel(value = "ResourceType对象", description = "资源类型")
+@ApiModel(value = "ResourceType对象", description = "资源所属类型")
 public class ResourceType implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -32,7 +32,7 @@ public class ResourceType implements Serializable {
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
-    @ApiModelProperty(value = "资源类型名")
+    @ApiModelProperty(value = "资源所属类型名")
     private String typeName;
 
     @ApiModelProperty(value = "父分类ID")
