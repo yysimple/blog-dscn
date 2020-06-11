@@ -50,8 +50,8 @@
         tui.create_time,
         tui.update_time
         from t_user tu
-        left join to t_user_info tui on tui.t_user_id = tu.id
-        where tu.id = #{userId}
+        left outer join  t_user_info tui on tu.id = tui.t_user_id
+        where tu.id = #{userId};
     </select>
 
 </mapper>

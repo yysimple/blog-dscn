@@ -33,5 +33,5 @@ public interface UserMapper extends BaseMapper<User> {
      * @param userId
      * @return com.jxkj.usercenter.vo.UserInfoVo
      **/
-    UserInfoVo selectUserInfoById(Long userId);
+    User selectUserInfoById(Long userId);
 }
