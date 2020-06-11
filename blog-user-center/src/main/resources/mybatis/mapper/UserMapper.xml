@@ -7,7 +7,7 @@
         insert into t_user(username, password) values (#{username}, #{password});
     </insert>
 
-    <resultMap id="selectUserInfoByIdMap" type="com.jxkj.usercenter.vo.UserInfoVo">
+    <resultMap id="selectUserInfoByIdMap" type="com.jxkj.usercenter.entity.User">
         <id column="id" property="id"/>
         <result column="username" property="username"/>
         <result column="password" property="password"/>

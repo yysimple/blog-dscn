@@ -38,5 +38,7 @@ public class  User extends BaseEntity implements Serializable {
     @NotNull(message = "请输入密码")
     private String password;
 
+    @ApiModelProperty(value = "用户详细信息")
+    private UserInfo userInfo;
 
 }
