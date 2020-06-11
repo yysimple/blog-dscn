@@ -26,5 +26,12 @@ public interface UserMapper extends BaseMapper<User> {
      */
     void userRegister(User user);
 
+    /**
+     * 功能描述: 通过用户id查询其详细信息（帮少奇加的）
+     *
+     * @Author ysq
+     * @param userId
+     * @return com.jxkj.usercenter.vo.UserInfoVo
+     **/
     UserInfoVo selectUserInfoById(Long userId);
 }
