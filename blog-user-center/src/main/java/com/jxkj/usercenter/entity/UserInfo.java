@@ -73,4 +73,5 @@ public class UserInfo extends BaseEntity implements Serializable {
     private String remark;
 
     private Long tUserId;
+
 }

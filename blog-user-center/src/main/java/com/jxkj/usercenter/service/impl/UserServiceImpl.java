@@ -44,7 +44,6 @@ import java.util.List;
  */
 @Service
 @Slf4j
-
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IUserService {
 
     public static final Long DEFAULT_PERMISSIONS = 2L;

@@ -42,7 +42,4 @@ public class UserInfoController {
     public ResultBody update(UserInfo userInfo){
         return iUserInfoService.update(userInfo);
     }
-
-
-
 }

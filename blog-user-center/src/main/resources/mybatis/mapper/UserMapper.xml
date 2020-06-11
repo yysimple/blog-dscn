@@ -11,21 +11,23 @@
         <id column="id" property="id"/>
         <result column="username" property="username"/>
         <result column="password" property="password"/>
-        <result column="real_name" property="realName"/>
-        <result column="nickname" property="nickname"/>
-        <result column="birthday" property="birthday"/>
-        <result column="address" property="address"/>
-        <result column="email" property="email"/>
-        <result column="phone_number" property="phoneNumber"/>
-        <result column="gender" property="gender"/>
-        <result column="position" property="position"/>
-        <result column="company" property="company"/>
-        <result column="education" property="education"/>
-        <result column="industry" property="industry"/>
-        <result column="start_working_time" property="startWorkingTime"/>
-        <result column="remark" property="remark"/>
-        <result column="create_time" property="createTime"/>
-        <result column="update_time" property="updateTime"/>
+        <association property="userInfo"  javaType="com.jxkj.usercenter.entity.UserInfo">
+            <result column="real_name" property="realName"/>
+            <result column="nickname" property="nickname"/>
+            <result column="birthday" property="birthday"/>
+            <result column="address" property="address"/>
+            <result column="email" property="email"/>
+            <result column="phone_number" property="phoneNumber"/>
+            <result column="gender" property="gender"/>
+            <result column="position" property="position"/>
+            <result column="company" property="company"/>
+            <result column="education" property="education"/>
+            <result column="industry" property="industry"/>
+            <result column="start_working_time" property="startWorkingTime"/>
+            <result column="remark" property="remark"/>
+            <result column="create_time" property="createTime"/>
+            <result column="update_time" property="updateTime"/>
+        </association>
     </resultMap>
     <select id="selectUserInfoById" parameterType="Long" resultMap="selectUserInfoByIdMap">
         select
