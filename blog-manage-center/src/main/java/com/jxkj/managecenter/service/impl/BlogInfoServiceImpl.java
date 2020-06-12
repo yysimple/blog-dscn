@@ -15,6 +15,7 @@ import com.jxkj.managecenter.mapper.*;
 import com.jxkj.managecenter.service.IBlogInfoService;
 import com.jxkj.managecenter.vo.BlogUserInfoVO;
 import com.jxkj.managecenter.vo.UserInfoVO;
+import com.jxkj.managecenter.vo.UserVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -217,11 +218,11 @@ public class BlogInfoServiceImpl extends ServiceImpl<BlogInfoMapper, BlogInfo> i
         for (BlogInfo blogInfo : blogInfoList) {
             BlogUserInfoVO blogUserInfoVO = new BlogUserInfoVO();
             blogUserInfoVO.setBlogInfo(blogInfo);
-            ResultBody resultBody = userInfoFeignService.selectById(blogInfo.getTUserId());
+            ResultBody resultBody = userInfoFeignService.selectUserInfoById(blogInfo.getTUserId());
             Object data = resultBody.getData();
             JSONObject jsonObject = JSONUtil.parseObj(data, false);
-            UserInfoVO userInfoVO = JSON.parseObject(jsonObject.toString(), UserInfoVO.class);
-            blogUserInfoVO.setUser(userInfoVO);
+            UserVO userVO = JSON.parseObject(jsonObject.toString(), UserVO.class);
+            blogUserInfoVO.setUser(userVO);
             blogUserInfoVOS.add(blogUserInfoVO);
         }
         return ResultBodyUtil.success(blogUserInfoVOS);

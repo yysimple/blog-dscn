@@ -4,6 +4,7 @@ import com.jxkj.common.result.ResultBody;
 import com.jxkj.usercenter.entity.User;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.jxkj.usercenter.entity.UserInfo;
+import com.jxkj.usercenter.form.BlogInfoAndTagForm;
 import com.jxkj.usercenter.form.BlogInfoForm;
 import com.jxkj.usercenter.form.UserForm;
 import io.swagger.models.auth.In;
@@ -83,7 +84,7 @@ public interface IUserService extends IService<User> {
      * @return com.jxkj.common.result.ResultBody
      * @date 2020/5/29
      */
-    ResultBody saveBlogInfo(BlogInfoForm blogInfoForm, Long[] tagIds, Long typeId, Long userId);
+    ResultBody saveBlogInfo(BlogInfoAndTagForm blogInfoAndTagForm, Long typeId, Long userId);
 
     /**
      * 功能描述  删除博客并减分

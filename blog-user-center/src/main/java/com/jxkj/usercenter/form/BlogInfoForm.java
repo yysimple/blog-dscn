@@ -14,6 +14,7 @@ import java.util.List;
 @Data
 @ApiModel(value = "用户注册")
 public class BlogInfoForm {
+
     @ApiModelProperty(value = "博客标题")
     private String title;
 

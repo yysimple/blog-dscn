@@ -3,6 +3,7 @@ package com.jxkj.usercenter.controller;
 
 import com.jxkj.common.result.ResultBody;
 import com.jxkj.common.result.ResultBodyUtil;
+import com.jxkj.usercenter.form.BlogInfoAndTagForm;
 import com.jxkj.usercenter.form.BlogInfoForm;
 import com.jxkj.usercenter.form.UserForm;
 import com.jxkj.usercenter.service.IUserService;
@@ -71,8 +72,8 @@ public class UserController {
 
     @ApiOperation(value = "保存博客并添加分数")
     @PostMapping("/saveBlogInfo")
-    public ResultBody saveBlogInfo(BlogInfoForm blogInfoForm, Long[] tagIds, Long typeId, Long userId){
-        return userService.saveBlogInfo(blogInfoForm, tagIds, typeId, userId);
+    public ResultBody saveBlogInfo(@RequestBody BlogInfoAndTagForm blogInfoAndTagForm, Long typeId, Long userId){
+        return userService.saveBlogInfo(blogInfoAndTagForm, typeId, userId);
     }
 
     @ApiOperation(value = "删除博客并减分数")

@@ -14,6 +14,6 @@ public class BlogUserInfoVO {
 
     private BlogInfo blogInfo;
 
-    private UserInfoVO user;
+    private UserVO user;
 
 }

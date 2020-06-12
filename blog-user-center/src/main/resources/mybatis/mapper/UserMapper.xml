@@ -27,6 +27,7 @@
             <result column="remark" property="remark"/>
             <result column="create_time" property="createTime"/>
             <result column="update_time" property="updateTime"/>
+            <result column="avatar_url" property="avatarUrl"/>
         </association>
     </resultMap>
     <select id="selectUserInfoById" parameterType="Long" resultMap="selectUserInfoByIdMap">
@@ -48,7 +49,8 @@
         tui.start_working_time,
         tui.remark,
         tui.create_time,
-        tui.update_time
+        tui.update_time,
+        tui.avatar_url
         from t_user tu
         left outer join  t_user_info tui on tu.id = tui.t_user_id
         where tu.id = #{userId};

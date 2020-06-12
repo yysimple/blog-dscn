@@ -16,7 +16,7 @@ mybatis-plus:
   # mybatis 原生配置
   configuration:
     #mybatis-plus配置控制台打印完整带参数SQL语句
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    # log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
     map-underscore-to-camel-case: true
     lazy-loading-enabled: false
 

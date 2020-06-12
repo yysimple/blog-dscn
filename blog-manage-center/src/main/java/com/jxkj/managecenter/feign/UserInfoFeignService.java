@@ -26,4 +26,14 @@ public interface UserInfoFeignService {
      */
     @GetMapping("/user-info/selectById")
     ResultBody selectById(@RequestParam("id") Long id);
+
+    /**
+     * 功能描述: 关联用户及其详细信息
+     *
+     * @Author wcx
+     * @param userId
+     * @return com.jxkj.common.result.ResultBody
+     **/
+    @GetMapping("/user/selectUserInfoById")
+    ResultBody selectUserInfoById(@RequestParam("userId") Long userId);
 }

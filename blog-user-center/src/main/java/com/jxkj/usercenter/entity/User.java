@@ -1,5 +1,6 @@
 package com.jxkj.usercenter.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 
@@ -39,6 +40,7 @@ public class  User extends BaseEntity implements Serializable {
     private String password;
 
     @ApiModelProperty(value = "用户详细信息")
+    @TableField(select = false)
     private UserInfo userInfo;
 
 }

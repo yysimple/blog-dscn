@@ -15,6 +15,7 @@ import com.jxkj.usercenter.entity.User;
 import com.jxkj.usercenter.entity.UserLevel;
 import com.jxkj.usercenter.entity.UserRole;
 import com.jxkj.usercenter.fegin.BlogInfoFeignService;
+import com.jxkj.usercenter.form.BlogInfoAndTagForm;
 import com.jxkj.usercenter.form.BlogInfoForm;
 import com.jxkj.usercenter.form.UserForm;
 import com.jxkj.usercenter.mapper.UserLevelMapper;
@@ -226,8 +227,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
      */
     @Override
     @Transactional(isolation = Isolation.SERIALIZABLE)
-    public ResultBody saveBlogInfo(BlogInfoForm blogInfoForm, Long[] tagIds, Long typeId, Long userId) {
+    public ResultBody saveBlogInfo(BlogInfoAndTagForm blogInfoAndTagForm, Long typeId, Long userId) {
+        BlogInfoForm blogInfoForm = blogInfoAndTagForm.getBlogInfoForm();
         blogInfoForm.setTUserId(userId);
+        Long[] tagIds = blogInfoAndTagForm.getTagIds();
         ResultBody resultBody = blogInfoFeignService.saveBlogInfo(blogInfoForm, tagIds, typeId);
         if ((boolean)resultBody.getData()){
             iUserLevelService.increaseIntegral(userId, BlogPointsEnum.ORIGINAL.getScore());

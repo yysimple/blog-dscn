@@ -1,5 +1,6 @@
 package com.jxkj.managecenter.vo;
 
+import com.jxkj.managecenter.vo.base.BaseVO;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -8,23 +9,15 @@ import java.time.LocalDateTime;
 
 /**
  * 功能描述:
+ * 修改：抽离公共字段，增加头像字段
  *
  * @Author GuJunBin
  * @Version 1.0
  */
 @Data
-public class UserInfoVO implements Serializable {
+public class UserInfoVO extends BaseVO implements Serializable {
 
-    private Long id;
-
-    @ApiModelProperty(value = "创建时间")
-    private LocalDateTime createTime;
-
-    @ApiModelProperty(value = "更新时间")
-    private LocalDateTime updateTime;
-
-    @ApiModelProperty(value = "显示状态，0-未删除，1-已删除")
-    private Integer deleteStatus;
+    private String avatarUrl;
 
     @ApiModelProperty(value = "真实姓名")
     private String realName;
@@ -64,8 +57,5 @@ public class UserInfoVO implements Serializable {
 
     @ApiModelProperty(value = "个人简介")
     private String remark;
-
-    @ApiModelProperty(value = "用户id")
-    private Long tUserId;
 
 }
