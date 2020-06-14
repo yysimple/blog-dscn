@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
  */
 @Data
 @ApiModel(value = "查询用户详细信息")
-public class UserInfoVo {
+public class UserInfoVO {
     @ApiModelProperty(value = "id")
     private Long id;
     @ApiModelProperty(value = "用户名")

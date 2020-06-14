@@ -14,4 +14,6 @@ public class BlogInfoAndTagForm {
     private BlogInfoForm blogInfoForm;
 
     private Long[] tagIds;
+
+    private String[] tagNames;
 }

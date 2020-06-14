@@ -60,6 +60,14 @@ public class BlogInfoController {
         return iBlogInfoService.saveBlogInfo(blogInfo, tagIds, typeId);
     }
 
+    @ApiOperation(value = "保存博客信息通过标签名")
+    @PostMapping("/saveBlogInfoByTagNames")
+    public ResultBody saveBlogInfo(@RequestBody BlogInfo blogInfo,
+                                   @RequestParam("tagNames") String[]  tagNames,
+                                   @RequestParam("typeId") Long typeId) {
+        return iBlogInfoService.saveBlogInfo(blogInfo, tagNames, typeId);
+    }
+
     @ApiOperation(value = "更新博客信息")
     @PostMapping("/updateBlogInfo")
     public ResultBody updateBlogInfo(@RequestBody BlogInfo blogInfo,

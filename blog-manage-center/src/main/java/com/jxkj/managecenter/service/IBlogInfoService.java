@@ -93,6 +93,16 @@ public interface IBlogInfoService extends IService<BlogInfo> {
     ResultBody saveBlogInfo(BlogInfo blogInfo, Long[] tagIds, Long typeId);
 
     /**
+     * 功能描述: 保存博客信息，重写保存方法，用于判断数据库是否存在重名tagName
+     *
+     * @Author wcx
+     * @param blogInfo
+     * @param tagNames
+     * @param typeId
+     * @return com.jxkj.common.result.ResultBody
+     **/
+    ResultBody saveBlogInfo(BlogInfo blogInfo, String[] tagNames, Long typeId);
+    /**
      * 功能描述: 更新博客信息
      *
      * @param blogInfo

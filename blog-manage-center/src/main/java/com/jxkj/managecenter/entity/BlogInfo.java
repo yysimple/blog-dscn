@@ -51,7 +51,7 @@ public class BlogInfo extends BaseEntity implements Serializable {
     private Integer blogStatus;
 
     @ApiModelProperty(value = "博客标签信息", hidden = true)
-    @TableField(select = false)
+    @TableField(select = false, exist = false)
     private List<BlogInfoTag> blogInfoTags;
 
 }

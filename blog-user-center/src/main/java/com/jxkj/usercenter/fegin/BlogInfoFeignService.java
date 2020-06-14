@@ -25,7 +25,14 @@ public interface BlogInfoFeignService {
                             @RequestParam("tagIds") Long[] tagIds,
                             @RequestParam("typeId") Long typeId);
 
+    @ApiOperation(value = "保存博客信息")
+    @PostMapping("/blogInfo/saveBlogInfoByTagNames")
+    ResultBody saveBlogInfoByTagNames(@RequestBody BlogInfoForm blogInfoForm,
+                            @RequestParam("tagNames") String[] tagNames,
+                            @RequestParam("typeId") Long typeId);
+
     @ApiOperation(value = "逻辑删除博客信息")
     @PostMapping("/blogInfo/deleteBlogInfoById")
     ResultBody deleteBlogInfoById(@RequestParam("id") Long id);
+
 }

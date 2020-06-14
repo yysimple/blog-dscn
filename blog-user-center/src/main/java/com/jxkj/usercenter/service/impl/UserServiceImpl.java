@@ -1,12 +1,12 @@
 package com.jxkj.usercenter.service.impl;
 
 import cn.hutool.core.util.StrUtil;
-import cn.hutool.json.JSONObject;
-import cn.hutool.json.JSONUtil;
+import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.jxkj.common.constant.BlogStatusConstant;
 import com.jxkj.common.result.ResultBody;
 import com.jxkj.common.result.ResultBodyUtil;
 import com.jxkj.common.result.ResultTypeEnum;
@@ -25,9 +25,9 @@ import com.jxkj.usercenter.service.IUserInfoService;
 import com.jxkj.usercenter.service.IUserLevelService;
 import com.jxkj.usercenter.service.IUserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.jxkj.usercenter.vo.BlogInfoVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
@@ -236,6 +236,21 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
             iUserLevelService.increaseIntegral(userId, BlogPointsEnum.ORIGINAL.getScore());
         }
         return ResultBodyUtil.success();
+    }
+
+    @Override
+    @Transactional(isolation = Isolation.REPEATABLE_READ, rollbackFor = Exception.class)
+    public ResultBody saveBlogInfoByTagNames(BlogInfoAndTagForm blogInfoAndTagForm, Long typeId, Long userId) {
+        BlogInfoForm blogInfoForm = blogInfoAndTagForm.getBlogInfoForm();
+        blogInfoForm.setTUserId(userId);
+        String[] tagNames = blogInfoAndTagForm.getTagNames();
+        ResultBody resultBody = blogInfoFeignService.saveBlogInfoByTagNames(blogInfoForm, tagNames, typeId);
+        String text = JSON.toJSONString(resultBody.getData());
+        BlogInfoVO blogInfo = JSON.parseObject(text, BlogInfoVO.class);
+        if (blogInfo.getBlogStatus().equals(BlogStatusConstant.BLOG_PUBLIC)){
+            iUserLevelService.increaseIntegral(userId, BlogPointsEnum.ORIGINAL.getScore());
+        }
+        return ResultBodyUtil.success(blogInfo);
     }
 
     /**

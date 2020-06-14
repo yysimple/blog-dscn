@@ -5,6 +5,7 @@ import cn.hutool.json.JSONUtil;
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.jxkj.common.result.ResultBody;
@@ -13,15 +14,18 @@ import com.jxkj.managecenter.entity.*;
 import com.jxkj.managecenter.feign.UserInfoFeignService;
 import com.jxkj.managecenter.mapper.*;
 import com.jxkj.managecenter.service.IBlogInfoService;
+import com.jxkj.managecenter.vo.BlogInfoVO;
 import com.jxkj.managecenter.vo.BlogUserInfoVO;
 import com.jxkj.managecenter.vo.UserInfoVO;
 import com.jxkj.managecenter.vo.UserVO;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,6 +58,9 @@ public class BlogInfoServiceImpl extends ServiceImpl<BlogInfoMapper, BlogInfo> i
 
     @Autowired
     private UserInfoFeignService userInfoFeignService;
+
+    @Autowired
+    private BlogTagMapper blogTagMapper;
 
     private QueryWrapper<BlogInfo> queryWrapper = new QueryWrapper<>();
     IPage<BlogInfo> page = new Page(1, 10);
@@ -148,6 +155,46 @@ public class BlogInfoServiceImpl extends ServiceImpl<BlogInfoMapper, BlogInfo> i
         blogInfoType.setTBlogTypeId(typeId);
         blogInfoTypeMapper.insert(blogInfoType);
         return ResultBodyUtil.success(blogInfo.getBlogStatus() == 1);
+    }
+
+    /**
+     * 通过过滤标签名来进行发布博客
+     * @param blogInfo
+     * @param tagNames
+     * @param typeId
+     * @return
+     */
+    @Override
+    @Transactional(isolation = Isolation.REPEATABLE_READ, rollbackFor = Exception.class)
+    public ResultBody saveBlogInfo(BlogInfo blogInfo, String[] tagNames, Long typeId) {
+        blogInfoMapper.insertBlogInfo(blogInfo);
+        List<BlogTag> blogTags = blogTagMapper.selectList(null);
+        for (int i = 0; i < tagNames.length; i++) {
+            BlogInfoTag blogInfoTag = new BlogInfoTag();
+            int finalI = i;
+            boolean isExistTagName = blogTags.stream().anyMatch(blogTag -> blogTag.getTagName()
+                    .toLowerCase().equals(tagNames[finalI].toLowerCase()));
+            if (!isExistTagName) {
+                BlogTag blogTag = new BlogTag();
+                blogTag.setTagName(tagNames[finalI]);
+                blogTag.setCreateTime(LocalDateTime.now());
+                blogTag.setUpdateTime(LocalDateTime.now());
+                blogTagMapper.saveBlogTag(blogTag);
+                blogInfoTag.setTBlogInfoId(blogInfo.getId());
+                blogInfoTag.setTBlogTagId(blogTag.getId());
+            }else {
+                blogInfoTag.setTBlogInfoId(blogInfo.getId());
+                blogInfoTag.setTBlogTagId(blogTagMapper.findBlogTagByTagName(tagNames[i]).getId());
+            }
+            blogInfoTagMapper.insert(blogInfoTag);
+        }
+        BlogInfoType blogInfoType = new BlogInfoType();
+        blogInfoType.setTBlogInfoId(blogInfo.getId());
+        blogInfoType.setTBlogTypeId(typeId);
+        blogInfoTypeMapper.insert(blogInfoType);
+        BlogInfoVO blogInfoVO = new BlogInfoVO();
+        BeanUtils.copyProperties(blogInfo, blogInfoVO);
+        return ResultBodyUtil.success(blogInfoVO);
     }
 
     @Override

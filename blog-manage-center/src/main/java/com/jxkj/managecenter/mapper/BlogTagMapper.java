@@ -15,4 +15,21 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface BlogTagMapper extends BaseMapper<BlogTag> {
 
+    /**
+     * 功能描述: 保存博客信息，并主键回填
+     *
+     * @Author wcx
+     * @param blogTag
+     * @return void
+     **/
+    void saveBlogTag(BlogTag blogTag);
+
+    /**
+     * 功能描述: 通过标签名查找对应的博客标签对象
+     *
+     * @Author wcx
+     * @param tagName
+     * @return com.jxkj.managecenter.entity.BlogTag
+     **/
+    BlogTag findBlogTagByTagName(String tagName);
 }

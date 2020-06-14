@@ -14,6 +14,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public enum BlogPointsEnum {
 
+    /**
+     *
+     */
     ORIGINAL("原创", 10),
     REPRINT("转载", 2),
     DELETE_ORIGINAL("删除原创", -10),

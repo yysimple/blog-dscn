@@ -76,6 +76,14 @@ public class UserController {
         return userService.saveBlogInfo(blogInfoAndTagForm, typeId, userId);
     }
 
+    @ApiOperation(value = "保存博客并添加分数,过滤标签名")
+    @PostMapping("/saveBlogInfoByTagNames")
+    public ResultBody saveBlogInfoByTagNames(@RequestBody BlogInfoAndTagForm blogInfoAndTagForm, Long typeId, Long userId){
+        return userService.saveBlogInfoByTagNames(blogInfoAndTagForm, typeId, userId);
+    }
+
+
+
     @ApiOperation(value = "删除博客并减分数")
     @GetMapping("/deleteBlogInfoById")
     public ResultBody deleteBlogInfoById(Long userId, Long blogId){
