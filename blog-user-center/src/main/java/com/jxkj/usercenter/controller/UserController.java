@@ -8,6 +8,7 @@ import com.jxkj.usercenter.form.BlogInfoForm;
 import com.jxkj.usercenter.form.UserForm;
 import com.jxkj.usercenter.service.IUserService;
 
+import com.jxkj.usercenter.util.RandomCreateSixNumber;
 import io.swagger.annotations.Api;
 
 import io.swagger.annotations.ApiOperation;
@@ -92,7 +93,13 @@ public class UserController {
 
     @ApiOperation(value = "根据用户id查询详细信息")
     @GetMapping("/selectUserInfoById")
-    public  ResultBody selectUserInfoById(Long userId){
+    public ResultBody selectUserInfoById(Long userId){
         return userService.selectUserInfoById(userId);
+    }
+
+    @ApiOperation(value = "获取6位随机验证码")
+    @GetMapping("/getRandomSixNumber")
+    public ResultBody getRandomSixNumber(){
+       return ResultBodyUtil.success(RandomCreateSixNumber.getRandomSixNumber());
     }
 }
