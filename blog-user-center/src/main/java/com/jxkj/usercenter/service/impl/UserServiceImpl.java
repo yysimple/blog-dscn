@@ -244,7 +244,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         BlogInfoForm blogInfoForm = blogInfoAndTagForm.getBlogInfoForm();
         blogInfoForm.setTUserId(userId);
         String[] tagNames = blogInfoAndTagForm.getTagNames();
-        ResultBody resultBody = blogInfoFeignService.saveBlogInfoByTagNames(blogInfoForm, tagNames, typeId);
+        String[] categoryNames = blogInfoAndTagForm.getCategoryNames();
+        ResultBody resultBody = blogInfoFeignService.saveBlogInfoByTagNames(blogInfoForm, categoryNames, tagNames, typeId);
         String text = JSON.toJSONString(resultBody.getData());
         BlogInfoVO blogInfo = JSON.parseObject(text, BlogInfoVO.class);
         if (blogInfo.getBlogStatus().equals(BlogStatusConstant.BLOG_PUBLIC)){

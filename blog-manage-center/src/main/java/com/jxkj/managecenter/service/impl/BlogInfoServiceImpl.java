@@ -62,6 +62,12 @@ public class BlogInfoServiceImpl extends ServiceImpl<BlogInfoMapper, BlogInfo> i
     @Autowired
     private BlogTagMapper blogTagMapper;
 
+    @Autowired
+    private CategoryColumnMapper categoryColumnMapper;
+
+    @Autowired
+    private BlogInfoCategoryMapper blogInfoCategoryMapper;
+
     private QueryWrapper<BlogInfo> queryWrapper = new QueryWrapper<>();
     IPage<BlogInfo> page = new Page(1, 10);
 
@@ -158,15 +164,18 @@ public class BlogInfoServiceImpl extends ServiceImpl<BlogInfoMapper, BlogInfo> i
     }
 
     /**
-     * 通过过滤标签名来进行发布博客
+     * 功能描述: 保存博客
+     *
      * @param blogInfo
+     * @param categoryNames
      * @param tagNames
      * @param typeId
-     * @return
-     */
+     * @return com.jxkj.common.result.ResultBody
+     * @Author wcx
+     **/
     @Override
     @Transactional(isolation = Isolation.REPEATABLE_READ, rollbackFor = Exception.class)
-    public ResultBody saveBlogInfo(BlogInfo blogInfo, String[] tagNames, Long typeId) {
+    public ResultBody saveBlogInfo(BlogInfo blogInfo, String[] categoryNames, String[] tagNames, Long typeId) {
         blogInfoMapper.insertBlogInfo(blogInfo);
         List<BlogTag> blogTags = blogTagMapper.selectList(null);
         for (int i = 0; i < tagNames.length; i++) {
@@ -182,11 +191,32 @@ public class BlogInfoServiceImpl extends ServiceImpl<BlogInfoMapper, BlogInfo> i
                 blogTagMapper.saveBlogTag(blogTag);
                 blogInfoTag.setTBlogInfoId(blogInfo.getId());
                 blogInfoTag.setTBlogTagId(blogTag.getId());
-            }else {
+            } else {
                 blogInfoTag.setTBlogInfoId(blogInfo.getId());
                 blogInfoTag.setTBlogTagId(blogTagMapper.findBlogTagByTagName(tagNames[i]).getId());
             }
             blogInfoTagMapper.insert(blogInfoTag);
+        }
+        List<CategoryColumn> categoryColumns = categoryColumnMapper.selectList(null);
+        for (int i = 0; i < categoryNames.length; i++) {
+            BlogInfoCategory blogInfoCategory = new BlogInfoCategory();
+            int finalI = i;
+            boolean isExistCategoryName = categoryColumns.stream().anyMatch(categoryColumn -> categoryColumn
+                    .getCategoryName().toLowerCase().equals(categoryNames[finalI].toLowerCase()));
+            if (!isExistCategoryName) {
+                CategoryColumn categoryColumn = new CategoryColumn();
+                categoryColumn.setCategoryName(categoryNames[i]);
+                categoryColumn.setCreateTime(LocalDateTime.now());
+                categoryColumn.setUpdateTime(LocalDateTime.now());
+                categoryColumn.setTUserId(blogInfo.getTUserId());
+                categoryColumnMapper.saveCategoryColumn(categoryColumn);
+                blogInfoCategory.setTBlogInfoId(blogInfo.getId());
+                blogInfoCategory.setTCategoryColumnId(categoryColumn.getId());
+            }else {
+                blogInfoCategory.setTBlogInfoId(blogInfo.getId());
+                blogInfoCategory.setTCategoryColumnId(categoryColumnMapper.getCategoryByCategoryName(categoryNames[i]).getId());
+            }
+            blogInfoCategoryMapper.insert(blogInfoCategory);
         }
         BlogInfoType blogInfoType = new BlogInfoType();
         blogInfoType.setTBlogInfoId(blogInfo.getId());

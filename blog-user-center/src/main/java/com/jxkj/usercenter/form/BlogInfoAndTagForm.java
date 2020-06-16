@@ -16,4 +16,6 @@ public class BlogInfoAndTagForm {
     private Long[] tagIds;
 
     private String[] tagNames;
+
+    private String[] categoryNames;
 }

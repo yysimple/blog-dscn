@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jxkj.managecenter.mapper.CategoryColumnMapper">
+
+    <insert id="saveCategoryColumn" parameterType="com.jxkj.managecenter.entity.CategoryColumn"
+    keyProperty="id" useGeneratedKeys="true">
+        insert into t_category_column (category_name, create_time, update_time, t_user_id)
+        values (#{categoryName},#{createTime},#{updateTime},#{tUserId});
+    </insert>
+    <select id="getCategoryByCategoryName" parameterType="string" resultType="com.jxkj.managecenter.entity.CategoryColumn">
+        select * from t_category_column where category_name = #{categoryName};
+    </select>
+</mapper>

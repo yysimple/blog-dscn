@@ -59,14 +59,14 @@ public interface IBlogInfoService extends IService<BlogInfo> {
      * @return com.jxkj.common.result.ResultBody
      * @author GuJunBin
      */
-    ResultBody addLikeNum(Long id,Long userId);
+    ResultBody addLikeNum(Long id, Long userId);
 
     /**
      * 功能描述: 访问
      *
-     * @author GuJunBin
      * @param id
      * @return com.jxkj.common.result.ResultBody
+     * @author GuJunBin
      */
     ResultBody addViewNum(Long id);
 
@@ -95,13 +95,15 @@ public interface IBlogInfoService extends IService<BlogInfo> {
     /**
      * 功能描述: 保存博客信息，重写保存方法，用于判断数据库是否存在重名tagName
      *
-     * @Author wcx
      * @param blogInfo
+     * @param categoryNames
      * @param tagNames
      * @param typeId
      * @return com.jxkj.common.result.ResultBody
+     * @Author wcx
      **/
-    ResultBody saveBlogInfo(BlogInfo blogInfo, String[] tagNames, Long typeId);
+    ResultBody saveBlogInfo(BlogInfo blogInfo, String[] categoryNames, String[] tagNames, Long typeId);
+
     /**
      * 功能描述: 更新博客信息
      *
@@ -152,9 +154,9 @@ public interface IBlogInfoService extends IService<BlogInfo> {
     /**
      * 功能描述: 查询访问量最高的10条博客并排序
      *
-     * @author GuJunBin
      * @param
      * @return com.jxkj.common.result.ResultBody
+     * @author GuJunBin
      */
     ResultBody listOrderByViewNum();
 }

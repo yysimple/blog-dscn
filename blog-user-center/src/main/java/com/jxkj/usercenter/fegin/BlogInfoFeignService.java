@@ -25,11 +25,21 @@ public interface BlogInfoFeignService {
                             @RequestParam("tagIds") Long[] tagIds,
                             @RequestParam("typeId") Long typeId);
 
-    @ApiOperation(value = "保存博客信息")
+    /**
+     * 功能描述: 保存博客信息
+     *
+     * @param blogInfoForm
+     * @param categoryNames
+     * @param tagNames
+     * @param typeId
+     * @return com.jxkj.common.result.ResultBody
+     * @Author wcx
+     **/
     @PostMapping("/blogInfo/saveBlogInfoByTagNames")
     ResultBody saveBlogInfoByTagNames(@RequestBody BlogInfoForm blogInfoForm,
-                            @RequestParam("tagNames") String[] tagNames,
-                            @RequestParam("typeId") Long typeId);
+                                      @RequestParam("categoryNames") String[] categoryNames,
+                                      @RequestParam("tagNames") String[] tagNames,
+                                      @RequestParam("typeId") Long typeId);
 
     @ApiOperation(value = "逻辑删除博客信息")
     @PostMapping("/blogInfo/deleteBlogInfoById")
