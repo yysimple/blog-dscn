@@ -8,6 +8,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+import org.apache.ibatis.type.Alias;
 
 import java.io.Serializable;
 import java.util.List;
@@ -57,5 +58,8 @@ public class BlogInfo extends BaseEntity implements Serializable {
     @ApiModelProperty(value = "博客类型", hidden = true)
     @TableField(select = false, exist = false)
     private BlogType blogType;
+
+    @TableField(select = false, exist = false)
+    private List<CategoryColumn> categoryColumns;
 
 }

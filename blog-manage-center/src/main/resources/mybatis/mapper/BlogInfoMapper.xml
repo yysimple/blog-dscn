@@ -12,11 +12,47 @@
         <result column="create_time" property="createTime"/>
         <result column="update_time" property="updateTime"/>
         <result column="title" property="title"/>
+        <association property="blogType" column="id" javaType="blogType">
+            <id column="id" property="id"/>
+            <result column="type" property="type"/>
+        </association>
         <collection property="blogInfoTags" column="id"  ofType="com.jxkj.managecenter.entity.BlogTag">
             <id column="id" property="id"/>
             <result column="tag_name" property="tagName"/>
         </collection>
+        <collection property="categoryColumns" column="id" ofType="categoryColumn">
+            <id column="id" property="id"/>
+            <result column="category_name" property="categoryName"/>
+        </collection>
     </resultMap>
+
+    <select id="findBlogInfoAndTagsByBlogInfoId" parameterType="long" resultMap="findBlogInfoAndTagsByBlogInfoIdMap">
+        select
+            tbi.id,
+            tbi.content,
+            tbi.like_num,
+            tbi.blog_link_url,
+            tbi.blog_status,
+            tbi.page_view_num,
+            tbi.create_time,
+            tbi.update_time,
+            tbi.title,
+            tbt.id,
+            tbt.type,
+            tba.id,
+            tba.tag_name,
+            tcc.id,
+            tcc.category_name
+        from t_blog_info tbi
+        left outer join t_blog_info_tag tbit on tbi.id = tbit.t_blog_info_id
+        left outer join t_blog_tag tba on tbit.t_blog_tag_id = tba.id
+        left outer join t_blog_info_type tbi_type on tbi_type.t_blog_info_id = tbi.id
+        left outer join t_blog_type tbt on tbt.id = tbi_type.t_blog_type_id
+        left outer join t_blog_info_category tbic on tbic.t_blog_info_id = tbi.id
+        left outer join t_category_column tcc on tcc.id = tbic.t_category_column_id
+        where tbi.id = #{blogId}
+        ;
+    </select>
 
 
     <insert id="insertBlogInfo" parameterType="com.jxkj.managecenter.entity.BlogInfo"
@@ -30,26 +66,6 @@
         delete from t_blog_info where id = #{id}
     </delete>
 
-
-    <select id="findBlogInfoAndTagsByBlogInfoId" parameterType="long" resultMap="findBlogInfoAndTagsByBlogInfoIdMap">
-        select
-            tbi.id,
-            tbi.content,
-            tbi.like_num,
-            tbi.blog_link_url,
-            tbi.blog_status,
-            tbi.page_view_num,
-            tbi.create_time,
-            tbi.update_time,
-            tbi.title,
-            tba.id,
-            tba.tag_name
-        from t_blog_info tbi
-        left outer join t_blog_info_tag tbit on tbi.id = tbit.t_blog_info_id
-        left outer join t_blog_tag tba on tbit.t_blog_tag_id = tba.id
-        where tbi.id = #{blogId}
-        ;
-    </select>
     <select id="selectListOrderByViewNum" resultType="com.jxkj.managecenter.entity.BlogInfo">
         select * from t_blog_info where datediff(NOW(),update_time) &lt;= 7
         order by page_view_num DESC

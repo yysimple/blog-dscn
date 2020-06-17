@@ -6,6 +6,7 @@ import io.swagger.annotations.ApiModel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+import org.apache.ibatis.type.Alias;
 
 import java.util.Date;
 import java.io.Serializable;
@@ -20,6 +21,7 @@ import java.io.Serializable;
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @TableName("t_category_column")
+@Alias("categoryColumn")
 @ApiModel(value="分类专栏", description="分类专栏")
 public class CategoryColumn extends BaseEntity {
 
