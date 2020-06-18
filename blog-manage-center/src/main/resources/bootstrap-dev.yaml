@@ -14,3 +14,11 @@ spring:
         group: DEFAULT_GROUP
         # 命名空间
         namespace: 1e66063c-7c4f-4903-a84d-0640c25eec7c
+#  datasource:
+#    hikari:
+#      max-lifetime: 20000
+#      connection-timeout: 20000
+# 连接超时时间
+feign:
+  httpclient:
+    connection-timeout: 20000
