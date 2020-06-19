@@ -53,4 +53,13 @@ public interface BlogInfoMapper extends BaseMapper<BlogInfo> {
      * @author GuJunBin
      */
     List<BlogInfo> selectListOrderByViewNum();
+
+    /**
+     * 功能描述: 查询每篇博客的详细信息
+     *
+     * @Author wcx
+     * @param
+     * @return java.util.List<com.jxkj.managecenter.entity.BlogInfo>
+     **/
+    List<BlogInfo> findAllBlogDetails();
 }

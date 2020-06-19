@@ -23,7 +23,7 @@ import java.io.Serializable;
 @TableName("t_category_column")
 @Alias("categoryColumn")
 @ApiModel(value="分类专栏", description="分类专栏")
-public class CategoryColumn extends BaseEntity {
+public class CategoryColumn extends BaseEntity implements Serializable {
 
     private String categoryName;
 

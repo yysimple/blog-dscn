@@ -8,6 +8,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
+import java.io.Serializable;
+
 /**
  * 功能描述：
  *
@@ -19,7 +21,7 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 @TableName("t_blog_info_category")
 @ApiModel(value="关联对象", description="关联对象")
-public class BlogInfoCategory {
+public class BlogInfoCategory implements Serializable {
 
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;

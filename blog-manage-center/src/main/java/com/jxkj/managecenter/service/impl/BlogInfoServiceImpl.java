@@ -68,6 +68,9 @@ public class BlogInfoServiceImpl extends ServiceImpl<BlogInfoMapper, BlogInfo> i
     @Autowired
     private BlogInfoCategoryMapper blogInfoCategoryMapper;
 
+    @Autowired
+    private BlogTypeMapper blogTypeMapper;
+
     private QueryWrapper<BlogInfo> queryWrapper = new QueryWrapper<>();
     IPage<BlogInfo> page = new Page(1, 10);
 
@@ -222,8 +225,11 @@ public class BlogInfoServiceImpl extends ServiceImpl<BlogInfoMapper, BlogInfo> i
         blogInfoType.setTBlogInfoId(blogInfo.getId());
         blogInfoType.setTBlogTypeId(typeId);
         blogInfoTypeMapper.insert(blogInfoType);
+        BlogType blogType = blogTypeMapper.selectById(typeId);
+        String typeName = blogType.getType();
         BlogInfoVO blogInfoVO = new BlogInfoVO();
         BeanUtils.copyProperties(blogInfo, blogInfoVO);
+        blogInfoVO.setTypeName(typeName);
         return ResultBodyUtil.success(blogInfoVO);
     }
 

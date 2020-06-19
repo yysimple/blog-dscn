@@ -53,7 +53,7 @@ public class BlogInfo extends BaseEntity implements Serializable {
 
     @ApiModelProperty(value = "博客标签信息", hidden = true)
     @TableField(select = false, exist = false)
-    private List<BlogInfoTag> blogInfoTags;
+    private List<BlogTag> blogTags;
 
     @ApiModelProperty(value = "博客类型", hidden = true)
     @TableField(select = false, exist = false)
@@ -61,5 +61,9 @@ public class BlogInfo extends BaseEntity implements Serializable {
 
     @TableField(select = false, exist = false)
     private List<CategoryColumn> categoryColumns;
+
+    @TableField(select = false, exist = false)
+    private List<BlogLikeUser> blogLikeUsers;
+
 
 }

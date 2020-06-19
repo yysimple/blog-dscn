@@ -248,8 +248,18 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         ResultBody resultBody = blogInfoFeignService.saveBlogInfoByTagNames(blogInfoForm, categoryNames, tagNames, typeId);
         String text = JSON.toJSONString(resultBody.getData());
         BlogInfoVO blogInfo = JSON.parseObject(text, BlogInfoVO.class);
-        if (blogInfo.getBlogStatus().equals(BlogStatusConstant.BLOG_PUBLIC)){
+        System.out.println(blogInfo);
+        if (blogInfo.getBlogStatus().equals(BlogStatusConstant.BLOG_PUBLIC) &&
+                BlogPointsEnum.ORIGINAL.getDescription().equals(blogInfo.getTypeName())){
             iUserLevelService.increaseIntegral(userId, BlogPointsEnum.ORIGINAL.getScore());
+        } else if(blogInfo.getBlogStatus().equals(BlogStatusConstant.BLOG_PUBLIC) &&
+                BlogPointsEnum.REPRINT.getDescription().equals(blogInfo.getTypeName())){
+            iUserLevelService.increaseIntegral(userId, BlogPointsEnum.REPRINT.getScore());
+        } else if(blogInfo.getBlogStatus().equals(BlogStatusConstant.BLOG_PUBLIC) &&
+                BlogPointsEnum.TRANSLATION.getDescription().equals(blogInfo.getTypeName())) {
+            iUserLevelService.increaseIntegral(userId, BlogPointsEnum.TRANSLATION.getScore());
+        } else {
+            iUserLevelService.increaseIntegral(userId, BlogPointsEnum.OTHER.getScore());
         }
         return ResultBodyUtil.success(blogInfo);
     }

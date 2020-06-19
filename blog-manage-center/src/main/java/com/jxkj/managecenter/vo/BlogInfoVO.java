@@ -45,4 +45,6 @@ public class BlogInfoVO {
 
     @ApiModelProperty(value = "博客状态，0为草稿，1为发布")
     private Integer blogStatus;
+
+    private String typeName;
 }

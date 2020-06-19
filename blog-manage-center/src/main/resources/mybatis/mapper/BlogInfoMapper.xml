@@ -17,13 +17,17 @@
             <id column="id" property="id"/>
             <result column="type" property="type"/>
         </association>
-        <collection property="blogInfoTags" column="id"  ofType="com.jxkj.managecenter.entity.BlogTag">
+        <collection property="blogTags" column="id"  ofType="com.jxkj.managecenter.entity.BlogTag">
             <id column="id" property="id"/>
             <result column="tag_name" property="tagName"/>
         </collection>
         <collection property="categoryColumns" column="id" ofType="categoryColumn">
             <id column="id" property="id"/>
             <result column="category_name" property="categoryName"/>
+        </collection>
+        <collection property="blogLikeUsers" column="id" ofType="blogLikeUser">
+            <id column="tblu_id" property="id"/>
+            <result column="user_id" property="userId"/>
         </collection>
     </resultMap>
 
@@ -44,7 +48,9 @@
             tba.id,
             tba.tag_name,
             tcc.id,
-            tcc.category_name
+            tcc.category_name,
+            tblu.id as tblu_id,
+            tblu.user_id
         from t_blog_info tbi
         left outer join t_blog_info_tag tbit on tbi.id = tbit.t_blog_info_id
         left outer join t_blog_tag tba on tbit.t_blog_tag_id = tba.id
@@ -52,6 +58,7 @@
         left outer join t_blog_type tbt on tbt.id = tbi_type.t_blog_type_id
         left outer join t_blog_info_category tbic on tbic.t_blog_info_id = tbi.id
         left outer join t_category_column tcc on tcc.id = tbic.t_category_column_id
+        left outer join t_blog_like_user tblu on tblu.blog_id = tbi.id
         where tbi.id = #{blogId}
         ;
     </select>
@@ -72,5 +79,35 @@
         select * from t_blog_info where datediff(NOW(),update_time) &lt;= 7
         order by page_view_num DESC
         limit 10;
+    </select>
+
+    <select id="findAllBlogDetails" resultMap="findBlogInfoAndTagsByBlogInfoIdMap">
+        select
+            tbi.id,
+            tbi.content,
+            tbi.like_num,
+            tbi.blog_link_url,
+            tbi.blog_status,
+            tbi.page_view_num,
+            tbi.create_time,
+            tbi.update_time,
+            tbi.title,
+            tbi.t_user_id,
+            tbt.id,
+            tbt.type,
+            tba.id,
+            tba.tag_name,
+            tcc.id,
+            tcc.category_name,
+            tblu.id as tblu_id,
+            tblu.user_id
+        from t_blog_info tbi
+        left outer join t_blog_info_tag tbit on tbi.id = tbit.t_blog_info_id
+        left outer join t_blog_tag tba on tbit.t_blog_tag_id = tba.id
+        left outer join t_blog_info_type tbi_type on tbi_type.t_blog_info_id = tbi.id
+        left outer join t_blog_type tbt on tbt.id = tbi_type.t_blog_type_id
+        left outer join t_blog_info_category tbic on tbic.t_blog_info_id = tbi.id
+        left outer join t_category_column tcc on tcc.id = tbic.t_category_column_id
+        left outer join t_blog_like_user tblu on tblu.blog_id = tbi.id;
     </select>
 </mapper>
