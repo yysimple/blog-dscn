@@ -27,6 +27,8 @@ public class CategoryColumn extends BaseEntity {
 
     private String categoryName;
 
+    private String picture;
+
     private Long tUserId;
 
 }
