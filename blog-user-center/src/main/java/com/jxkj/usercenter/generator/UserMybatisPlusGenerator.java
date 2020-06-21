@@ -18,6 +18,9 @@ public class UserMybatisPlusGenerator {
         generatorEntity.setUsername("db_user_center");
         generatorEntity.setPassword("db_user_center");
         generatorEntity.setProjectPath("F:\\Micro-service\\blog-dscn\\blog-user-center");
+        String[] tables = {"t_user_fans"};
+        generatorEntity.setTableNames(tables);
+        generatorEntity.setOpenSwagger(true);
         MybatisPlusGenerator.generator(generatorEntity);
 
     }

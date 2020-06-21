@@ -17,7 +17,7 @@
             <id column="id" property="id"/>
             <result column="type" property="type"/>
         </association>
-        <collection property="blogTags" column="id"  ofType="com.jxkj.managecenter.entity.BlogTag">
+        <collection property="blogTags" column="id" ofType="com.jxkj.managecenter.entity.BlogTag">
             <id column="id" property="id"/>
             <result column="tag_name" property="tagName"/>
         </collection>
@@ -28,6 +28,12 @@
         <collection property="blogLikeUsers" column="id" ofType="blogLikeUser">
             <id column="tblu_id" property="id"/>
             <result column="user_id" property="userId"/>
+        </collection>
+        <collection property="favorites" column="id" ofType="favorites">
+            <id column="tf_id" property="id"/>
+            <result column="favorites_name" property="favoritesName"/>
+            <result column="description" property="description"/>
+            <result column="tf_user_id" property="tUserId"/>
         </collection>
     </resultMap>
 
@@ -50,7 +56,11 @@
             tcc.id,
             tcc.category_name,
             tblu.id as tblu_id,
-            tblu.user_id
+            tblu.user_id,
+            tf.id as tf_id,
+            tf.favorites_name,
+            tf.description,
+            tf.t_user_id as tf_user_id
         from t_blog_info tbi
         left outer join t_blog_info_tag tbit on tbi.id = tbit.t_blog_info_id
         left outer join t_blog_tag tba on tbit.t_blog_tag_id = tba.id
@@ -59,13 +69,53 @@
         left outer join t_blog_info_category tbic on tbic.t_blog_info_id = tbi.id
         left outer join t_category_column tcc on tcc.id = tbic.t_category_column_id
         left outer join t_blog_like_user tblu on tblu.blog_id = tbi.id
+        left outer join t_blog_info_favorites tbif on tbif.blog_id = tbi.id
+        left outer join t_favorites tf on tf.id = tbif.favorites_id
         where tbi.id = #{blogId}
+        ;
+    </select>
+
+    <select id="findAllBlogByUserId" parameterType="long" resultMap="findBlogInfoAndTagsByBlogInfoIdMap">
+        select
+            tbi.id,
+            tbi.content,
+            tbi.like_num,
+            tbi.blog_link_url,
+            tbi.blog_status,
+            tbi.page_view_num,
+            tbi.create_time,
+            tbi.update_time,
+            tbi.title,
+            tbi.t_user_id,
+            tbt.id,
+            tbt.type,
+            tba.id,
+            tba.tag_name,
+            tcc.id,
+            tcc.category_name,
+            tblu.id as tblu_id,
+            tblu.user_id,
+            tf.id as tf_id,
+            tf.favorites_name,
+            tf.description,
+            tf.t_user_id as tf_user_id
+        from t_blog_info tbi
+        left outer join t_blog_info_tag tbit on tbi.id = tbit.t_blog_info_id
+        left outer join t_blog_tag tba on tbit.t_blog_tag_id = tba.id
+        left outer join t_blog_info_type tbi_type on tbi_type.t_blog_info_id = tbi.id
+        left outer join t_blog_type tbt on tbt.id = tbi_type.t_blog_type_id
+        left outer join t_blog_info_category tbic on tbic.t_blog_info_id = tbi.id
+        left outer join t_category_column tcc on tcc.id = tbic.t_category_column_id
+        left outer join t_blog_like_user tblu on tblu.blog_id = tbi.id
+        left outer join t_blog_info_favorites tbif on tbif.blog_id = tbi.id
+        left outer join t_favorites tf on tf.id = tbif.favorites_id
+        where tbi.t_user_id = #{userId}
         ;
     </select>
 
 
     <insert id="insertBlogInfo" parameterType="com.jxkj.managecenter.entity.BlogInfo"
-            useGeneratedKeys="true" keyProperty="id" >
+            useGeneratedKeys="true" keyProperty="id">
             insert into t_blog_info(title,content,t_user_id)
             values
             (#{title},#{content},#{tUserId});
@@ -100,7 +150,11 @@
             tcc.id,
             tcc.category_name,
             tblu.id as tblu_id,
-            tblu.user_id
+            tblu.user_id,
+            tf.id as tf_id,
+            tf.favorites_name,
+            tf.description,
+            tf.t_user_id as tf_user_id
         from t_blog_info tbi
         left outer join t_blog_info_tag tbit on tbi.id = tbit.t_blog_info_id
         left outer join t_blog_tag tba on tbit.t_blog_tag_id = tba.id
@@ -108,6 +162,8 @@
         left outer join t_blog_type tbt on tbt.id = tbi_type.t_blog_type_id
         left outer join t_blog_info_category tbic on tbic.t_blog_info_id = tbi.id
         left outer join t_category_column tcc on tcc.id = tbic.t_category_column_id
-        left outer join t_blog_like_user tblu on tblu.blog_id = tbi.id;
+        left outer join t_blog_like_user tblu on tblu.blog_id = tbi.id
+        left outer join t_blog_info_favorites tbif on tbif.blog_id = tbi.id
+        left outer join t_favorites tf on tf.id = tbif.favorites_id;
     </select>
 </mapper>

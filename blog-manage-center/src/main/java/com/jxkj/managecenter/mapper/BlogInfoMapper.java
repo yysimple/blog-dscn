@@ -37,6 +37,15 @@ public interface BlogInfoMapper extends BaseMapper<BlogInfo> {
     BlogInfo findBlogInfoAndTagsByBlogInfoId(Long blogId);
 
     /**
+     * 功能描述: 通过用户id查询其对应所有的详细博客信息
+     *
+     * @Author wcx
+     * @param userId
+     * @return java.util.List<com.jxkj.managecenter.entity.BlogInfo>
+     **/
+    List<BlogInfo> findAllBlogByUserId(Long userId);
+
+    /**
      * 功能描述: 彻底删除博客信息
      *
      * @param id

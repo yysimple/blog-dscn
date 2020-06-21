@@ -65,5 +65,8 @@ public class BlogInfo extends BaseEntity implements Serializable {
     @TableField(select = false, exist = false)
     private List<BlogLikeUser> blogLikeUsers;
 
+    @TableField(select = false, exist = false)
+    private List<Favorites> favorites;
+
 
 }

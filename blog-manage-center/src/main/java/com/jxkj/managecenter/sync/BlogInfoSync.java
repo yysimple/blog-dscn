@@ -93,7 +93,8 @@ public class BlogInfoSync implements ApplicationRunner {
                                 "t_blog_info_category".equals(eventTypeStr) ||
                                 "t_blog_info_tag".equals(eventTypeStr) ||
                                 "t_blog_info_type".equals(eventTypeStr) ||
-                                "t_blog_like_user".equals(eventTypeStr)
+                                "t_blog_like_user".equals(eventTypeStr) ||
+                                "t_blog_info_favorites".equals(eventTypeStr)
                                 );
                         System.out.println(flag);
                         if (tableFlag && flag) {

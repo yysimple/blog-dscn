@@ -9,7 +9,7 @@ import com.jxkj.common.model.GeneratorEntity;
  * @author wcx
  * @version 1.0
  */
-public class UserMybatisPlusGenerator {
+public class BlogMybatisPlusGenerator {
     public static void main(String[] args) {
         GeneratorEntity generatorEntity = new GeneratorEntity();
         generatorEntity.setAuthor("GuJunBin");
@@ -18,6 +18,9 @@ public class UserMybatisPlusGenerator {
         generatorEntity.setUsername("db_blog_center");
         generatorEntity.setPassword("db_blog_center");
         generatorEntity.setProjectPath("F:\\Micro-service\\blog-dscn\\blog-manage-center");
+        String[] tables = {"t_blog_info_favorites"};
+        generatorEntity.setTableNames(tables);
+        generatorEntity.setOpenSwagger(true);
         MybatisPlusGenerator.generator(generatorEntity);
 
     }

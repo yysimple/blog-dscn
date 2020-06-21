@@ -37,4 +37,10 @@ public class StatisticsController {
     public ResultBody getAllBlogDetails(){
         return ResultBodyUtil.success(blogInfoMapper.findAllBlogDetails());
     }
+
+    @GetMapping("/getAllStatisticsByUserId")
+    @ApiOperation(value = "通过用户id查询所有博客信息")
+    public ResultBody getAllStatisticsByUserId(Long userId){
+        return ResultBodyUtil.success(blogInfoMapper.findAllBlogByUserId(userId));
+    }
 }
