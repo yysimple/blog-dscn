@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2020-05-20
  */
 @RestController
-@RequestMapping("/user-level")
+@RequestMapping("/userLevel")
 @Api(tags = "积分等级表")
 public class UserLevelController {
 

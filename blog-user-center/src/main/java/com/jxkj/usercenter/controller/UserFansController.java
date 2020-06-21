@@ -23,15 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/userFans")
-@Api(tags = "用户统计接口")
 public class UserFansController {
 
-    @Autowired
-    private IUserFansService userFansService;
 
-    @GetMapping("/getUserAllFans")
-    @ApiOperation(value = "获取所有该用户的所有粉丝数")
-    public ResultBody getUserAllFans(Long userId){
-        return userFansService.getUserAllFans(userId);
-    }
 }
