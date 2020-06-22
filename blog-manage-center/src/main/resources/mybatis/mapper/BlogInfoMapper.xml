@@ -166,4 +166,10 @@
         left outer join t_blog_info_favorites tbif on tbif.blog_id = tbi.id
         left outer join t_favorites tf on tf.id = tbif.favorites_id;
     </select>
+
+    <select id="findRecentlyTopNumberBlogInfo" parameterType="integer" resultType="blogInfo">
+        select * from t_blog_info tbi
+        order by tbi.create_time desc
+        limit #{number};
+    </select>
 </mapper>

@@ -34,6 +34,12 @@ public class StatisticsController {
         return statisticsService.allStatistics(userId);
     }
 
+    @GetMapping("/getOneBlogStatistics")
+    @ApiOperation(value = "获取单篇博客的统计信息")
+    public ResultBody getOneBlogStatistics(Long blogId){
+        return statisticsService.getOneBlogStatistics(blogId);
+    }
+
     @GetMapping("/getAllBlogDetails")
     @ApiOperation(value = "获取所有博客详情")
     public ResultBody getAllBlogDetails(){
@@ -44,5 +50,17 @@ public class StatisticsController {
     @ApiOperation(value = "通过用户id查询所有博客信息")
     public ResultBody getAllStatisticsByUserId(Long userId){
         return ResultBodyUtil.success(blogInfoMapper.findAllBlogByUserId(userId));
+    }
+
+    @GetMapping("/countBlogNumber")
+    @ApiOperation(value = "获取该用户所有的博客")
+    public ResultBody countBlogNumber(Long userId){
+        return statisticsService.countBlogNumber(userId);
+    }
+
+    @GetMapping("/countForChart")
+    @ApiOperation(value = "用于图表数据")
+    public ResultBody countForChart(){
+        return statisticsService.countForChart();
     }
 }

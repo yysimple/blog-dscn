@@ -310,4 +310,10 @@ public class BlogInfoServiceImpl extends ServiceImpl<BlogInfoMapper, BlogInfo> i
         }
         return ResultBodyUtil.success(blogUserInfoVOS);
     }
+
+    @Override
+    public ResultBody findRecentlyTopNumberBlogInfo(Integer number) {
+        List<BlogInfo> blogInfos = blogInfoMapper.findRecentlyTopNumberBlogInfo(number);
+        return ResultBodyUtil.success(blogInfos);
+    }
 }

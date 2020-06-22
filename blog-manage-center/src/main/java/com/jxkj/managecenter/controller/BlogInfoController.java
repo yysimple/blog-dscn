@@ -133,4 +133,10 @@ public class BlogInfoController {
     public ResultBody listOrderByViewNum() {
         return iBlogInfoService.listOrderByViewNum();
     }
+
+    @GetMapping("/findRecentlyTopNumberBlogInfo")
+    @ApiOperation(value = "获取最近发布的N条博客")
+    public ResultBody findRecentlyTopNumberBlogInfo(Integer number){
+        return iBlogInfoService.findRecentlyTopNumberBlogInfo(number);
+    }
 }

@@ -25,6 +25,7 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @TableName("t_blog_info")
+@Alias("blogInfo")
 @ApiModel(value="BlogInfo对象", description="博客基本信息表")
 public class BlogInfo extends BaseEntity implements Serializable {
 

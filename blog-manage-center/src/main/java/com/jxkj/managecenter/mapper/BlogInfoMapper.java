@@ -71,4 +71,13 @@ public interface BlogInfoMapper extends BaseMapper<BlogInfo> {
      * @return java.util.List<com.jxkj.managecenter.entity.BlogInfo>
      **/
     List<BlogInfo> findAllBlogDetails();
+
+    /**
+     * 功能描述: 查询最近发布的 N 条博客
+     *
+     * @Author wcx
+     * @param number
+     * @return java.util.List<com.jxkj.managecenter.entity.BlogInfo>
+     **/
+    List<BlogInfo> findRecentlyTopNumberBlogInfo(Integer number);
 }

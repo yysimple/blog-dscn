@@ -159,4 +159,13 @@ public interface IBlogInfoService extends IService<BlogInfo> {
      * @author GuJunBin
      */
     ResultBody listOrderByViewNum();
+
+    /**
+     * 功能描述: 查询最近发布的 N 条博客
+     *
+     * @Author wcx
+     * @param number
+     * @return com.jxkj.common.result.ResultBody
+     **/
+    ResultBody findRecentlyTopNumberBlogInfo(Integer number);
 }
