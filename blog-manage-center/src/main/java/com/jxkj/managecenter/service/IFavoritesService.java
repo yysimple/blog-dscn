@@ -31,7 +31,7 @@ public interface IFavoritesService extends IService<Favorites> {
      * @param userId
      * @return com.jxkj.common.result.ResultBody
      */
-    ResultBody finaUserFavorites(Long userId);
+    ResultBody findFavoritesByUserId(Long userId);
 
     /**
      * 功能描述: 删除收藏夹
@@ -42,4 +42,13 @@ public interface IFavoritesService extends IService<Favorites> {
      * @return com.jxkj.common.result.ResultBody
      */
     ResultBody deleteById(Long id, Long userId);
+
+    /**
+     * 功能描述: 查询对应收藏夹下的博客信息
+     *
+     * @Author wcx
+     * @param favoriteId
+     * @return com.jxkj.common.result.ResultBody
+     **/
+    ResultBody findAllBlogFavoriteId(Long favoriteId);
 }

@@ -63,4 +63,16 @@ public class StatisticsController {
     public ResultBody countForChart(){
         return statisticsService.countForChart();
     }
+
+    @GetMapping("/countBlogArchive")
+    @ApiOperation(value = "博客归档")
+    public ResultBody countBlogArchive(Long userId){
+        return statisticsService.countBlogArchive(userId);
+    }
+
+    @GetMapping("/countBlogNumberInFavorites")
+    @ApiOperation(value = "统计每个收藏夹下有多少篇博客")
+    public ResultBody countBlogNumberInFavorites(Long favoriteId){
+        return statisticsService.countBlogNumberInFavorites(favoriteId);
+    }
 }

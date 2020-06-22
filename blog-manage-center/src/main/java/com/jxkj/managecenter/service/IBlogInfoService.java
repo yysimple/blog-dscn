@@ -163,9 +163,28 @@ public interface IBlogInfoService extends IService<BlogInfo> {
     /**
      * 功能描述: 查询最近发布的 N 条博客
      *
-     * @Author wcx
      * @param number
      * @return com.jxkj.common.result.ResultBody
+     * @Author wcx
      **/
     ResultBody findRecentlyTopNumberBlogInfo(Integer number);
+
+    /**
+     * 功能描述: 查询对应用户最近发布的 N 条博客
+     *
+     * @param number
+     * @param userId
+     * @return com.jxkj.common.result.ResultBody
+     * @Author wcx
+     **/
+    ResultBody findRecentlyTopNumberBlogInfoByUserId(Integer number, Long userId);
+
+    /**
+     * 功能描述: 查询最早发布的几条博客
+     *
+     * @param number
+     * @return com.jxkj.common.result.ResultBody
+     * @Author wcx
+     **/
+    ResultBody findOldTopNumberBlogInfo(Integer number);
 }

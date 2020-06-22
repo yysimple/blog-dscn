@@ -2,5 +2,49 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jxkj.managecenter.mapper.FavoritesMapper">
 
+    <resultMap id="findAllBlogFavoriteIdMap" type="favorites">
+        <id column="id" property="id"/>
+        <result column="favorites_name" property="favoritesName"/>
+        <result column="description" property="description"/>
+        <result column="create_time" property="createTime"/>
+        <result column="picture" property="picture"/>
+        <result column="tf_uid" property="tUserId"/>
+        <collection property="blogInfos" column="id" ofType="blogInfo">
+            <id column="tbi_id" property="id"/>
+            <result column="content" property="content"/>
+            <result column="like_num" property="likeNum"/>
+            <result column="blog_link_url" property="blogLinkUrl"/>
+            <result column="blog_status" property="blogStatus"/>
+            <result column="page_view_num" property="pageViewNum"/>
+            <result column="create_time" property="createTime"/>
+            <result column="update_time" property="updateTime"/>
+            <result column="title" property="title"/>
+            <result column="tbi_uid" property="tUserId"/>
+        </collection>
+    </resultMap>
 
+    <select id="findAllBlogFavoriteId" parameterType="long" resultMap="findAllBlogFavoriteIdMap">
+        select
+            tf.id,
+            tf.favorites_name,
+            tf.description,
+            tf.create_time,
+            tf.picture,
+            tf.t_user_id as tf_uid,
+            tbi.id as tbi_id,
+            tbi.content,
+            tbi.like_num,
+            tbi.blog_link_url,
+            tbi.blog_status,
+            tbi.page_view_num,
+            tbi.create_time,
+            tbi.update_time,
+            tbi.title,
+            tbi.t_user_id as tbi_uid
+        from
+        t_favorites tf
+        left outer join t_blog_info_favorites tbif on tbif.favorites_id = tf.id
+        left outer join t_blog_info tbi on tbi.id = tbif.blog_id
+        where tf.id = #{favoriteId}
+    </select>
 </mapper>

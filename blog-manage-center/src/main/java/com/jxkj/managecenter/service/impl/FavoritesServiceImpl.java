@@ -10,6 +10,7 @@ import com.jxkj.managecenter.entity.Favorites;
 import com.jxkj.managecenter.mapper.BlogFavoritesUserMapper;
 import com.jxkj.managecenter.mapper.FavoritesMapper;
 import com.jxkj.managecenter.service.IFavoritesService;
+import com.jxkj.managecenter.vo.FavoritesBlogVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -53,9 +54,19 @@ public class FavoritesServiceImpl extends ServiceImpl<FavoritesMapper, Favorites
     }
 
     @Override
-    public ResultBody finaUserFavorites(Long userId) {
+    public ResultBody findFavoritesByUserId(Long userId) {
+        List<FavoritesBlogVO> favoritesBlogVOS = new ArrayList<>();
         queryWrapper.eq("t_user_id", userId);
-        return ResultBodyUtil.success(favoritesMapper.selectList(queryWrapper));
+        List<Favorites> favorites = favoritesMapper.selectList(queryWrapper);
+        for (Favorites favorite : favorites) {
+            FavoritesBlogVO favoritesBlogVO = new FavoritesBlogVO();
+            Favorites favorites1 = favoritesMapper.findAllBlogFavoriteId(favorite.getId());
+            favoritesBlogVO.setFavorite(favorites1);
+            Integer blogNum = favorites1.getBlogInfos().size();
+            favoritesBlogVO.setBlogNum(blogNum);
+            favoritesBlogVOS.add(favoritesBlogVO);
+        }
+        return ResultBodyUtil.success(favoritesBlogVOS);
     }
 
     @Override
@@ -75,5 +86,15 @@ public class FavoritesServiceImpl extends ServiceImpl<FavoritesMapper, Favorites
             blogFavoritesUserMapper.deleteBatchIds(idList);
         }
         return ResultBodyUtil.success();
+    }
+
+    @Override
+    public ResultBody findAllBlogFavoriteId(Long favoriteId) {
+        Favorites favorites = favoritesMapper.findAllBlogFavoriteId(favoriteId);
+        FavoritesBlogVO favoritesBlogVO = new FavoritesBlogVO();
+        favoritesBlogVO.setFavorite(favorites);
+        Integer blogNum = favorites.getBlogInfos().size();
+        favoritesBlogVO.setBlogNum(blogNum);
+        return ResultBodyUtil.success(favoritesBlogVO);
     }
 }

@@ -10,8 +10,11 @@ import com.jxkj.managecenter.entity.BlogLikeUser;
 import com.jxkj.managecenter.entity.Favorites;
 import com.jxkj.managecenter.form.BlogInfoListForm;
 import com.jxkj.managecenter.mapper.BlogInfoMapper;
+import com.jxkj.managecenter.mapper.FavoritesMapper;
 import com.jxkj.managecenter.repository.RedisRepository;
 import com.jxkj.managecenter.service.StatisticsService;
+import com.jxkj.managecenter.vo.ArchiveMonthVO;
+import com.jxkj.managecenter.vo.ArchiveVO;
 import com.jxkj.managecenter.vo.ChartVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,6 +41,9 @@ public class StatisticsServiceImpl implements StatisticsService {
 
     @Autowired
     private BlogInfoMapper blogInfoMapper;
+
+    @Autowired
+    private FavoritesMapper favoritesMapper;
 
     @Override
     public ResultBody allStatistics(Long userId) {
@@ -145,5 +151,67 @@ public class StatisticsServiceImpl implements StatisticsService {
         map.put("blogLinkNum", blogLinkNum);
         map.put("favoritesNum", favoritesNum);
         return ResultBodyUtil.success(map);
+    }
+
+    @Override
+    public ResultBody countBlogArchive(Long userId) {
+        List<ArchiveVO> archiveVOS = new ArrayList<>();
+        BlogInfo oldOneBlog = blogInfoMapper.findOldOneBlog(userId);
+        BlogInfo recentlyOneBlog = blogInfoMapper.findRecentlyOneBlog(userId);
+        LocalDateTime startTime = oldOneBlog.getCreateTime();
+        LocalDateTime endTime = recentlyOneBlog.getCreateTime();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat sdfMonth = new SimpleDateFormat("yyyy-MM");
+        Calendar calendar1 = Calendar.getInstance();
+        Calendar calendar2 = Calendar.getInstance();
+        Date start = DateFormatConvertUtil.asDate(startTime);
+        Date end = DateFormatConvertUtil.asDate(endTime);
+        String strStartTime = sdf.format(start);
+        String strEndTime = sdf.format(end);
+        Integer strS = Integer.valueOf(strStartTime.substring(0, 4));
+        Integer strE = Integer.valueOf(strEndTime.substring(0, 4));
+        while (strS <= strE) {
+            ArchiveVO archiveVO = new ArchiveVO();
+            List<ArchiveMonthVO> archiveMonthVOS = new ArrayList<>();
+            Integer ss = strS;
+            String sss = ss.toString();
+            archiveVO.setArchiveYear(sss);
+            Date compareStart = null;
+            Date compareEnd = null;
+            try {
+                compareStart = sdfMonth.parse(strStartTime);
+                compareEnd = sdfMonth.parse(strEndTime);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+                /*calendar2.setTime(compareEnd);
+                calendar2.add(Calendar.MONTH, +1);
+                compareEnd = calendar2.getTime();*/
+            while (compareStart.compareTo(compareEnd) <= 0) {
+                ArchiveMonthVO archiveMonthVO = new ArchiveMonthVO();
+                calendar1.setTime(compareStart);
+                String strStartT = sdfMonth.format(compareStart);
+                //String newStrStart = strStartT.substring(0, 7);
+                String strMonth = strStartT.substring(5, 7);
+                Integer integer = blogInfoMapper.countBlogNumberByUserId(strStartT, userId);
+                archiveMonthVO.setArchiveMonth(strMonth);
+                archiveMonthVO.setBlogNumber(integer);
+                calendar1.add(Calendar.MONTH, +1);
+                compareStart = calendar1.getTime();
+                archiveMonthVOS.add(archiveMonthVO);
+            }
+            strS++;
+            archiveVO.setArchiveMonthVOS(archiveMonthVOS);
+            archiveVOS.add(archiveVO);
+        }
+        return ResultBodyUtil.success(archiveVOS);
+    }
+
+    @Override
+    public ResultBody countBlogNumberInFavorites(Long favoriteId) {
+        Favorites allBlogFavoriteId = favoritesMapper.findAllBlogFavoriteId(favoriteId);
+        List<BlogInfo> blogInfos = allBlogFavoriteId.getBlogInfos();
+        int blogInfoNum = blogInfos.size();
+        return ResultBodyUtil.success(blogInfoNum);
     }
 }

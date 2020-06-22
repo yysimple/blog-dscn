@@ -35,9 +35,9 @@ public class FavoritesController {
     }
 
     @ApiOperation(value = "查询用户收藏夹")
-    @GetMapping("/finaUserFavorites")
-    public ResultBody finaUserFavorites(@RequestParam("userId") Long userId) {
-        return iFavoritesService.finaUserFavorites(userId);
+    @GetMapping("/findFavoritesByUserId")
+    public ResultBody findFavoritesByUserId(@RequestParam("userId") Long userId) {
+        return iFavoritesService.findFavoritesByUserId(userId);
     }
 
     @ApiOperation(value = "删除收藏夹")
@@ -45,6 +45,12 @@ public class FavoritesController {
     public ResultBody deleteById(@RequestParam("id") Long id, @RequestParam("userId") Long userId) {
         iFavoritesService.deleteById(id, userId);
         return ResultBodyUtil.success();
+    }
+
+    @GetMapping("/findAllBlogFavoriteId")
+    @ApiOperation(value = "查询对应收藏夹下的博客信息")
+    public ResultBody findAllBlogFavoriteId(Long favoriteId){
+        return iFavoritesService.findAllBlogFavoriteId(favoriteId);
     }
 }
 

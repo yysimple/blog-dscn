@@ -1,5 +1,6 @@
 package com.jxkj.managecenter.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.jxkj.managecenter.base.entity.BaseEntity;
 import io.swagger.annotations.ApiModel;
@@ -10,6 +11,7 @@ import lombok.experimental.Accessors;
 import org.apache.ibatis.type.Alias;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * <p>
@@ -45,5 +47,10 @@ public class Favorites extends BaseEntity implements Serializable {
     @ApiModelProperty(value = "收藏夹对应的用户id")
     private Long tUserId;
 
+    @ApiModelProperty(value = "收藏夹的图片")
+    private String picture;
+
+    @TableField(select = false, exist = false)
+    private List<BlogInfo> blogInfos;
 
 }

@@ -4,12 +4,15 @@ package com.jxkj.managecenter.controller;
 import com.jxkj.common.result.ResultBody;
 import com.jxkj.common.result.ResultBodyUtil;
 import com.jxkj.managecenter.entity.BlogInfo;
+import com.jxkj.managecenter.mapper.BlogInfoMapper;
 import com.jxkj.managecenter.service.IBlogInfoService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * <p>
@@ -27,6 +30,9 @@ public class BlogInfoController {
 
     @Autowired
     private IBlogInfoService iBlogInfoService;
+
+    @Autowired
+    private BlogInfoMapper blogInfoMapper;
 
     @ApiOperation(value = "分页查询所有已发布博客信息")
     @GetMapping("/findAllIssueBlog")
@@ -138,5 +144,18 @@ public class BlogInfoController {
     @ApiOperation(value = "获取最近发布的N条博客")
     public ResultBody findRecentlyTopNumberBlogInfo(Integer number){
         return iBlogInfoService.findRecentlyTopNumberBlogInfo(number);
+    }
+
+    @GetMapping("/findRecentlyTopNumberBlogInfoByUserId")
+    @ApiOperation(value = "获取对应用户最近发布的N条博客")
+    public ResultBody findRecentlyTopNumberBlogInfoByUserId(Integer number, Long userId){
+        return iBlogInfoService.findRecentlyTopNumberBlogInfoByUserId(number, userId);
+    }
+
+    @ApiOperation(value = "查询对应用户访问量最高的几篇博客")
+    @GetMapping("/findTopNumberPageViewByUserId")
+    public ResultBody findTopNumberPageViewByUserId(Integer number, Long userId){
+        List<BlogInfo> blogInfos = blogInfoMapper.findTopNumberPageViewByUserId(number, userId);
+        return ResultBodyUtil.success(blogInfos);
     }
 }
