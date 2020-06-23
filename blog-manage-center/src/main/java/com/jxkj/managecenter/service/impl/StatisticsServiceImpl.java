@@ -15,6 +15,7 @@ import com.jxkj.managecenter.repository.RedisRepository;
 import com.jxkj.managecenter.service.StatisticsService;
 import com.jxkj.managecenter.vo.ArchiveMonthVO;
 import com.jxkj.managecenter.vo.ArchiveVO;
+import com.jxkj.managecenter.vo.ChartPageViewVO;
 import com.jxkj.managecenter.vo.ChartVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -136,6 +137,41 @@ public class StatisticsServiceImpl implements StatisticsService {
             start = calendar.getTime();
         }
         return ResultBodyUtil.success(chartVOS);
+    }
+
+    @Override
+    public ResultBody countPageViewForChart(Long userId) {
+        List<ChartPageViewVO> chartPageViewVOS = new ArrayList<>();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar calendar = Calendar.getInstance();
+        Date start = null;
+        Date end = null;
+        try {
+            start = DateFormatConvertUtil.asDate(LocalDate.now().minusDays(7));
+            end = DateFormatConvertUtil.asDate(LocalDate.now());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        while (!start.equals(end)) {
+            calendar.setTime(start);
+            String strStartTime = sdf.format(start);
+            LocalDateTime startTime = DateFormatConvertUtil.startTime(strStartTime);
+            LocalDateTime endTime = DateFormatConvertUtil.endTime(strStartTime);
+            QueryWrapper<BlogInfo> queryWrapper = Wrappers.query();
+            queryWrapper.eq("t_user_id", userId).between("create_time", startTime, endTime);
+            List<BlogInfo> blogInfos = blogInfoMapper.selectList(queryWrapper);
+            Integer countPageViewNum = blogInfos.stream()
+                    .filter(blogInfo -> blogInfo.getTUserId().equals(userId))
+                    .mapToInt(BlogInfo::getPageViewNum)
+                    .sum();
+            ChartPageViewVO chartPageViewVO = new ChartPageViewVO();
+            chartPageViewVO.setDate(strStartTime);
+            chartPageViewVO.setPageViewNum(countPageViewNum);
+            chartPageViewVOS.add(chartPageViewVO);
+            calendar.add(Calendar.DATE, 1);
+            start = calendar.getTime();
+        }
+        return ResultBodyUtil.success(chartPageViewVOS);
     }
 
     @Override

@@ -38,6 +38,15 @@ public interface StatisticsService {
     ResultBody countForChart();
 
     /**
+     * 功能描述: 根据用户id查询访问数，用于展示图表
+     *
+     * @Author wcx
+     * @param userId
+     * @return com.jxkj.common.result.ResultBody
+     **/
+    ResultBody countPageViewForChart(Long userId);
+
+    /**
      * 功能描述: 统计单篇博客
      *
      * @param blogId

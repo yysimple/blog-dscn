@@ -64,6 +64,12 @@ public class StatisticsController {
         return statisticsService.countForChart();
     }
 
+    @GetMapping("/countPageViewForChart")
+    @ApiOperation(value = "统计用户博客被访问数")
+    public ResultBody countPageViewForChart(Long userId){
+        return statisticsService.countPageViewForChart(userId);
+    }
+
     @GetMapping("/countBlogArchive")
     @ApiOperation(value = "博客归档")
     public ResultBody countBlogArchive(Long userId){
