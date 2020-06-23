@@ -2,6 +2,7 @@ package com.jxkj.managecenter.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.jxkj.managecenter.entity.BlogTag;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -32,4 +33,13 @@ public interface BlogTagMapper extends BaseMapper<BlogTag> {
      * @return com.jxkj.managecenter.entity.BlogTag
      **/
     BlogTag findBlogTagByTagName(String tagName);
+
+    /**
+     * 功能描述: 根据标签id查询所有的博客
+     *
+     * @Author wcx
+     * @param tagId
+     * @return com.jxkj.managecenter.entity.BlogTag
+     **/
+    BlogTag findAllBlogByTagId(Long tagId);
 }

@@ -1,12 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jxkj.managecenter.mapper.BlogTagMapper">
-        <insert id="saveBlogTag" keyProperty="id" useGeneratedKeys="true" parameterType="com.jxkj.managecenter.entity.BlogTag">
+    <insert id="saveBlogTag" keyProperty="id" useGeneratedKeys="true"
+            parameterType="com.jxkj.managecenter.entity.BlogTag">
             insert into t_blog_tag (tag_name, create_time, update_time)
             values (#{tagName}, #{createTime}, #{updateTime});
         </insert>
 
-        <select id="findBlogTagByTagName" parameterType="string" resultType="com.jxkj.managecenter.entity.BlogTag">
+    <select id="findBlogTagByTagName" parameterType="string" resultType="com.jxkj.managecenter.entity.BlogTag">
             select * from t_blog_tag where lower(tag_name) = lower(#{tagName}) ;
+    </select>
+
+    <resultMap id="findAllBlogByTagIdMap" type="blogTag">
+        <id column="id" property="id"/>
+        <result column="tag_name" property="tagName"/>
+        <result column="create_time" property="createTime"/>
+        <collection property="blogInfos" column="id" ofType="blogInfo">
+            <id column="tbi_id" property="id"/>
+            <result column="content" property="content"/>
+            <result column="like_num" property="likeNum"/>
+            <result column="blog_link_url" property="blogLinkUrl"/>
+            <result column="blog_status" property="blogStatus"/>
+            <result column="page_view_num" property="pageViewNum"/>
+            <result column="create_time" property="createTime"/>
+            <result column="update_time" property="updateTime"/>
+            <result column="title" property="title"/>
+            <result column="t_user_id" property="tUserId"/>
+        </collection>
+    </resultMap>
+
+    <select id="findAllBlogByTagId" parameterType="long" resultMap="findAllBlogByTagIdMap">
+            select
+                tbt.id,
+                tbt.tag_name,
+                tbt.create_time,
+                tbi.id as tbi_id,
+                tbi.content,
+                tbi.like_num,
+                tbi.blog_link_url,
+                tbi.blog_status,
+                tbi.page_view_num,
+                tbi.create_time,
+                tbi.update_time,
+                tbi.title,
+                tbi.t_user_id
+            from
+            t_blog_tag tbt
+            left outer join t_blog_info_tag tbit on tbt.id = tbit.t_blog_tag_id
+            left outer join t_blog_info tbi on tbi.id = tbit.t_blog_info_id
+            where tbt.id = #{tagId}
+
         </select>
 </mapper>

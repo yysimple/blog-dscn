@@ -4,6 +4,7 @@ package com.jxkj.managecenter.controller;
 import com.jxkj.common.result.ResultBody;
 import com.jxkj.common.result.ResultBodyUtil;
 import com.jxkj.managecenter.entity.BlogTag;
+import com.jxkj.managecenter.mapper.BlogTagMapper;
 import com.jxkj.managecenter.service.IBlogTagService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -28,6 +29,9 @@ public class BlogTagController {
     @Autowired
     private IBlogTagService iBlogTagService;
 
+    @Autowired
+    private BlogTagMapper blogTagMapper;
+
     @ApiOperation(value = "查询所有博客标签")
     @GetMapping("/findAllBlogTag")
     public ResultBody findAllBlogTag() {
@@ -45,4 +49,18 @@ public class BlogTagController {
     public ResultBody deleteBlogTag(@RequestParam("id") Long id) {
         return iBlogTagService.deleteById(id);
     }
+
+    @ApiOperation(value = "根据标签id查询所有的博客")
+    @GetMapping("/findAllBlogByTagId")
+    public ResultBody findAllBlogByTagId(Long tagId) {
+        BlogTag allBlogByTagId = blogTagMapper.findAllBlogByTagId(tagId);
+        return ResultBodyUtil.success(allBlogByTagId);
+    }
+
+    @ApiOperation(value = "根据标签id查询访问量最高的前几条博客")
+    @GetMapping("/findPVTopNBlogByTagId")
+    public ResultBody findPVTopNBlogByTagId(Long tagId, Integer number) {
+        return iBlogTagService.findPVTopNBlogByTagId(tagId, number);
+    }
+
 }

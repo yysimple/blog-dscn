@@ -18,18 +18,29 @@ public interface IBlogTagService extends IService<BlogTag> {
     /**
      * 功能描述: 新增or更新博客标签
      *
-     * @author GuJunBin
      * @param blogTag
      * @return com.jxkj.common.result.ResultBody
+     * @author GuJunBin
      */
     ResultBody saveOrUpdateBlogTag(BlogTag blogTag);
 
     /**
      * 功能描述: 删除标签
      *
-     * @author GuJunBin
      * @param id
      * @return com.jxkj.common.result.ResultBody
+     * @author GuJunBin
      */
     ResultBody deleteById(Long id);
+
+    /**
+     * 功能描述: 根据标签id查询所有的博客
+     *
+     * @Author wcx
+     * @param tagId
+     * @param number
+     * @return com.jxkj.common.result.ResultBody
+     **/
+    ResultBody findPVTopNBlogByTagId(Long tagId, Integer number);
+
 }

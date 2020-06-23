@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.jxkj.common.result.ResultBody;
 import com.jxkj.common.result.ResultBodyUtil;
 import com.jxkj.common.result.ResultTypeEnum;
+import com.jxkj.managecenter.entity.BlogInfo;
 import com.jxkj.managecenter.entity.BlogInfoTag;
 import com.jxkj.managecenter.entity.BlogTag;
 import com.jxkj.managecenter.mapper.BlogInfoTagMapper;
@@ -13,7 +14,9 @@ import com.jxkj.managecenter.service.IBlogTagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -40,9 +43,9 @@ public class BlogTagServiceImpl extends ServiceImpl<BlogTagMapper, BlogTag> impl
         QueryWrapper<BlogTag> queryWrapper = new QueryWrapper<>();
         List<BlogTag> tagList = blogTagMapper.selectList(queryWrapper);
         boolean exist = tagList.stream().anyMatch(u -> u.getTagName().equals(blogTag.getTagName()));
-        if (!exist){
+        if (!exist) {
             return ResultBodyUtil.success(iBlogTagService.saveOrUpdate(blogTag));
-        }else {
+        } else {
             return ResultBodyUtil.error(
                     ResultTypeEnum.ALREADY_EXIST.getCode(),
                     ResultTypeEnum.ALREADY_EXIST.getMsg());
@@ -53,11 +56,28 @@ public class BlogTagServiceImpl extends ServiceImpl<BlogTagMapper, BlogTag> impl
     public ResultBody deleteById(Long id) {
         QueryWrapper<BlogInfoTag> queryWrapper = new QueryWrapper<>();
         List<BlogInfoTag> blogInfoTag = blogInfoTagMapper.selectList(queryWrapper.eq("t_blog_tag_id", id));
-        if (blogInfoTag.isEmpty()){
+        if (blogInfoTag.isEmpty()) {
             blogTagMapper.deleteById(id);
             return ResultBodyUtil.success();
-        }else {
+        } else {
             return ResultBodyUtil.error(ResultTypeEnum.CAN_NOT_DELETE.getCode(), ResultTypeEnum.CAN_NOT_DELETE.getMsg());
         }
+    }
+
+    @Override
+    public ResultBody findPVTopNBlogByTagId(Long tagId, Integer number) {
+        BlogTag blogTag = blogTagMapper.findAllBlogByTagId(tagId);
+        List<BlogInfo> blogInfos = blogTag.getBlogInfos();
+        if (number <= 0) {
+            number = 10;
+        }
+        if (number >= 100) {
+            number = 100;
+        }
+        List<BlogInfo> blogInfoList = blogInfos.stream()
+                .sorted(Comparator.comparing(BlogInfo::getPageViewNum, Comparator.nullsFirst(Integer::compareTo)).reversed())
+                .limit(number).collect(Collectors.toList());
+        blogTag.setBlogInfos(blogInfoList);
+        return ResultBodyUtil.success(blogTag);
     }
 }
