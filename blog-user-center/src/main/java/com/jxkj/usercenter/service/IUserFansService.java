@@ -17,9 +17,29 @@ public interface IUserFansService extends IService<UserFans> {
     /**
      * 功能描述: 获取对应用户的所有粉丝数
      *
-     * @Author wcx
      * @param userId
      * @return com.jxkj.common.result.ResultBody
+     * @Author wcx
      **/
     ResultBody getUserAllFans(Long userId);
+
+    /**
+     * 功能描述: 关注用户
+     *
+     * @param userId
+     * @param fanId
+     * @return com.jxkj.common.result.ResultBody
+     * @Author wcx
+     **/
+    ResultBody attention(Long userId, Long fanId);
+
+    /**
+     * 功能描述: 获取两个用户之间关注关系
+     *
+     * @param userId
+     * @param fanId
+     * @return com.jxkj.common.result.ResultBody
+     * @Author wcx
+     **/
+    ResultBody getAttentionStatus(Long userId, Long fanId);
 }

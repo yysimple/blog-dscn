@@ -43,4 +43,12 @@ public interface IBlogTagService extends IService<BlogTag> {
      **/
     ResultBody findPVTopNBlogByTagId(Long tagId, Integer number);
 
+    /**
+     * 功能描述: 根据标签名查询对应的标签
+     *
+     * @Author wcx
+     * @param tagName
+     * @return com.jxkj.common.result.ResultBody
+     **/
+    ResultBody findBlogTagNyName(String tagName);
 }

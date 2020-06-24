@@ -1,6 +1,7 @@
 package com.jxkj.managecenter.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.jxkj.common.result.ResultBody;
 import com.jxkj.common.result.ResultBodyUtil;
@@ -75,9 +76,18 @@ public class BlogTagServiceImpl extends ServiceImpl<BlogTagMapper, BlogTag> impl
             number = 100;
         }
         List<BlogInfo> blogInfoList = blogInfos.stream()
+                .distinct()
                 .sorted(Comparator.comparing(BlogInfo::getPageViewNum, Comparator.nullsFirst(Integer::compareTo)).reversed())
                 .limit(number).collect(Collectors.toList());
         blogTag.setBlogInfos(blogInfoList);
+        return ResultBodyUtil.success(blogTag);
+    }
+
+    @Override
+    public ResultBody findBlogTagNyName(String tagName) {
+        QueryWrapper<BlogTag> queryWrapper = Wrappers.query();
+        queryWrapper.eq("tag_name", tagName);
+        BlogTag blogTag = blogTagMapper.selectOne(queryWrapper);
         return ResultBodyUtil.success(blogTag);
     }
 }

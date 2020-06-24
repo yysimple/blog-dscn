@@ -10,6 +10,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+import org.apache.ibatis.type.Alias;
 
 /**
  * <p>
@@ -23,6 +24,7 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @TableName("t_user_fans")
+@Alias("userFans")
 @ApiModel(value="UserFans对象", description="用户粉丝表")
 public class UserFans implements Serializable {
 
@@ -38,6 +40,11 @@ public class UserFans implements Serializable {
     private LocalDateTime createTime;
 
     private LocalDateTime updateTime;
+
+    /**
+     * 关注的状态，1为关注，0为取消关注
+     */
+    private Integer status;
 
 
 }

@@ -1,5 +1,6 @@
 package com.jxkj.managecenter.service.impl;
 
+import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import com.alibaba.fastjson.JSON;
@@ -108,8 +109,7 @@ public class BlogInfoServiceImpl extends ServiceImpl<BlogInfoMapper, BlogInfo> i
     @Transactional(isolation = Isolation.SERIALIZABLE)
     public ResultBody addLikeNum(Long id, Long userId) {
         BlogInfo blogInfo = blogInfoMapper.selectById(id);
-        QueryWrapper<BlogLikeUser> queryWrapper = new QueryWrapper<>();
-        BlogLikeUser likeUser = blogLikeUserMapper.selectOne(queryWrapper.eq("blog_id", id).eq("user_id", userId));
+        BlogLikeUser likeUser = blogLikeUserMapper.filterIsLike(id, userId);
         if (likeUser == null) {
             blogInfo.setLikeNum(blogInfo.getLikeNum() + 1);
             BlogLikeUser blogLikeUser = new BlogLikeUser();

@@ -158,4 +158,10 @@ public class BlogInfoController {
         List<BlogInfo> blogInfos = blogInfoMapper.findTopNumberPageViewByUserId(number, userId);
         return ResultBodyUtil.success(blogInfos);
     }
+
+    @ApiOperation(value = "查询所有的博客")
+    @GetMapping("/findAllBlogInfo")
+    public ResultBody findAllBlogInfo(){
+        return ResultBodyUtil.success(blogInfoMapper.selectList(null));
+    }
 }

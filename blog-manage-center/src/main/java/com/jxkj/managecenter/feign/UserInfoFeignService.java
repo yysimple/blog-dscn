@@ -1,6 +1,7 @@
 package com.jxkj.managecenter.feign;
 
 import com.jxkj.common.result.ResultBody;
+import com.jxkj.managecenter.config.OpenFeignServiceConfig;
 import feign.hystrix.FallbackFactory;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Component;
@@ -14,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  * @Version 1.0
  */
 @Component
-@FeignClient(value = "user-center",fallback = FallbackFactory.Default.class)
+@FeignClient(value = "user-center", configuration = OpenFeignServiceConfig.class, fallback = FallbackFactory.Default.class)
 public interface UserInfoFeignService {
 
     /**

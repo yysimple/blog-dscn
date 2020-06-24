@@ -63,4 +63,10 @@ public class BlogTagController {
         return iBlogTagService.findPVTopNBlogByTagId(tagId, number);
     }
 
+    @GetMapping("/findBlogTagNyName")
+    @ApiOperation(value = "根据标签名查询对应的标签")
+    public ResultBody findBlogTagNyName(String tagName){
+        return iBlogTagService.findBlogTagNyName(tagName);
+    }
+
 }

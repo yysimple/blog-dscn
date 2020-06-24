@@ -47,8 +47,6 @@ public class BlogInfoSync implements ApplicationRunner {
         Set<String> keys = redisRepository.getKeys("blogInfos");
         if (keys.size() <= 0) {
             List<BlogInfo> blogInfos = blogInfoMapper.findAllBlogDetails();
-            /*BlogInfoListForm blogInfoListForm = new BlogInfoListForm();
-            blogInfoListForm.setBlogInfos(blogInfos01);*/
             redisRepository.setObject("blogInfos", blogInfos);
         }
         // 创建链接

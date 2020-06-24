@@ -9,6 +9,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
@@ -23,7 +24,22 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/userFans")
+@Api(tags = "用户粉丝模块")
 public class UserFansController {
 
+    @Autowired
+    private IUserFansService userFansService;
+
+    @PostMapping("/attention")
+    @ApiOperation(value = "关注用户")
+    public ResultBody attention(Long userId, Long fanId){
+        return userFansService.attention(userId, fanId);
+    }
+
+    @GetMapping("/getAttentionStatus")
+    @ApiOperation(value = "获取两个用户之间关注关系")
+    public ResultBody getAttentionStatus(Long userId, Long fanId){
+        return userFansService.getAttentionStatus(userId, fanId);
+    }
 
 }

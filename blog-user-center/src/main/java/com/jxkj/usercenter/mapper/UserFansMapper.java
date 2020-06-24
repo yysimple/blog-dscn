@@ -2,6 +2,7 @@ package com.jxkj.usercenter.mapper;
 
 import com.jxkj.usercenter.entity.UserFans;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -15,4 +16,13 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UserFansMapper extends BaseMapper<UserFans> {
 
+    /**
+     * 功能描述: 关注用户
+     *
+     * @param userId
+     * @param fanId
+     * @return com.jxkj.usercenter.entity.UserFans
+     * @Author wcx
+     **/
+    UserFans attention(@Param("userId") Long userId, @Param("fanId") Long fanId);
 }
