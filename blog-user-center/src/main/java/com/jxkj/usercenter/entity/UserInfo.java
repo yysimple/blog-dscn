@@ -1,7 +1,9 @@
 package com.jxkj.usercenter.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.jxkj.usercenter.base.entity.BaseEntity;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -11,6 +13,7 @@ import org.hibernate.validator.constraints.Length;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * <p>
@@ -39,7 +42,8 @@ public class UserInfo extends BaseEntity implements Serializable {
     private String nickname;
 
     @ApiModelProperty(value = "出生日期")
-    private LocalDateTime birthday;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private Date birthday;
 
     @ApiModelProperty(value = "地址")
     private String address;
@@ -66,8 +70,12 @@ public class UserInfo extends BaseEntity implements Serializable {
     @ApiModelProperty(value = "行业")
     private String industry;
 
+    @ApiModelProperty(value = "学校")
+    private String school;
+
     @ApiModelProperty(value = "开始工作时间")
-    private LocalDateTime startWorkingTime;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private Date startWorkingTime;
 
     @ApiModelProperty(value = "个人简介")
     private String remark;

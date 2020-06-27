@@ -42,4 +42,10 @@ public class UserFansController {
         return userFansService.getAttentionStatus(userId, fanId);
     }
 
+    @ApiOperation(value = "获取个人信息模块需要的数据")
+    @GetMapping("/forPersonalInfoCount")
+    public ResultBody forPersonalInfoCount(Long userId){
+        return userFansService.forPersonalInfoCount(userId);
+    }
+
 }

@@ -45,7 +45,7 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
     }
 
     @Override
-    public ResultBody update(UserInfo userInfo) {
+    public ResultBody updateUserInfo(UserInfo userInfo) {
         int i = userInfoMapper.updateById(userInfo);
         return ResultBodyUtil.success(i);
     }

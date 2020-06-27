@@ -5,4 +5,14 @@
         select * from t_user_fans tuf
         where tuf.user_id = #{userId} and tuf.fan_id = #{fanId};
     </select>
+
+    <select id="getAllFans" parameterType="long" resultType="userFans">
+        select * from t_user_fans tuf
+        where tuf.user_id = #{userId};
+    </select>
+
+    <select id="getAllAttentional" parameterType="long" resultType="userFans">
+        select * from t_user_fans tuf
+        where tuf.fan_id = #{userId};
+    </select>
 </mapper>

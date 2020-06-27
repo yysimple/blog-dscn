@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
  * @since 2020-05-20
  */
 @RestController
-@RequestMapping("/user-info")
+@RequestMapping("/userInfo")
 @Api(tags = "用户详细信息表")
 public class UserInfoController {
 
@@ -38,8 +38,8 @@ public class UserInfoController {
     }
 
     @ApiOperation(value = "更改用户详细信息")
-    @PostMapping("/update")
-    public ResultBody update(UserInfo userInfo){
-        return iUserInfoService.update(userInfo);
+    @PostMapping("/updateUserInfo")
+    public ResultBody updateUserInfo(@RequestBody UserInfo userInfo){
+        return iUserInfoService.updateUserInfo(userInfo);
     }
 }

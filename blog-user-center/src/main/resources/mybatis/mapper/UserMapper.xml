@@ -12,6 +12,7 @@
         <result column="username" property="username"/>
         <result column="password" property="password"/>
         <association property="userInfo"  javaType="com.jxkj.usercenter.entity.UserInfo">
+            <id column="tui_id" property="id"/>
             <result column="real_name" property="realName"/>
             <result column="nickname" property="nickname"/>
             <result column="birthday" property="birthday"/>
@@ -24,6 +25,7 @@
             <result column="education" property="education"/>
             <result column="industry" property="industry"/>
             <result column="start_working_time" property="startWorkingTime"/>
+            <result column="school" property="school"/>
             <result column="remark" property="remark"/>
             <result column="create_time" property="createTime"/>
             <result column="update_time" property="updateTime"/>
@@ -35,6 +37,7 @@
         tu.id,
         tu.username,
         tu.password,
+        tui.id as tui_id,
         tui.real_name,
         tui.nickname,
         tui.birthday,
@@ -47,6 +50,7 @@
         tui.education,
         tui.industry,
         tui.start_working_time,
+        tui.school,
         tui.remark,
         tui.create_time,
         tui.update_time,

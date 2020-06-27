@@ -42,4 +42,13 @@ public interface IUserFansService extends IService<UserFans> {
      * @Author wcx
      **/
     ResultBody getAttentionStatus(Long userId, Long fanId);
+
+    /**
+     * 功能描述: 获取个人信息模块需要的数据
+     *
+     * @param userId
+     * @return com.jxkj.common.result.ResultBody
+     * @Author wcx
+     **/
+    ResultBody forPersonalInfoCount(Long userId);
 }

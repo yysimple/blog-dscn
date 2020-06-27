@@ -12,6 +12,11 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
 /**
  * <p>
  * 用户粉丝表 服务实现类
@@ -45,7 +50,14 @@ public class UserFansServiceImpl extends ServiceImpl<UserFansMapper, UserFans> i
             userFansMapper.insert(userFans1);
             return ResultBodyUtil.success(AttentionConsist.IS_ATTENTION);
         }
-        userFans.setStatus(AttentionConsist.NO_ATTENTION);
+        Integer status = userFans.getStatus();
+        if (AttentionConsist.IS_ATTENTION.equals(status)) {
+            userFans.setStatus(AttentionConsist.NO_ATTENTION);
+            userFansMapper.updateById(userFans);
+            return ResultBodyUtil.success(AttentionConsist.IS_ATTENTION);
+        }
+        userFans.setStatus(AttentionConsist.IS_ATTENTION);
+        userFansMapper.updateById(userFans);
         return ResultBodyUtil.success(AttentionConsist.NO_ATTENTION);
     }
 
@@ -53,8 +65,22 @@ public class UserFansServiceImpl extends ServiceImpl<UserFansMapper, UserFans> i
     public ResultBody getAttentionStatus(Long userId, Long fanId) {
         UserFans userFans = userFansMapper.attention(userId, fanId);
         if (userFans == null) {
-            return ResultBodyUtil.success(0);
+            return ResultBodyUtil.success(1);
         }
-        return ResultBodyUtil.success(userFans.getStatus());
+        Integer status = userFans.getStatus();
+        if (AttentionConsist.IS_ATTENTION.equals(status)) {
+            return ResultBodyUtil.success(AttentionConsist.NO_ATTENTION);
+        }
+        return ResultBodyUtil.success(AttentionConsist.IS_ATTENTION);
+    }
+
+    @Override
+    public ResultBody forPersonalInfoCount(Long userId) {
+        List<UserFans> allFans = userFansMapper.getAllFans(userId);
+        List<UserFans> allAttentional = userFansMapper.getAllAttentional(userId);
+        Map<String, Object> map = new ConcurrentHashMap<>(16);
+        map.put("fanNumber", allFans.size());
+        map.put("attentionNumber", allAttentional.size());
+        return ResultBodyUtil.success(map);
     }
 }

@@ -18,6 +18,6 @@ public interface IUserInfoService extends IService<UserInfo> {
 
     ResultBody saveMessage(UserInfo userInfo);
 
-    ResultBody update(UserInfo userInfo);
+    ResultBody updateUserInfo(UserInfo userInfo);
 
 }
