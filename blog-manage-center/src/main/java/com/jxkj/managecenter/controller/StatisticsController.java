@@ -81,4 +81,16 @@ public class StatisticsController {
     public ResultBody countBlogNumberInFavorites(Long favoriteId){
         return statisticsService.countBlogNumberInFavorites(favoriteId);
     }
+
+    @ApiOperation(value = "统计博客文章管理模块需要的数据")
+    @GetMapping("/countForBlogManage")
+    public ResultBody countForBlogManage(Long userId){
+        return statisticsService.countForBlogManage(userId);
+    }
+
+    @ApiOperation(value = "统计单篇博客的数据")
+    @GetMapping("/countForOneBlog")
+    public ResultBody countForOneBlog(Long blogId){
+        return statisticsService.countForOneBlog(blogId);
+    }
 }

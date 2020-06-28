@@ -2,6 +2,7 @@ package com.jxkj.managecenter.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.jxkj.common.constant.BlogStatusConstant;
 import com.jxkj.common.result.ResultBody;
 import com.jxkj.common.result.ResultBodyUtil;
 import com.jxkj.common.util.DateFormatConvertUtil;
@@ -26,6 +27,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentSkipListMap;
 import java.util.stream.Collectors;
 
 /**
@@ -249,5 +251,47 @@ public class StatisticsServiceImpl implements StatisticsService {
         List<BlogInfo> blogInfos = allBlogFavoriteId.getBlogInfos();
         int blogInfoNum = blogInfos.size();
         return ResultBodyUtil.success(blogInfoNum);
+    }
+
+    @Override
+    public ResultBody countForBlogManage(Long userId) {
+        List<BlogInfo> blogInfos = blogInfoMapper.findAllBlogByUserId(userId);
+        long allNumber = blogInfos.size();
+        long draftNumber= blogInfos.stream()
+                .filter(blogInfo -> BlogStatusConstant.BLOG_DRAFT.equals(blogInfo.getBlogStatus()))
+                .count();
+        long publicNumber = blogInfos.stream()
+                .filter(blogInfo -> BlogStatusConstant.BLOG_PUBLIC.equals(blogInfo.getBlogStatus()))
+                .count();
+        long privateNumber = blogInfos.stream()
+                .filter(blogInfo -> BlogStatusConstant.BLOG_PRIVATE.equals(blogInfo.getBlogStatus()))
+                .count();
+        long auditNumber = blogInfos.stream()
+                .filter(blogInfo -> BlogStatusConstant.BLOG_AUDIT.equals(blogInfo.getBlogStatus()))
+                .count();
+        long recycleNumber = blogInfos.stream()
+                .filter(blogInfo -> BlogStatusConstant.BLOG_RECYCLE_BIN.equals(blogInfo.getBlogStatus()))
+                .count();
+        Map<String, Object> map = new ConcurrentHashMap<>(16);
+        map.put("allNumber", allNumber);
+        map.put("draftNumber", draftNumber);
+        map.put("publicNumber", publicNumber);
+        map.put("privateNumber", privateNumber);
+        map.put("auditNumber", auditNumber);
+        map.put("recycleNumber", recycleNumber);
+        return ResultBodyUtil.success(map);
+    }
+
+    @Override
+    public ResultBody countForOneBlog(Long blogId) {
+        BlogInfo blogInfo = blogInfoMapper.findBlogInfoAndTagsByBlogInfoId(blogId);
+        Integer blogPVNumber = blogInfo.getPageViewNum();
+        Integer likeNumber = blogInfo.getLikeNum();
+        Integer favoriteNumber = blogInfo.getFavorites().size();
+        Map<String, Object> map = new ConcurrentHashMap<>(16);
+        map.put("blogPVNumber", blogPVNumber);
+        map.put("likeNumber", likeNumber);
+        map.put("favoriteNumber", favoriteNumber);
+        return ResultBodyUtil.success(map);
     }
 }

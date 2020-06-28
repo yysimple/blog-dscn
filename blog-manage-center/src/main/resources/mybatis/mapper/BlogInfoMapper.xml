@@ -116,9 +116,9 @@
 
     <insert id="insertBlogInfo" parameterType="com.jxkj.managecenter.entity.BlogInfo"
             useGeneratedKeys="true" keyProperty="id">
-            insert into t_blog_info(title,content,t_user_id)
+            insert into t_blog_info(title,content,blog_status,t_user_id)
             values
-            (#{title},#{content},#{tUserId});
+            (#{title},#{content},#{blogStatus}, #{tUserId});
     </insert>
 
     <delete id="deleteInfoById" parameterType="long">

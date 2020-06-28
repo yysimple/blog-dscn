@@ -73,4 +73,21 @@ public interface StatisticsService {
      **/
     ResultBody countBlogNumberInFavorites(Long favoriteId);
 
+    /**
+     * 功能描述: 统计博客文章管理模块需要的数据
+     *
+     * @Author wcx
+     * @param userId
+     * @return com.jxkj.common.result.ResultBody
+     **/
+    ResultBody countForBlogManage(Long userId);
+
+    /**
+     * 功能描述: 统计单篇博客的数据
+     *
+     * @Author wcx
+     * @param blogId
+     * @return com.jxkj.common.result.ResultBody
+     **/
+    ResultBody countForOneBlog(Long blogId);
 }
