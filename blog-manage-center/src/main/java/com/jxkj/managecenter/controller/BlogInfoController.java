@@ -4,6 +4,7 @@ package com.jxkj.managecenter.controller;
 import com.jxkj.common.result.ResultBody;
 import com.jxkj.common.result.ResultBodyUtil;
 import com.jxkj.managecenter.entity.BlogInfo;
+import com.jxkj.managecenter.form.AllBlogByFuzzyForm;
 import com.jxkj.managecenter.mapper.BlogInfoMapper;
 import com.jxkj.managecenter.service.IBlogInfoService;
 import io.swagger.annotations.Api;
@@ -163,5 +164,11 @@ public class BlogInfoController {
     @GetMapping("/findAllBlogInfo")
     public ResultBody findAllBlogInfo(){
         return ResultBodyUtil.success(blogInfoMapper.selectList(null));
+    }
+
+    @ApiOperation(value = "查询所有的博客根据条件查询")
+    @PostMapping("/findAllBlogByFuzzy")
+    public ResultBody findAllBlogByFuzzy(@RequestBody AllBlogByFuzzyForm allBlogByFuzzyForm){
+        return iBlogInfoService.findAllBlogByFuzzy(allBlogByFuzzyForm);
     }
 }

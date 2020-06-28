@@ -9,10 +9,13 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.jxkj.common.constant.BlogStatusConstant;
 import com.jxkj.common.result.ResultBody;
 import com.jxkj.common.result.ResultBodyUtil;
+import com.jxkj.common.util.DateFormatConvertUtil;
 import com.jxkj.managecenter.entity.*;
 import com.jxkj.managecenter.feign.UserInfoFeignService;
+import com.jxkj.managecenter.form.AllBlogByFuzzyForm;
 import com.jxkj.managecenter.mapper.*;
 import com.jxkj.managecenter.service.IBlogInfoService;
 import com.jxkj.managecenter.vo.BlogInfoVO;
@@ -29,6 +32,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * <p>
@@ -215,7 +220,7 @@ public class BlogInfoServiceImpl extends ServiceImpl<BlogInfoMapper, BlogInfo> i
                 categoryColumnMapper.saveCategoryColumn(categoryColumn);
                 blogInfoCategory.setTBlogInfoId(blogInfo.getId());
                 blogInfoCategory.setTCategoryColumnId(categoryColumn.getId());
-            }else {
+            } else {
                 blogInfoCategory.setTBlogInfoId(blogInfo.getId());
                 blogInfoCategory.setTCategoryColumnId(categoryColumnMapper.getCategoryByCategoryName(categoryNames[i]).getId());
             }
@@ -326,6 +331,48 @@ public class BlogInfoServiceImpl extends ServiceImpl<BlogInfoMapper, BlogInfo> i
     @Override
     public ResultBody findOldTopNumberBlogInfo(Integer number) {
         List<BlogInfo> blogInfos = blogInfoMapper.findOldTopNumberBlogInfo(number);
+        return ResultBodyUtil.success(blogInfos);
+    }
+
+    @Override
+    public ResultBody findAllBlogByFuzzy(AllBlogByFuzzyForm allBlogByFuzzyForm) {
+        List<BlogInfo> blogInfos = blogInfoMapper.findAllBlogByUserId(allBlogByFuzzyForm.getUserId());
+        if (!StrUtil.isEmptyIfStr(allBlogByFuzzyForm.getBlogStatus())) {
+            blogInfos = blogInfos.stream()
+                    .filter(blogInfo -> allBlogByFuzzyForm.getBlogStatus().equals(blogInfo.getBlogStatus()))
+                    .collect(Collectors.toList());
+        }
+        if (!StrUtil.hasBlank(allBlogByFuzzyForm.getBlogType())) {
+            blogInfos = blogInfos.stream()
+                    .filter(blogInfo -> blogInfo.getBlogType().getType().equals(allBlogByFuzzyForm.getBlogType()))
+                    .collect(Collectors.toList());
+        }
+        if (!StrUtil.hasBlank(allBlogByFuzzyForm.getBlogCategory())) {
+            blogInfos = blogInfos.stream()
+                    .filter(blogInfo -> {
+                        List<CategoryColumn> categoryColumns = blogInfo.getCategoryColumns();
+                        if (categoryColumns != null) {
+                            for (CategoryColumn categoryColumn : categoryColumns) {
+                                if (allBlogByFuzzyForm.getBlogCategory().equals(categoryColumn.getCategoryName())) {
+                                    return true;
+                                }
+                            }
+                        }
+                        return false;
+                    }).collect(Collectors.toList());
+        }
+        if (!StrUtil.hasBlank(allBlogByFuzzyForm.getEndTime(), allBlogByFuzzyForm.getStartTime())) {
+            LocalDateTime start = DateFormatConvertUtil.startTime(allBlogByFuzzyForm.getStartTime());
+            LocalDateTime end = DateFormatConvertUtil.endTime(allBlogByFuzzyForm.getEndTime());
+            blogInfos = blogInfos.stream()
+                    .filter(blogInfo -> blogInfo.getCreateTime().isBefore(end) && blogInfo.getCreateTime().isAfter(start))
+                    .collect(Collectors.toList());
+        }
+        if (!StrUtil.hasBlank(allBlogByFuzzyForm.getKeyword())) {
+           blogInfos = blogInfos.stream()
+                    .filter(blogInfo -> blogInfo.getTitle().contains(allBlogByFuzzyForm.getKeyword()) || blogInfo.getContent().contains(allBlogByFuzzyForm.getKeyword()))
+                    .collect(Collectors.toList());
+        }
         return ResultBodyUtil.success(blogInfos);
     }
 }

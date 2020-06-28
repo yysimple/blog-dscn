@@ -3,6 +3,7 @@ package com.jxkj.managecenter.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.jxkj.common.result.ResultBody;
 import com.jxkj.managecenter.entity.BlogInfo;
+import com.jxkj.managecenter.form.AllBlogByFuzzyForm;
 
 /**
  * <p>
@@ -187,4 +188,13 @@ public interface IBlogInfoService extends IService<BlogInfo> {
      * @Author wcx
      **/
     ResultBody findOldTopNumberBlogInfo(Integer number);
+
+    /**
+     * 功能描述: 根据条件查询对应的博客信息
+     *
+     * @param allBlogByFuzzyForm
+     * @return com.jxkj.common.result.ResultBody
+     * @Author wcx
+     **/
+    ResultBody findAllBlogByFuzzy(AllBlogByFuzzyForm allBlogByFuzzyForm);
 }
