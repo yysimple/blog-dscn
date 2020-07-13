@@ -1,4 +1,6 @@
 spring:
+  application:
+    name: blog-center
   # 测试时，控制台彩色日志
   output:
     ansi:
@@ -24,7 +26,6 @@ mybatis-plus:
 service-url:
   nacos-user-service: http://user-center
 
-
 ribbon:
   ConnectTimeout: 10000 # ribbon链接超时时长
   ReadTimeout: 10000 # ribbon读取超时时间长
@@ -36,3 +37,23 @@ pagehelper:
   params: count=countSql
 swagger2:
   enable: true
+seata:
+  enabled: true
+  application-id: ${spring.application.name}
+  tx-service-group: dscn-seata-group
+  config:
+    type: nacos
+    nacos:
+      serverAddr: 123.57.26.161
+      namespace:
+      group: SEATA_GROUP
+      userName: ""
+      password: ""
+  registry:
+    type: nacos
+    nacos:
+      server-addr: 123.57.26.161
+      application: seata-server
+      userName: ""
+      password: ""
+      namespace:

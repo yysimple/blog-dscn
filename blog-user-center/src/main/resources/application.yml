@@ -1,4 +1,12 @@
 spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    username: db_user_center
+    password: db_user_center
+    url: jdbc:mysql://39.100.24.145/db_user_center?serverTimezone=Asia/Shanghai
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  application:
+    name: user-center
   # 测试时，控制台彩色日志
   profiles:
     active: dev
@@ -26,6 +34,26 @@ pagehelper:
 swagger2:
   enable: true
 
+seata:
+  enabled: true
+  application-id: ${spring.application.name}
+  tx-service-group: dscn-seata-group
+  config:
+    type: nacos
+    nacos:
+      serverAddr: 123.57.26.161:8848
+      namespace:
+      group: SEATA_GROUP
+      userName: ""
+      password: ""
+  registry:
+    type: nacos
+    nacos:
+      server-addr: 123.57.26.161:8848
+      application: seata-server
+      userName: ""
+      password: ""
+      namespace:
 # 消费者将去访问微服务的名称
 service-url:
   nacos-user-service: http://blog-center

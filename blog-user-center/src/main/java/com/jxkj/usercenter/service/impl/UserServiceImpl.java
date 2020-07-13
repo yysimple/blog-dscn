@@ -26,6 +26,8 @@ import com.jxkj.usercenter.service.IUserLevelService;
 import com.jxkj.usercenter.service.IUserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.jxkj.usercenter.vo.BlogInfoVO;
+// import io.seata.spring.annotation.GlobalTransactional;
+import io.seata.spring.annotation.GlobalTransactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -240,6 +242,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
     @Override
     @Transactional(isolation = Isolation.REPEATABLE_READ, rollbackFor = Exception.class)
+    @GlobalTransactional(name = "user-center", rollbackFor = Exception.class)
     public ResultBody saveBlogInfoByTagNames(BlogInfoAndTagForm blogInfoAndTagForm, Long typeId, Long userId) {
         BlogInfoForm blogInfoForm = blogInfoAndTagForm.getBlogInfoForm();
         blogInfoForm.setTUserId(userId);
