@@ -2,10 +2,7 @@ package com.jxkj.managecenter.controller;
 
 import cn.hutool.core.text.replacer.StrReplacer;
 import com.jxkj.common.result.ResultBody;
-import org.redisson.api.RCountDownLatch;
-import org.redisson.api.RLock;
-import org.redisson.api.RReadWriteLock;
-import org.redisson.api.RedissonClient;
+import org.redisson.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -113,5 +110,31 @@ public class BlogTestController {
         System.out.println(id + "班 ==== 开始离校 ====");
         rCountDownLatch.countDown();
         return "回家";
+    }
+
+    @GetMapping("/park")
+    public String park(){
+        RSemaphore rSemaphore = redissonClient.getSemaphore("park");
+        rSemaphore.addPermits(2);
+        boolean b = rSemaphore.tryAcquire();
+        if (b) {
+            System.out.println("只有一个线程访问我，OK");
+        }else {
+            System.out.println("我处理不了，请等待");
+        }
+        return "OK==>" + b;
+    }
+
+    @GetMapping("/go")
+    public String go(){
+        RSemaphore rSemaphore = redissonClient.getSemaphore("park");
+        System.out.println("我要停车10s");
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        rSemaphore.release();
+        return "我走了，空出来了";
     }
 }
