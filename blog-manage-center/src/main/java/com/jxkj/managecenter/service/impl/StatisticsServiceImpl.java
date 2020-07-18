@@ -17,6 +17,8 @@ import com.jxkj.managecenter.vo.ArchiveMonthVO;
 import com.jxkj.managecenter.vo.ArchiveVO;
 import com.jxkj.managecenter.vo.ChartPageViewVO;
 import com.jxkj.managecenter.vo.ChartVO;
+import org.redisson.api.RLock;
+import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.script.DefaultRedisScript;
@@ -51,6 +53,9 @@ public class StatisticsServiceImpl implements StatisticsService {
 
     @Autowired
     private RedisTemplate<String, String> redisTemplate;
+
+    @Autowired
+    private RedissonClient redissonClient;
 
     @Override
     public ResultBody allStatistics(Long userId) {
@@ -343,6 +348,16 @@ public class StatisticsServiceImpl implements StatisticsService {
 
     @Override
     public ResultBody findAllBlogDetailsByRedisson() {
-        return null;
+        // 锁应该细粒度化，具体的缓存存的就是具体的对应对象
+        RLock rLock = redissonClient.getLock("findAllBlogDetailsByRedisson-lock");
+        rLock.lock();
+        List<BlogInfo> blogInfos;
+        try {
+            blogInfos = getBlogInfos();
+        } finally {
+            rLock.unlock();
+        }
+        return ResultBodyUtil.success(blogInfos);
     }
 }
+
