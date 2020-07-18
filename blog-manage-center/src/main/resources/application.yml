@@ -44,7 +44,7 @@ seata:
   config:
     type: nacos
     nacos:
-      serverAddr: 123.57.26.161
+      serverAddr: 192.168.109.135:8848
       namespace:
       group: SEATA_GROUP
       userName: ""
@@ -52,8 +52,10 @@ seata:
   registry:
     type: nacos
     nacos:
-      server-addr: 123.57.26.161
+      server-addr: 192.168.109.135:8848
       application: seata-server
       userName: ""
       password: ""
       namespace:
+server:
+  port: 5220

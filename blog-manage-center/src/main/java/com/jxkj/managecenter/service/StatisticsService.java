@@ -90,4 +90,22 @@ public interface StatisticsService {
      * @return com.jxkj.common.result.ResultBody
      **/
     ResultBody countForOneBlog(Long blogId);
+
+    /**
+     * 功能描述: 使用redis原生锁和Lua脚本进行锁操作
+     * @author 吴呈兴
+     * @date 2020/7/17
+     * @param
+     * @return com.jxkj.common.result.ResultBody
+     */
+    ResultBody findAllBlogDetailsByRedisLock();
+
+    /**
+     * 功能描述: 使用分布式锁框架Redisson进行锁操作
+     * @author 吴呈兴
+     * @date 2020/7/17
+     * @param
+     * @return com.jxkj.common.result.ResultBody
+     */
+    ResultBody findAllBlogDetailsByRedisson();
 }

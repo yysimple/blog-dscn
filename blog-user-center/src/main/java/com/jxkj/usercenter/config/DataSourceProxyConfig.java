@@ -21,7 +21,7 @@ import javax.sql.DataSource;
  * @author wcx
  * @version 1.0
  */
-@Configuration
+// @Configuration
 public class DataSourceProxyConfig {
 
 

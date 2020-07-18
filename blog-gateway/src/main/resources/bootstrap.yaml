@@ -1,0 +1,42 @@
+spring:
+  application:
+    name: blog-gateway
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 192.168.109.135:8848
+        namespace: ae533aaa-fcf2-491c-9b9a-e74a9c6eefba
+      config:
+        # 配置中心的地址
+        server-addr: 192.168.109.135:8848
+        # 指定配置文件格式，相当于gitee上的那个文件
+        file-extension: yml
+        # 分组
+        group: DEFAULT_GROUP
+        # 命名空间
+        namespace: ae533aaa-fcf2-491c-9b9a-e74a9c6eefba
+        # dataIds
+        shared-configs:
+          - ${spring.application.name}.${spring.cloud.nacos.config.file-extension}
+  #gateway:
+  #  discovery:
+  #    locator:
+  #      enabled: true
+  #  routes:
+  #    - id: user-center
+  #      uri: lb://user-center
+  #      predicates:
+  #        - Path=/api/userCenter/**
+  #      filters:
+  #        - RewritePath=/api/(?<segment>.*),/$\{segment}
+  #        - SwaggerHeaderFilter
+  #        - StripPrefix=1
+
+  #    - id: blog-center
+  #      uri: lb://blog-center
+  #      predicates:
+  #        - Path=/api/blogCenter/**
+  #      filters:
+  #        - RewritePath=/api/(?<segment>.*),/$\{segment}
+  #        - SwaggerHeaderFilter
+  #        - StripPrefix=1

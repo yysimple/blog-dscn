@@ -55,7 +55,7 @@
 
 1. 指定Main启动入口,用于jar包上线
 ```maven
-    <build>
+    <build> 
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>

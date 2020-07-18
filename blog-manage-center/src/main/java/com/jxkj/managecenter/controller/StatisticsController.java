@@ -43,7 +43,7 @@ public class StatisticsController {
     @GetMapping("/getAllBlogDetails")
     @ApiOperation(value = "获取所有博客详情")
     public ResultBody getAllBlogDetails(){
-        return ResultBodyUtil.success(blogInfoMapper.findAllBlogDetails());
+        return statisticsService.findAllBlogDetailsByRedisLock();
     }
 
     @GetMapping("/getAllStatisticsByUserId")

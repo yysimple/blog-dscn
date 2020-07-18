@@ -9,7 +9,6 @@ import com.jxkj.common.util.DateFormatConvertUtil;
 import com.jxkj.managecenter.entity.BlogInfo;
 import com.jxkj.managecenter.entity.BlogLikeUser;
 import com.jxkj.managecenter.entity.Favorites;
-import com.jxkj.managecenter.form.BlogInfoListForm;
 import com.jxkj.managecenter.mapper.BlogInfoMapper;
 import com.jxkj.managecenter.mapper.FavoritesMapper;
 import com.jxkj.managecenter.repository.RedisRepository;
@@ -19,6 +18,8 @@ import com.jxkj.managecenter.vo.ArchiveVO;
 import com.jxkj.managecenter.vo.ChartPageViewVO;
 import com.jxkj.managecenter.vo.ChartVO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.script.DefaultRedisScript;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
@@ -27,7 +28,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentSkipListMap;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 /**
@@ -47,6 +48,9 @@ public class StatisticsServiceImpl implements StatisticsService {
 
     @Autowired
     private FavoritesMapper favoritesMapper;
+
+    @Autowired
+    private RedisTemplate<String, String> redisTemplate;
 
     @Override
     public ResultBody allStatistics(Long userId) {
@@ -257,7 +261,7 @@ public class StatisticsServiceImpl implements StatisticsService {
     public ResultBody countForBlogManage(Long userId) {
         List<BlogInfo> blogInfos = blogInfoMapper.findAllBlogByUserId(userId);
         long allNumber = blogInfos.size();
-        long draftNumber= blogInfos.stream()
+        long draftNumber = blogInfos.stream()
                 .filter(blogInfo -> BlogStatusConstant.BLOG_DRAFT.equals(blogInfo.getBlogStatus()))
                 .count();
         long publicNumber = blogInfos.stream()
@@ -293,5 +297,52 @@ public class StatisticsServiceImpl implements StatisticsService {
         map.put("likeNumber", likeNumber);
         map.put("favoriteNumber", favoriteNumber);
         return ResultBodyUtil.success(map);
+    }
+
+    public List<BlogInfo> getBlogInfos() {
+        // 尝试从redis中读取数据
+        List<BlogInfo> blogInfos = redisRepository.getObject("blogInfos");
+        if (null == blogInfos) {
+            blogInfos = blogInfoMapper.findAllBlogDetails();
+            redisRepository.setObject("blogInfos", blogInfos);
+            System.out.println("====== 从数据库里面获取值 ======");
+            return blogInfos;
+        }
+        return blogInfos;
+    }
+
+    @Override
+    public ResultBody findAllBlogDetailsByRedisLock() {
+
+        // 生成唯一的一个值
+        String uuidLock = UUID.randomUUID().toString();
+        // 设置一个锁，也既在redis设置一个为空才能插入的kv，并设置过期时间
+        Boolean blogLock = redisTemplate.opsForValue().setIfAbsent("blogLock", uuidLock, 300, TimeUnit.SECONDS);
+        if (blogLock) {
+            System.out.println("=== 获取分布式锁成功 ===");
+            List<BlogInfo> blogInfos;
+            try {
+                blogInfos = getBlogInfos();
+            } finally {
+                // 执行redis 原子删除脚本，在该线程执行完之后，自动删除锁
+                String script = "if redis.call('get',KEYS[1]) == ARGV[1] then return redis.call('del',KEYS[1]) else return 0 end";
+                redisTemplate.execute(new DefaultRedisScript<Long>(script, Long.class), Arrays.asList("blogLock"), uuidLock);
+            }
+            return ResultBodyUtil.success(blogInfos);
+        } else {
+            System.out.println("=== 分布式锁获取失败 ===");
+            try {
+                Thread.sleep(300);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            // 调用自己，让失败的线程一直尝试抢占锁===相当于是自旋锁
+            return findAllBlogDetailsByRedisLock();
+        }
+    }
+
+    @Override
+    public ResultBody findAllBlogDetailsByRedisson() {
+        return null;
     }
 }

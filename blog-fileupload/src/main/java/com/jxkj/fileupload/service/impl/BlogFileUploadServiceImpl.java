@@ -28,7 +28,7 @@ public class BlogFileUploadServiceImpl implements BlogFileUploadService {
             return ResultBodyUtil.error(ResultTypeEnum.FILE_TOO_LARGE.getCode(),
                     ResultTypeEnum.FILE_TOO_LARGE.getMsg());
         }
-        String url = FileUploadUtil.fileUpload(file, "blog/blog-info");
+        String url = FileUploadUtil.fileUpload(file, "/blog/blog-info");
         return ResultBodyUtil.success(url);
     }
 }
