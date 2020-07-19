@@ -32,8 +32,6 @@ public class Storage implements Serializable {
 
     private Long productId;
 
-    private Long orderId;
-
     private Integer total;
 
     private Integer used;

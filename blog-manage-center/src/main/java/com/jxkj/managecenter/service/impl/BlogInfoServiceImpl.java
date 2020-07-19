@@ -22,6 +22,7 @@ import com.jxkj.managecenter.vo.BlogInfoVO;
 import com.jxkj.managecenter.vo.BlogUserInfoVO;
 import com.jxkj.managecenter.vo.UserInfoVO;
 import com.jxkj.managecenter.vo.UserVO;
+import io.seata.spring.annotation.GlobalTransactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -183,6 +184,7 @@ public class BlogInfoServiceImpl extends ServiceImpl<BlogInfoMapper, BlogInfo> i
      **/
     @Override
     @Transactional(isolation = Isolation.REPEATABLE_READ, rollbackFor = Exception.class)
+    @GlobalTransactional(name = "dscn-seata-saveBlogInfo", rollbackFor = Exception.class)
     public ResultBody saveBlogInfo(BlogInfo blogInfo, String[] categoryNames, String[] tagNames, Long typeId) {
         blogInfoMapper.insertBlogInfo(blogInfo);
         List<BlogTag> blogTags = blogTagMapper.selectList(null);

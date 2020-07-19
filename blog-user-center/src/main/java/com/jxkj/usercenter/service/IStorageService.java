@@ -12,5 +12,11 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @since 2020-07-19
  */
 public interface IStorageService extends IService<Storage> {
+    /**
+     * 减库存
+     * @param productId
+     * @param count
+     */
+    void decrease(Long productId, Integer count);
 
 }

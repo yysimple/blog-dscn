@@ -12,5 +12,9 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @since 2020-07-19
  */
 public interface IOrderService extends IService<Order> {
-
+    /**
+     * 创建订单
+     * @param order
+     */
+    void create(Order order);
 }

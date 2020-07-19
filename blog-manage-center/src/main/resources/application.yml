@@ -1,4 +1,7 @@
 spring:
+  # 碰到重名bean 可以使用这个允许其覆盖
+  main:
+    allow-bean-definition-overriding: true
   application:
     name: blog-center
   # 测试时，控制台彩色日志
