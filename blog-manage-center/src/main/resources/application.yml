@@ -45,17 +45,20 @@ seata:
     type: nacos
     nacos:
       serverAddr: 192.168.109.135:8848
-      namespace:
+      namespace: f77491f9-7905-4f2e-913a-07546c4ad128
       group: SEATA_GROUP
-      userName: ""
-      password: ""
   registry:
     type: nacos
     nacos:
       server-addr: 192.168.109.135:8848
       application: seata-server
-      userName: ""
-      password: ""
-      namespace:
+      namespace: f77491f9-7905-4f2e-913a-07546c4ad128
 server:
   port: 5220
+#spring:
+#  datasource:
+#    type: com.alibaba.druid.pool.DruidDataSource
+#    username: db_user_center
+#    password: db_user_center
+#    url: jdbc:mysql://39.100.24.145/db_user_center?serverTimezone=Asia/Shanghai
+#    driver-class-name: com.mysql.cj.jdbc.Driver

@@ -5,7 +5,7 @@ spring:
     nacos:
       discovery:
         server-addr: 192.168.109.135:8848
-        namespace: ae533aaa-fcf2-491c-9b9a-e74a9c6eefba
+        namespace: 30a7556a-5447-426d-a340-0c8d2d56b550
       config:
         # 配置中心的地址
         server-addr: 192.168.109.135:8848
@@ -14,7 +14,7 @@ spring:
         # 分组
         group: DEFAULT_GROUP
         # 命名空间
-        namespace: ae533aaa-fcf2-491c-9b9a-e74a9c6eefba
+        namespace: 30a7556a-5447-426d-a340-0c8d2d56b550
         # dataIds
         shared-configs:
           - ${spring.application.name}.${spring.cloud.nacos.config.file-extension}

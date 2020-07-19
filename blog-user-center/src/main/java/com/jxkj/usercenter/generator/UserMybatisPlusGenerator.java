@@ -12,13 +12,13 @@ import com.jxkj.common.model.GeneratorEntity;
 public class UserMybatisPlusGenerator {
     public static void main(String[] args) {
         GeneratorEntity generatorEntity = new GeneratorEntity();
-        generatorEntity.setAuthor("GuJunBin");
+        generatorEntity.setAuthor("wcx");
         generatorEntity.setParentPackage("com.jxkj.usercenter");
-        generatorEntity.setUrl("jdbc:mysql://39.100.24.145:3306/db_user_center?serverTimezone=UTC&useUnicode=true&useSSL=false&characterEncoding=utf8");
+        generatorEntity.setUrl("jdbc:mysql://192.168.109.135:3306/db_user_center?serverTimezone=UTC&useUnicode=true&useSSL=false&characterEncoding=utf8");
         generatorEntity.setUsername("db_user_center");
         generatorEntity.setPassword("db_user_center");
         generatorEntity.setProjectPath("F:\\Micro-service\\blog-dscn\\blog-user-center");
-        String[] tables = {"t_user_fans"};
+        String[] tables = {"t_storage"};
         generatorEntity.setTableNames(tables);
         generatorEntity.setOpenSwagger(true);
         MybatisPlusGenerator.generator(generatorEntity);

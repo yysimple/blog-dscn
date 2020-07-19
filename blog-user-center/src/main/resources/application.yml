@@ -27,26 +27,22 @@ pagehelper:
 swagger2:
   enable: true
 
-#  seata:
-#    enabled: true
-#    application-id: ${spring.application.name}
-#    tx-service-group: dscn-seata-group
-#    config:
-#      type: nacos
-#      nacos:
-#        serverAddr: 192.168.109.135:8848
-#        namespace:
-#        group: SEATA_GROUP
-#        userName: ""
-#        password: ""
-#    registry:
-#      type: nacos
-#      nacos:
-#        server-addr: 192.168.109.135:8848
-#        application: seata-server
-#        userName: ""
-#        password: ""
-#        namespace:
+seata:
+ enabled: true
+ application-id: ${spring.application.name}
+ tx-service-group: dscn-seata-group
+ config:
+   type: nacos
+   nacos:
+     serverAddr: 192.168.109.135:8848
+     namespace: f77491f9-7905-4f2e-913a-07546c4ad128
+     group: SEATA_GROUP
+ registry:
+   type: nacos
+   nacos:
+     server-addr: 192.168.109.135:8848
+     application: seata-server
+     namespace: f77491f9-7905-4f2e-913a-07546c4ad128
 # 消费者将去访问微服务的名称
 service-url:
   nacos-user-service: http://blog-center

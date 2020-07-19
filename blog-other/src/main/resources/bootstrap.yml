@@ -1,13 +1,13 @@
 spring:
   application:
-    name: user-center
+    name: blog-other
   cloud:
     nacos:
       discovery:
         server-addr: 192.168.109.135:8848
         namespace: 30a7556a-5447-426d-a340-0c8d2d56b550
       config:
-        # 配置中心的地址
+        # 配置中心的地址a
         server-addr: 192.168.109.135:8848
         # 指定配置文件格式，相当于gitee上的那个文件
         file-extension: yml
@@ -15,9 +15,9 @@ spring:
         group: DEFAULT_GROUP
         # 命名空间
         namespace: 30a7556a-5447-426d-a340-0c8d2d56b550
-        # dataIds
+        # dataId
         shared-configs:
           - ${spring.application.name}.${spring.cloud.nacos.config.file-extension}
 feign:
   httpclient:
-    connection-timeout: 100000
+    connection-timeout: 20000
