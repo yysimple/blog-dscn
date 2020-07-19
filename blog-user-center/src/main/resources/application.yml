@@ -46,3 +46,9 @@ seata:
 # 消费者将去访问微服务的名称
 service-url:
   nacos-user-service: http://blog-center
+logging:
+  level:
+    com:
+      alibaba:
+        # 设置nacos日志的打印级别
+        nacos: warn

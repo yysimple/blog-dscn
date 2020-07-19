@@ -1,0 +1,6 @@
+logging:
+  level:
+    com:
+      alibaba:
+        # 设置nacos日志的打印级别
+        nacos: warn

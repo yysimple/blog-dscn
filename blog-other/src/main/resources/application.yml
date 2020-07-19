@@ -39,3 +39,9 @@ seata:
       server-addr: 192.168.109.135:8848
       application: seata-server
       namespace: f77491f9-7905-4f2e-913a-07546c4ad128
+logging:
+  level:
+    com:
+      alibaba:
+        # 设置nacos日志的打印级别
+        nacos: warn
