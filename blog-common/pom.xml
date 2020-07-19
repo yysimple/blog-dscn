@@ -104,6 +104,13 @@
             <version>2.9.2</version>
         </dependency>
 
+        <!-- 日志集中管理 -->
+        <dependency>
+            <groupId>net.logstash.logback</groupId>
+            <artifactId>logstash-logback-encoder</artifactId>
+            <version>5.2</version>
+        </dependency>
+
     </dependencies>
 
 
