@@ -26,6 +26,7 @@ import io.seata.spring.annotation.GlobalTransactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
@@ -80,6 +81,17 @@ public class BlogInfoServiceImpl extends ServiceImpl<BlogInfoMapper, BlogInfo> i
 
     private QueryWrapper<BlogInfo> queryWrapper = new QueryWrapper<>();
     IPage<BlogInfo> page = new Page(1, 10);
+
+    @Cacheable(cacheNames = "cache-getBlogInfos")
+    public List<BlogInfo> getBlogInfos(){
+        List<BlogInfo> blogInfos = blogInfoMapper.selectList(null);
+        return blogInfos;
+    }
+
+    @Override
+    public ResultBody findAllBlogInfos() {
+        return ResultBodyUtil.success(getBlogInfos());
+    }
 
     @Override
     public ResultBody pagingQuery() {

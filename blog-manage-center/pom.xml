@@ -73,6 +73,11 @@
             <artifactId>jedis</artifactId>
         </dependency>
 
+        <!-- 整合spring自带的缓存 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-cache</artifactId>
+        </dependency>
         <!-- 分布式锁 Redisson -->
         <dependency>
             <groupId>org.redisson</groupId>

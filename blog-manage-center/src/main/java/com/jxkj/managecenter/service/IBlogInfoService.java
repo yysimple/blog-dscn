@@ -17,6 +17,14 @@ public interface IBlogInfoService extends IService<BlogInfo> {
 
 
     /**
+     * 功能描述: 查询所有的博客
+     * @author 吴呈兴
+     * @date 2020/7/19
+     * @param
+     * @return com.jxkj.common.result.ResultBody
+     */
+    ResultBody findAllBlogInfos();
+    /**
      * 功能描述: 分页查询所有已发布博客信息
      *
      * @param
