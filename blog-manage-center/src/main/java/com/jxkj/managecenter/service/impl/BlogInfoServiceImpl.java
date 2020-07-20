@@ -82,7 +82,7 @@ public class BlogInfoServiceImpl extends ServiceImpl<BlogInfoMapper, BlogInfo> i
     private QueryWrapper<BlogInfo> queryWrapper = new QueryWrapper<>();
     IPage<BlogInfo> page = new Page(1, 10);
 
-    @Cacheable(cacheNames = "cache-getBlogInfos")
+    @Cacheable({"cache-getBlogInfos"})
     public List<BlogInfo> getBlogInfos(){
         List<BlogInfo> blogInfos = blogInfoMapper.selectList(null);
         return blogInfos;

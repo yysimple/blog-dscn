@@ -35,6 +35,12 @@ public class BlogInfoController {
     @Autowired
     private BlogInfoMapper blogInfoMapper;
 
+    @GetMapping("/getBlogInfosByCache")
+    @ApiOperation(value = "通过缓存查询所有博客信息")
+    public ResultBody getBlogInfosByCache(){
+        return iBlogInfoService.findAllBlogInfos();
+    }
+
     @ApiOperation(value = "分页查询所有已发布博客信息")
     @GetMapping("/findAllIssueBlog")
     public ResultBody findAllIssueBlog() {

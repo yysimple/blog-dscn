@@ -8,6 +8,9 @@ spring:
   output:
     ansi:
       enabled: always
+  # 开启spring的缓存，存储在redis中
+  cache:
+    type: redis
 # mybatis-plus 相关配置
 mybatis-plus:
   type-aliases-package: com.jxkj.managecenter
