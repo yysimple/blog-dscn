@@ -1,6 +1,8 @@
 package com.jxkj.managecenter;
 
+import com.jxkj.managecenter.sync.BlogCanalClient;
 import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cache.annotation.EnableCaching;
@@ -8,6 +10,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import javax.annotation.Resource;
 
 /**
  * 功能描述：
@@ -22,8 +25,18 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @RefreshScope
 @EnableCaching
 @MapperScan(basePackages = "com.jxkj.managecenter.mapper")
-public class ManageCenterApplication5220 {
+public class ManageCenterApplication5220 implements CommandLineRunner {
+    @Resource
+    private BlogCanalClient blogCanalClient;
+
     public static void main(String[] args) {
         SpringApplication.run(ManageCenterApplication5220.class, args);
     }
+
+    @Override
+    public void run(String... strings) throws Exception {
+        //项目启动，执行canal客户端监听
+        blogCanalClient.run();
+    }
+
 }

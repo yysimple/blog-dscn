@@ -9,6 +9,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+import org.apache.ibatis.type.Alias;
 
 /**
  * <p>
@@ -22,6 +23,7 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @TableName("t_storage")
+@Alias("storage")
 @ApiModel(value="Storage对象", description="测试分布式锁的库存表")
 public class Storage implements Serializable {
 

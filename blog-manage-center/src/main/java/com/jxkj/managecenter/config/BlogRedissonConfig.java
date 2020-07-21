@@ -15,7 +15,7 @@ import java.io.IOException;
  * @create: 2020-07-18 21:43
  **/
 @Configuration
-public class MyRedissonConfig {
+public class BlogRedissonConfig {
 
     @Bean(destroyMethod = "shutdown")
     RedissonClient redissonClient() throws IOException {

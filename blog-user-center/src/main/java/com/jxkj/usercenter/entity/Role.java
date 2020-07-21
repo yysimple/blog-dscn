@@ -12,6 +12,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+import org.apache.ibatis.type.Alias;
 
 /**
  * <p>
@@ -25,6 +26,7 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @TableName("t_role")
+@Alias("role")
 @ApiModel(value="Role对象", description="用户角色表")
 public class Role extends BaseEntity implements Serializable {
 

@@ -11,6 +11,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NonNull;
 import lombok.experimental.Accessors;
+import org.apache.ibatis.type.Alias;
 
 import javax.validation.constraints.NotNull;
 
@@ -26,6 +27,7 @@ import javax.validation.constraints.NotNull;
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @TableName("t_user")
+@Alias("user")
 @ApiModel(value="User对象", description="用户表")
 public class  User extends BaseEntity implements Serializable {
 

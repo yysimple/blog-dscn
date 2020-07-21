@@ -1,21 +1,18 @@
 package com.jxkj.managecenter.sync;
 
-import com.jxkj.managecenter.form.BlogInfoListForm;
+import com.jxkj.common.constant.CanalConsist;
 import com.jxkj.managecenter.repository.RedisRepository;
-import com.jxkj.managecenter.constant.CanalConsist;
 import com.jxkj.managecenter.entity.BlogInfo;
 import com.jxkj.managecenter.mapper.BlogInfoMapper;
-import lombok.Synchronized;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
-import org.springframework.core.annotation.Order;
-import org.springframework.scheduling.annotation.Async;
-import org.springframework.stereotype.Component;
+
 import java.net.InetSocketAddress;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
+
 import com.alibaba.otter.canal.client.CanalConnector;
 import com.alibaba.otter.canal.client.CanalConnectors;
 import com.alibaba.otter.canal.protocol.CanalEntry;
@@ -27,9 +24,11 @@ import com.alibaba.otter.canal.protocol.Message;
  * @author wcx
  * @version 1.0
  */
-@Component
+/*@Component
 @Order(1)
-public class BlogInfoSync implements ApplicationRunner {
+implements ApplicationRunner
+*/
+public class BlogInfoSync {
 
     @Autowired
     private RedisRepository redisRepository;
@@ -37,7 +36,6 @@ public class BlogInfoSync implements ApplicationRunner {
     @Autowired
     private BlogInfoMapper blogInfoMapper;
 
-    @Override
     public void run(ApplicationArguments args) throws Exception {
         getCanalConn();
     }
@@ -51,7 +49,7 @@ public class BlogInfoSync implements ApplicationRunner {
         }
         // 创建链接
         CanalConnector connector = CanalConnectors.newSingleConnector(new InetSocketAddress(CanalConsist.CANAL_HOST,
-                CanalConsist.CANAL_PORT), CanalConsist.CANAL_DESTINATION, CanalConsist.CANAL_USERNAME, CanalConsist.CANAL_PASSWORD);
+                CanalConsist.CANAL_PORT), CanalConsist.CANAL_DESTINATION_BLOG, CanalConsist.CANAL_BLOG_USERNAME, CanalConsist.CANAL_BLOG_PASSWORD);
         int batchSize = 1000;
         try {
             connector.connect();
@@ -86,14 +84,14 @@ public class BlogInfoSync implements ApplicationRunner {
                         CanalEntry.EventType eventType = rowChage.getEventType();
                         String eventTypeStr = eventType.toString();
                         boolean flag = ("INSERT".equals(eventTypeStr) ||
-                                "CREATE".equals(eventTypeStr) ||"UPDATE".equals(eventTypeStr) || "DELETE".equals(eventTypeStr));
+                                "CREATE".equals(eventTypeStr) || "UPDATE".equals(eventTypeStr) || "DELETE".equals(eventTypeStr));
                         boolean tableFlag = ("t_blog_info".equals(entry.getHeader().getTableName()) ||
                                 "t_blog_info_category".equals(eventTypeStr) ||
                                 "t_blog_info_tag".equals(eventTypeStr) ||
                                 "t_blog_info_type".equals(eventTypeStr) ||
                                 "t_blog_like_user".equals(eventTypeStr) ||
                                 "t_blog_info_favorites".equals(eventTypeStr)
-                                );
+                        );
                         System.out.println(flag);
                         if (tableFlag && flag) {
                             redisRepository.del("blogInfos");

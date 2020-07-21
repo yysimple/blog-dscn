@@ -9,6 +9,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+import org.apache.ibatis.type.Alias;
 import org.hibernate.validator.constraints.Length;
 
 import java.io.Serializable;
@@ -27,6 +28,7 @@ import java.util.Date;
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @TableName("t_user_info")
+@Alias("userInfo")
 @ApiModel(value="UserInfo对象", description="用户详细信息")
 public class UserInfo extends BaseEntity implements Serializable {
 
