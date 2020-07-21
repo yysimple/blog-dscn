@@ -3,6 +3,7 @@ package com.jxkj.fileupload.controller;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.jxkj.common.result.ResultBody;
 import com.jxkj.common.result.ResultBodyUtil;
+import com.jxkj.fileupload.config.EncodingUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Value;
@@ -25,7 +26,10 @@ public class OnlineViewController {
     @PostMapping("/onlineViewFile")
     @ApiOperation(value = "在线预览")
     public ResultBody onlineViewFile(String fileUrl){
-        String preview = kkFileViewUrl + "/onlinePreview?url=" + fileUrl;
+        // EncodingUtil.encodeURIComponent(fileUrl)
+        System.out.println("encode:==" + EncodingUtil.encodeURIComponent(fileUrl));
+        System.out.println("decode:==" + EncodingUtil.decodeURIComponent(fileUrl));
+        String preview = kkFileViewUrl + "/onlinePreview?url=" + EncodingUtil.encodeURIComponent(fileUrl);
         return ResultBodyUtil.success(preview);
     }
 }
