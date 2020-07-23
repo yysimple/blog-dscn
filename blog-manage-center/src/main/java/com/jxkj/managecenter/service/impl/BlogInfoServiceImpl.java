@@ -83,7 +83,7 @@ public class BlogInfoServiceImpl extends ServiceImpl<BlogInfoMapper, BlogInfo> i
     IPage<BlogInfo> page = new Page(1, 10);
 
     @Cacheable({"cache-getBlogInfos"})
-    public List<BlogInfo> getBlogInfos(){
+    public List<BlogInfo> getBlogInfos() {
         List<BlogInfo> blogInfos = blogInfoMapper.selectList(null);
         return blogInfos;
     }
@@ -383,7 +383,7 @@ public class BlogInfoServiceImpl extends ServiceImpl<BlogInfoMapper, BlogInfo> i
                     .collect(Collectors.toList());
         }
         if (!StrUtil.hasBlank(allBlogByFuzzyForm.getKeyword())) {
-           blogInfos = blogInfos.stream()
+            blogInfos = blogInfos.stream()
                     .filter(blogInfo -> blogInfo.getTitle().contains(allBlogByFuzzyForm.getKeyword()) || blogInfo.getContent().contains(allBlogByFuzzyForm.getKeyword()))
                     .collect(Collectors.toList());
         }

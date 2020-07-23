@@ -10,6 +10,7 @@ import lombok.Data;
  */
 @Data
 public class ChartPageViewVO {
+
     private String date;
 
     private Integer pageViewNum;

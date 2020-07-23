@@ -11,6 +11,11 @@ import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.LinkedBlockingDeque;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
+
 /**
  * 功能描述：用户中心模块
  *
@@ -34,6 +39,13 @@ public class UserCenterApplication5190 implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        userCanalClient.run();
+        CompletableFuture.runAsync(() -> {
+            userCanalClient.run();
+        }, new ThreadPoolExecutor(1,
+                1,
+                1L,
+                TimeUnit.SECONDS,
+                new LinkedBlockingDeque<>(1),
+                new ThreadPoolExecutor.AbortPolicy()));
     }
 }

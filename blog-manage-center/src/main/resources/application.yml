@@ -72,3 +72,9 @@ logging:
 #    password: db_user_center
 #    url: jdbc:mysql://39.100.24.145/db_user_center?serverTimezone=Asia/Shanghai
 #    driver-class-name: com.mysql.cj.jdbc.Driver
+thread:
+  pool:
+    core-pool-size: 100
+    maximum-pool-size: 200
+    keep-alive-time: 60
+    queue-size: 50000

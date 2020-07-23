@@ -4,7 +4,6 @@ package com.jxkj.usercenter.controller;
 import com.jxkj.common.result.ResultBody;
 import com.jxkj.common.result.ResultBodyUtil;
 import com.jxkj.usercenter.form.BlogInfoAndTagForm;
-import com.jxkj.usercenter.form.BlogInfoForm;
 import com.jxkj.usercenter.form.UserForm;
 import com.jxkj.usercenter.service.IUserService;
 

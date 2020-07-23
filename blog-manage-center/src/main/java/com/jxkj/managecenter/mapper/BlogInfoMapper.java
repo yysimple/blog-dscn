@@ -148,4 +148,13 @@ public interface BlogInfoMapper extends BaseMapper<BlogInfo> {
      * @Author wcx
      **/
     List<BlogInfo> findTopNumberPageViewByUserId(@Param("number") Integer number, @Param("userId") Long userId);
+
+    /**
+     * 功能描述: 根据博客的标签id查询所有博客
+     * @author WuChengxing
+     * @date 2020/7/23
+     * @param blogTagId
+     * @return java.util.List<com.jxkj.managecenter.entity.BlogInfo>
+     */
+    List<BlogInfo> listBlogInfoByBlogTagId(Long blogTagId);
 }

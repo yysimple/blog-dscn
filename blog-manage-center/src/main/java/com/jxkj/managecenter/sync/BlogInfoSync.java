@@ -42,10 +42,10 @@ public class BlogInfoSync {
 
     public void getCanalConn() {
         System.out.println(LocalDateTime.now());
-        Set<String> keys = redisRepository.getKeys("blogInfos");
+        Set<String> keys = redisRepository.getKeys("blogInfoDetails");
         if (keys.size() <= 0) {
             List<BlogInfo> blogInfos = blogInfoMapper.findAllBlogDetails();
-            redisRepository.setObject("blogInfos", blogInfos);
+            redisRepository.setObject("blogInfoDetails", blogInfos);
         }
         // 创建链接
         CanalConnector connector = CanalConnectors.newSingleConnector(new InetSocketAddress(CanalConsist.CANAL_HOST,
@@ -94,16 +94,12 @@ public class BlogInfoSync {
                         );
                         System.out.println(flag);
                         if (tableFlag && flag) {
-                            redisRepository.del("blogInfos");
+                            redisRepository.del("blogInfoDetails");
                             List<BlogInfo> blogInfos = blogInfoMapper.findAllBlogDetails();
                            /* BlogInfoListForm blogInfoListForm = new BlogInfoListForm();
                             blogInfoListForm.setBlogInfos(blogInfos01);*/
-                            redisRepository.setObject("blogInfos", blogInfos);
+                            redisRepository.setObject("blogInfoDetails", blogInfos);
                         }
-                        System.out.println(String.format("================&gt; binlog[%s:%s] , name[%s,%s] , eventType : %s",
-                                entry.getHeader().getLogfileName(), entry.getHeader().getLogfileOffset(),
-                                entry.getHeader().getSchemaName(), entry.getHeader().getTableName(),
-                                eventType));
                     }
                 }
                 connector.ack(batchId); // 提交确认

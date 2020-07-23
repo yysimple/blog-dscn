@@ -80,7 +80,10 @@ public class UserCanalClient {
                 CanalEntry.RowChange rowChange = CanalEntry.RowChange.parseFrom(entry.getStoreValue());
                 CanalEntry.EventType eventType = rowChange.getEventType();
                 if (eventType == CanalEntry.EventType.DELETE || eventType == CanalEntry.EventType.UPDATE || eventType == CanalEntry.EventType.INSERT) {
-                    log.info("eventType: {}", eventType);
+                    log.info("数据库名：{} ---> 表名：{} ---> 操作的类型: {}",
+                            entry.getHeader().getSchemaName(),
+                            entry.getHeader().getTableName(),
+                            eventType);
                     List<User> users = redisRepository.getObject("users");
                     if (users != null) {
                         redisRepository.del("users");

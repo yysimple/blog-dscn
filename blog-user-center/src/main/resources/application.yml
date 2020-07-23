@@ -5,11 +5,10 @@ spring:
   output:
     ansi:
       enabled: always
-
 # mybatis-plus 相关配置
 mybatis-plus:
   type-aliases-package: com.jxkj.usercenter
-  # mapper-locations: classpath*:mybatis/mapper/*.xml
+  mapper-locations: classpath*:mybatis/mapper/*.xml
   # mybatis-plus 的全局配置
   global-config:
     banner: false

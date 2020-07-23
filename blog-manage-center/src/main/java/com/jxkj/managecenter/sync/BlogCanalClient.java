@@ -79,7 +79,10 @@ public class BlogCanalClient {
                 CanalEntry.RowChange rowChange = CanalEntry.RowChange.parseFrom(entry.getStoreValue());
                 CanalEntry.EventType eventType = rowChange.getEventType();
                 if (eventType == CanalEntry.EventType.DELETE || eventType == CanalEntry.EventType.UPDATE || eventType == CanalEntry.EventType.INSERT) {
-                    log.info("eventType: {}", eventType);
+                    log.info("数据库名：{} ---> 表名：{} ---> 操作的类型: {}",
+                            entry.getHeader().getSchemaName(),
+                            entry.getHeader().getTableName(),
+                            eventType);
                     List<BlogInfo> blogInfos = redisRepository.getObject("blogInfoDetails");
                     if (blogInfos != null) {
                         redisRepository.del("blogInfoDetails");

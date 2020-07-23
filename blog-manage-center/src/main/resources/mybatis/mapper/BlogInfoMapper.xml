@@ -219,4 +219,25 @@
         limit #{number}
         ;
     </select>
+
+    <sql id="selectBlogInfoId">
+        select
+            tbi.id,
+            tbi.content,
+            tbi.like_num,
+            tbi.blog_link_url,
+            tbi.blog_status,
+            tbi.page_view_num,
+            tbi.create_time,
+            tbi.update_time,
+            tbi.title,
+            tbi.t_user_id
+        from t_blog_info tbi
+    </sql>
+    <select id="listBlogInfoByBlogTagId" parameterType="long" resultType="com.jxkj.managecenter.entity.BlogInfo">
+        <include refid="selectBlogInfoId"></include>
+        left outer join t_blog_info_tag tbit on tbi.id = tbit.t_blog_info_id
+        left outer join t_blog_tag tba on tbit.t_blog_tag_id = tba.id
+        where tba.id = #{blogTagId}
+    </select>
 </mapper>

@@ -59,7 +59,7 @@ public class StatisticsServiceImpl implements StatisticsService {
 
     @Override
     public ResultBody allStatistics(Long userId) {
-        List<BlogInfo> blogInfos = redisRepository.getObject("blogInfos");
+        List<BlogInfo> blogInfos = redisRepository.getObject("blogInfoDetails");
         // 统计原创数
         long countType = blogInfos.stream()
                 .filter(blogInfo -> blogInfo.getTUserId().equals(userId) && "原创".equals(blogInfo.getBlogType().getType()))
@@ -306,10 +306,10 @@ public class StatisticsServiceImpl implements StatisticsService {
 
     public List<BlogInfo> getBlogInfos() {
         // 尝试从redis中读取数据
-        List<BlogInfo> blogInfos = redisRepository.getObject("blogInfos");
+        List<BlogInfo> blogInfos = redisRepository.getObject("blogInfoDetails");
         if (null == blogInfos) {
             blogInfos = blogInfoMapper.findAllBlogDetails();
-            redisRepository.setObject("blogInfos", blogInfos);
+            redisRepository.setObject("blogInfoDetails", blogInfos);
             System.out.println("====== 从数据库里面获取值 ======");
             return blogInfos;
         }
