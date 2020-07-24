@@ -36,8 +36,15 @@ public enum ResultTypeEnum {
     RECYCLER_ALREADY_LEAVE(708, "该回员已离职"),
     REGISTER_NOT_PASS(709, "您的注册信息被驳回，请重新注册"),
     USERNAME_NOT_EMPTY(710, "用户名不能为空"),
-    PASSWORD_NOT_EMPTY(711, "密码不能为空")
+    PASSWORD_NOT_EMPTY(711, "密码不能为空"),
 
+    PHONE_ALREADY_REGISTER(801, "手机号已注册，请选择其他手机号或直接登录"),
+    PHONE_NOT_REGISTER(802, "该手机号用户不存在，请检查手机号和密码"),
+    PHONE_INFO_EXCEPTION(803, "手机信息异常，请仔细核对"),
+    PHONE_VERIFY_FAIL(804, "手机校验失败，请检查验证码"),
+    CODE_NOT_EXPIRATION(805, "发送频繁，请稍后再次发送"),
+    CODE_FAILURE(806, "验证码已失效，请重试发送验证码"),
+    CODE_NOT_TRUE(807, "验证码不正确，请重新输入验证码")
     ;
     private Integer code;
 

@@ -19,6 +19,7 @@
         <module>blog-sms</module>
         <module>blog-system</module>
         <module>blog-resource</module>
+        <module>blog-auth</module>
     </modules>
 
     <properties>
