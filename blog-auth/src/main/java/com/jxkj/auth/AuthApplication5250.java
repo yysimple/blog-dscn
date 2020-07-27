@@ -2,9 +2,14 @@ package com.jxkj.auth;
 
 
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.cloud.client.SpringCloudApplication;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.cloud.openfeign.EnableFeignClients;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 /**
  * 项目: blog-dscn
@@ -14,7 +19,10 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
  * @author: WuChengXing
  * @create: 2020-07-24 20:00
  **/
-@SpringCloudApplication
+@EnableDiscoveryClient
+@SpringBootApplication(exclude = DataSourceAutoConfiguration.class)
+@EnableSwagger2
+@EnableTransactionManagement
 @RefreshScope
 @EnableFeignClients
 public class AuthApplication5250 {

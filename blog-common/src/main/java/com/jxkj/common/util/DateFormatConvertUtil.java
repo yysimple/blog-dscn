@@ -1,5 +1,7 @@
 package com.jxkj.common.util;
 
+import cn.hutool.core.util.StrUtil;
+
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -139,6 +141,14 @@ public final class DateFormatConvertUtil {
         return Instant.ofEpochMilli(date.getTime()).atZone(ZoneId.systemDefault()).toLocalDateTime();
     }
 
+    /**
+     * 将LocalDate 转换成 字符串
+     * @param localDate
+     */
+    public static String localDateToString(LocalDate localDate){
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        return localDate.format(dateTimeFormatter);
+    }
 
 }
 

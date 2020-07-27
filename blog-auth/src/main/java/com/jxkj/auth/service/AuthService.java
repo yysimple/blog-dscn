@@ -25,11 +25,11 @@ public interface AuthService {
     /**
      * 功能描述: 微博登录
      * @author WuChengxing
-     * @date 2020/7/24
-     * @param
+     * @date 2020/7/27
+     * @param code
      * @return com.jxkj.common.result.ResultBody
      */
-    ResultBody webLogin();
+    ResultBody weiboLogin(String code);
 
     /**
      * 功能描述: github登录

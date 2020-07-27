@@ -6,18 +6,18 @@ spring:
       discovery:
         server-addr: 192.168.109.135:8848
         namespace: 30a7556a-5447-426d-a340-0c8d2d56b550
-        #  config:
+      config:
         # 配置中心的地址
-        #    server-addr: 192.168.109.135:8848
+        server-addr: 192.168.109.135:8848
         # 指定配置文件格式，相当于gitee上的那个文件
-        #    file-extension: yml
+        file-extension: yml
         # 分组
-        #    group: DEFAULT_GROUP
+        group: DEFAULT_GROUP
         # 命名空间
-        #    namespace: 30a7556a-5447-426d-a340-0c8d2d56b550
+        namespace: 30a7556a-5447-426d-a340-0c8d2d56b550
         # dataId
-    #   shared-configs:
-    #      - ${spring.application.name}.${spring.cloud.nacos.config.file-extension}
+        shared-configs:
+          - ${spring.application.name}.${spring.cloud.nacos.config.file-extension}
 feign:
   httpclient:
     connection-timeout: 20000
