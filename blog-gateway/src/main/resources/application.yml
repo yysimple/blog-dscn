@@ -1,6 +1,22 @@
+spring:
+  application:
+    name: blog-gateway
+
 logging:
   level:
     com:
       alibaba:
         # 设置nacos日志的打印级别
         nacos: warn
+
+# 普罗米修斯的配置
+# 普罗米修斯的配置
+management:
+  endpoints:
+    web:
+      exposure:
+        include: 'prometheus'
+  metrics:
+    tags:
+      application: ${spring.application.name}
+
