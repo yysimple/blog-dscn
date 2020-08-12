@@ -7,6 +7,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -148,6 +149,51 @@ public final class DateFormatConvertUtil {
     public static String localDateToString(LocalDate localDate){
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         return localDate.format(dateTimeFormatter);
+    }
+
+    /**
+     * 功能描述: 获取月初
+     * @param date
+     * @return: java.util.Date
+     * @author: wcx
+     * @date: 2020/8/12 14:21
+     */
+    public static Date getMonthStart(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        int index = calendar.get(Calendar.DAY_OF_MONTH);
+        calendar.add(Calendar.DATE, (1 - index));
+        return calendar.getTime();
+    }
+
+    /**
+     * 功能描述: 获取月末
+     * @param date
+     * @return: java.util.Date
+     * @author: wcx
+     * @date: 2020/8/12 14:22
+     */
+    private static Date getMonthEnd(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.add(Calendar.MONTH, 1);
+        int index = calendar.get(Calendar.DAY_OF_MONTH);
+        calendar.add(Calendar.DATE, (-index));
+        return calendar.getTime();
+    }
+
+    /**
+     * 功能描述: 获取当天的下一天
+     * @param date
+     * @return: java.util.Date
+     * @author: wcx
+     * @date: 2020/8/12 14:22
+     */
+    private static Date getNext(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.add(Calendar.DATE, 1);
+        return calendar.getTime();
     }
 
 }
