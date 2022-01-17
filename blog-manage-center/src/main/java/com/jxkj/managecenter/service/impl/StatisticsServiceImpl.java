@@ -316,6 +316,15 @@ public class StatisticsServiceImpl implements StatisticsService {
         return blogInfos;
     }
 
+    /**
+     * 1. 首先使用set的带过期时间的命令去获取锁，这里是 set key value expire time;就是设置值的同时并为其设置过期时间；
+     * 这样保证了原子性；而将值设置成一个唯一的uuid是为了后面删除锁时，不会去删除其他线程的锁；比如A线程拿到锁，然后过期时间时30s，
+     * 但是这个A线程的业务执行时间超过了30s；如果这个时候在去释放锁，那就是释放新线程B获得的锁，所以在后面会去以这个值去判断；
+     * 2. 如果是获取失败那么就先睡眠一段时间（防止一直重复调用），然后自旋去等待；
+     * 3. 获取锁的那个线程，释放的时候，需要先去获取值，然后在删除，这两步其实不是原子性的，所以需要通过Lua脚本来保证其原子运行
+     *
+     * @return
+     */
     @Override
     public ResultBody findAllBlogDetailsByRedisLock() {
 
